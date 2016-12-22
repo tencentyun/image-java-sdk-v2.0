@@ -57,6 +57,7 @@ How to start
 	} catch (Exception ex) {
 		Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	
 	pornReq = new PornDetectRequest(bucketName, pornNameList, pornImageList);
 	ret = imageClient.pornDetect(pornReq);
 	System.out.println("porn detect ret:" + ret);
@@ -91,12 +92,15 @@ How to start
 	String[] idcardUrlList = new String[2];
 	idcardUrlList[0] = "http://imgs.focus.cn/upload/sz/5876/a_58758051.jpg";
 	idcardUrlList[1] = "http://img5.iqilu.com/c/u/2013/0530/1369896921237.jpg";
+	
 	IdcardDetectRequest idReq = new IdcardDetectRequest(bucketName, idcardUrlList, 0); 
 	ret = imageClient.idcardDetect(idReq);
 	System.out.println("idcard detect ret:" + ret);
+	
 	//识别身份证反面
 	idcardUrlList[0] = "http://www.csx.gov.cn/cwfw/bszn/201403/W020121030349825312574.jpg";
 	idcardUrlList[1] = "http://www.4009951551.com/upload/image/20151026/1445831136187479.png";
+	
 	idReq = new IdcardDetectRequest(bucketName, idcardUrlList, 1);   
 	ret = imageClient.idcardDetect(idReq);
 	System.out.println("idcard detect ret:" + ret);
@@ -112,9 +116,11 @@ How to start
 	} catch (Exception ex) {
 		Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	
 	idReq = new IdcardDetectRequest(bucketName, idcardNameList, idcardImageList, 0);
 	ret = imageClient.idcardDetect(idReq);
 	System.out.println("idcard detect ret:" + ret);
+	
 	//识别身份证反面
 	try {
 		idcardNameList[0] = "id5_fan.png";
@@ -124,6 +130,7 @@ How to start
 	} catch (Exception ex) {
 		Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	
 	idReq = new IdcardDetectRequest(bucketName, idcardNameList, idcardImageList, 1);
 	ret = imageClient.idcardDetect(idReq);
 	System.out.println("idcard detect ret:" + ret);
@@ -151,6 +158,7 @@ How to start
 	} catch (Exception ex) {
 		Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	
 	nameReq = new NamecardDetectRequest(bucketName, namecardNameList, namecardImageList, 0);
 	ret = imageClient.namecardDetect(nameReq);
 	System.out.println("namecard detect ret:" + ret);;
@@ -178,6 +186,7 @@ How to start
 	} catch (Exception ex) {
 		Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	
 	faceDetectReq = new FaceDetectRequest(bucketName, faceDetectName, faceDetectImage, 1);
 	ret = imageClient.faceDetect(faceDetectReq);
 	System.out.println("face detect ret:" + ret);
@@ -202,6 +211,7 @@ How to start
 	} catch (Exception ex) {
 		Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	
 	faceShapeReq = new FaceShapeRequest(bucketName, faceShapeName, faceShapeImage, 1);
 	ret = imageClient.faceShape(faceShapeReq);
 	System.out.println("face shape ret:" + ret);   
@@ -218,8 +228,8 @@ How to start
 	String personName = "yangmi";
 	String personId = "personY";
 	String personTag = "star";
+	
 	FaceNewPersonRequest personNewReq = new FaceNewPersonRequest(bucketName, personId, groupIds, personNewUrl, personName, personTag);
-
 	ret = imageClient.faceNewPerson(personNewReq);
 	System.out.println("person new  ret:" + ret);
 	
@@ -237,6 +247,7 @@ How to start
 	} catch (Exception ex) {
 		Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	
 	personNewReq = new FaceNewPersonRequest(bucketName, personId, groupIds, personNewName, personNewImage, personName, personTag);
 	ret = imageClient.faceNewPerson(personNewReq);
 	System.out.println("person new ret:" + ret); 
@@ -248,6 +259,7 @@ How to start
 	addFaceUrlList[1] = "http://p.ishowx.com/uploads/allimg/161024/648-161024110505.jpg";
 	String addfacePersonId = "personY";
 	String addfacePersonTag = "star1";
+	
 	FaceAddFaceRequest addFaceReq = new FaceAddFaceRequest(bucketName, addFaceUrlList, addfacePersonId, addfacePersonTag); 
 	ret = imageClient.faceAddFace(addFaceReq);
 	System.out.println("add face ret:" + ret);
@@ -265,6 +277,7 @@ How to start
 	} catch (Exception ex) {
 		Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	
 	addFaceReq = new FaceAddFaceRequest(bucketName, addFaceNameList, addFaceImageList, addfacePersonId, addfacePersonTag);
 	ret = imageClient.faceAddFace(addFaceReq);
 	System.out.println("add face ret:" + ret);
@@ -274,8 +287,8 @@ How to start
 	String[] delFaceIds = new String[2];
 	delFaceIds[0] = "1831408218312574949";
 	delFaceIds[1] = "1831408248150847230";
+	
 	FaceDelFaceRequest delFaceReq = new FaceDelFaceRequest(bucketName, delFacePersonId, delFaceIds);
-
 	ret = imageClient.faceDelFace(delFaceReq);
 	System.out.println("face del  ret:" + ret);
 	
@@ -283,8 +296,8 @@ How to start
 	String setInfoPersonId = "personY";
 	String setInfoPersonName = "mimi";
 	String setInfoTag = "actress";
+	
 	FaceSetInfoRequest setInfoReq = new FaceSetInfoRequest(bucketName, setInfoPersonId, setInfoPersonName, setInfoTag);
-
 	ret = imageClient.faceSetInfo(setInfoReq);
 	System.out.println("face set info  ret:" + ret);
 
@@ -346,6 +359,7 @@ How to start
 	} catch (Exception ex) {
 		Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	
 	faceVerifyReq = new FaceVerifyRequest(bucketName, faceVerifyPersonId, faceVerifyName, faceVerifyImage);
 	ret = imageClient.faceVerify(faceVerifyReq);
 	System.out.println("face verify ret:" + ret);
@@ -371,6 +385,7 @@ How to start
 	} catch (Exception ex) {
 		Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	
 	faceIdentifyReq = new FaceIdentifyRequest(bucketName, faceIdentifyGroupId, faceIdentifyName, faceIdentifyImage);
 	ret = imageClient.faceIdentify(faceIdentifyReq);
 	System.out.println("face identify ret:" + ret);
@@ -398,6 +413,7 @@ How to start
 	} catch (Exception ex) {
 		Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	
 	faceCompareReq = new FaceCompareRequest(bucketName, compareNameList, compareImageList);
 	ret = imageClient.faceCompare(faceCompareReq);
 	System.out.println("face compare ret:" + ret);
@@ -424,6 +440,7 @@ How to start
 	} catch (Exception ex) {
 		Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	
 	idCardCompareReq = new FaceIdCardCompareRequest(bucketName, idcardNumber, idcardName, idcardCompareName, idcardCompareImage);
 	ret = imageClient.faceIdCardCompare(idCardCompareReq);
 	System.out.println("face idCard Compare ret:" + ret);
@@ -436,8 +453,8 @@ How to start
 	String seq = "";
 	FaceLiveGetFourRequest getFaceFourReq = new FaceLiveGetFourRequest(bucketName, seq);        
 	ret = imageClient.faceLiveGetFour(getFaceFourReq);
-
 	System.out.println("face live get four  ret:" + ret);
+	
 	String validate = "";
 	JSONObject jsonObject = new JSONObject(ret);
 	JSONObject data = jsonObject.getJSONObject("data");
