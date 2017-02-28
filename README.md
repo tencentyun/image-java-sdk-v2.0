@@ -252,7 +252,7 @@ How to start
 	ret = imageClient.faceNewPerson(personNewReq);
 	System.out.println("person new ret:" + ret); 
 
-	//增加人脸,将一组Face加入到一个Person中。注意，一个Face只能被加入到一个Person中。 
+	//增加人脸,将一组Face加入到一个Person中
 	 // 1. url方式;
 	String[] addFaceUrlList = new String[2];
 	addFaceUrlList[0] = "http://img.huainanren.wang/2016/1030/20161030044908523.jpg";
@@ -451,9 +451,9 @@ How to start
 	System.out.println("face idCard Compare ret:" + ret);
 ```
 
-##### 活体检测
+##### 活体检测—获取唇语验证码	
+
 ```java
-	//活体检测—获取唇语验证码	
 	String seq = "";
 	FaceLiveGetFourRequest getFaceFourReq = new FaceLiveGetFourRequest(bucketName, seq);        
 	ret = imageClient.faceLiveGetFour(getFaceFourReq);
@@ -465,8 +465,12 @@ How to start
 	if (null != data) {
 		validate = data.getString("validate_data");
 	}
-   
-	//活体检测视频与身份证高清照片的比对
+```
+	
+##### 活体检测-视频与身份证高清照片的比对
+
+```java  
+	//
 	String  liveDetectIdcardNumber = "330782198802084329";
 	String  liveDetectIdcardName = "季锦锦";  
 	String  video = "";
@@ -479,8 +483,11 @@ How to start
 	FaceIdCardLiveDetectFourRequest liveDetectReq = new FaceIdCardLiveDetectFourRequest(bucketName, validate, video, liveDetectIdcardNumber, liveDetectIdcardName, seq);
 	ret = imageClient.faceIdCardLiveDetectFour(liveDetectReq);
 	System.out.println("face idCard live detect four ret:" + ret);
-	
-	//活体检测视频与用户照片的比对
+```
+
+##### 活体检测-视频与用户照片的比对
+
+```java  
 	String  liveDetectVideo = "";
 	String  liveDetectImage = "";
 	String liveDetectVvalidate = "123456";        
