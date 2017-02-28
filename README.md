@@ -1,4 +1,4 @@
-# image-java-sdk-v4
+# image-java-sdk-v2.0
 腾讯云 [万象优图（Cloud Image）](https://www.qcloud.com/product/ci) SDK for PHP
 ===================================
 简介
@@ -7,7 +7,7 @@ java sdk for picture service of tencentyun.
 
 	maven信息：
 	GroupId： com.qcloud
-	ArtifactId：image-sdk-v4
+	ArtifactId：image-sdk-v2.0
 
 How to start
 ----------------------------------- 
@@ -369,6 +369,7 @@ How to start
 对于一个待识别的人脸图片，在一个Group中识别出最相似的Top5 Person作为其身份返回，返回的Top5中按照相似度从大到小排列。
 
 ```java
+	// 1. url方式
 	 String  faceIdentifyGroupId = "group1";
 	String faceIdentifyUrl = "http://www.5djiaren.com/uploads/2016-07/22-141354_227.jpg";
 	FaceIdentifyRequest faceIdentifyReq = new FaceIdentifyRequest(bucketName, faceIdentifyGroupId, faceIdentifyUrl);
@@ -419,7 +420,11 @@ How to start
 	System.out.println("face compare ret:" + ret);
 ```
 	
-##### 身份证识别对比
+
+		
+#### 3.3 人脸核身
+
+##### 用户上传照片与高清身份证照片比对
 
 ```java
 	// 1. url方式
@@ -445,11 +450,10 @@ How to start
 	ret = imageClient.faceIdCardCompare(idCardCompareReq);
 	System.out.println("face idCard Compare ret:" + ret);
 ```
-		
-#### 3.3 人脸核身
 
+##### 活体检测
 ```java
-	//活体检测第一步：获取唇语（验证码）	
+	//活体检测—获取唇语验证码	
 	String seq = "";
 	FaceLiveGetFourRequest getFaceFourReq = new FaceLiveGetFourRequest(bucketName, seq);        
 	ret = imageClient.faceLiveGetFour(getFaceFourReq);
@@ -462,7 +466,7 @@ How to start
 		validate = data.getString("validate_data");
 	}
    
-	//活体检测第二步：检测
+	//活体检测视频与身份证高清照片的比对
 	String  liveDetectIdcardNumber = "330782198802084329";
 	String  liveDetectIdcardName = "季锦锦";  
 	String  video = "";
@@ -476,7 +480,7 @@ How to start
 	ret = imageClient.faceIdCardLiveDetectFour(liveDetectReq);
 	System.out.println("face idCard live detect four ret:" + ret);
 	
-	//活体检测第二步：检测--对比指定身份信息
+	//活体检测视频与用户照片的比对
 	String  liveDetectVideo = "";
 	String  liveDetectImage = "";
 	String liveDetectVvalidate = "123456";        
