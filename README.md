@@ -3,6 +3,17 @@
 ===================================
 简介
 ----------------------------------- 
+java sdk for picture service of tencentyun.
+
+	maven信息：
+	GroupId： com.qcloud
+	ArtifactId：qcloud-image-sdk
+	Version: 2.0.1
+
+	产品文档地址
+	https://www.qcloud.com/product/ci
+	
+----------------------------------- 
 How to start
 ----------------------------------- 
 ### 1. 在腾讯云申请业务的授权
