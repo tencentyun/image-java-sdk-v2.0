@@ -423,7 +423,7 @@ public class Demo {
         // 1. url方式
         System.out.println("====================================================");
         String  faceIdentifyGroupId = "group1";
-        String faceIdentifyUrl = "http://www.5djiaren.com/uploads/2016-07/22-141354_227.jpg";
+        String faceIdentifyUrl = "YOUR URL";
         FaceIdentifyRequest faceIdentifyReq = new FaceIdentifyRequest(bucketName, faceIdentifyGroupId, faceIdentifyUrl);
  
         ret = imageClient.faceIdentify(faceIdentifyReq);
@@ -449,8 +449,8 @@ public class Demo {
         ///////////////////////////////////////////////////////////////
         // 1. url方式
         System.out.println("====================================================");
-        String urlA = "http://imgsrc.baidu.com/baike/pic/item/5fdf8db1cb134954a4d833a0534e9258d0094a34.jpg";
-        String urlB = "http://a-ssl.duitang.com/uploads/item/201610/29/20161029215753_5cMTX.jpeg";
+        String urlA = "YOUR URL A";
+        String urlB = "YOUR URL B";
         FaceCompareRequest faceCompareReq = new FaceCompareRequest(bucketName, urlA, urlB);
         
         ret = imageClient.faceCompare(faceCompareReq);
