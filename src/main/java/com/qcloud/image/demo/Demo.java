@@ -60,9 +60,9 @@ public class Demo {
         // 1. url方式
         System.out.println("====================================================");
         String[] pornUrlList = new String[3];
-        pornUrlList[0] = "http://hearthstone.nos.netease.com/1/artworkGvG/GoblinBlastmagel.jpg";
-        pornUrlList[1] = "http://hearthstone.nos.netease.com/1/artworknaxx/Faerlinal.jpg";
-        pornUrlList[2] = "http://hearthstone.nos.netease.com/1/artworknaxx/KelThuzadl.jpg";
+        pornUrlList[0] = "YOUR URL A";
+        pornUrlList[1] = "YOUR URL B";
+        pornUrlList[2] = "YOUR URL C";
         PornDetectRequest pornReq = new PornDetectRequest(bucketName, pornUrlList);
         
         ret = imageClient.pornDetect(pornReq);
@@ -91,7 +91,7 @@ public class Demo {
         ///////////////////////////////////////////////////////////////
         // 1. url方式
         System.out.println("====================================================");
-        String tagUrl = "http://hearthstone.nos.netease.com/1/artworkGvG/GoblinBlastmagel.jpg";
+        String tagUrl = "YOUR URL";
         TagDetectRequest tagReq = new TagDetectRequest(bucketName, tagUrl);
         ret = imageClient.tagDetect(tagReq);
         System.out.println("tag detect ret:" + ret);
@@ -116,14 +116,14 @@ public class Demo {
         // 1. url方式,识别身份证正面
         System.out.println("====================================================");
         String[] idcardUrlList = new String[2];
-        idcardUrlList[0] = "http://imgs.focus.cn/upload/sz/5876/a_58758051.jpg";
-        idcardUrlList[1] = "http://img5.iqilu.com/c/u/2013/0530/1369896921237.jpg";
+        idcardUrlList[0] = "YOUR URL A";
+        idcardUrlList[1] = "YOUR URL B";
         IdcardDetectRequest idReq = new IdcardDetectRequest(bucketName, idcardUrlList, 0); 
         ret = imageClient.idcardDetect(idReq);
         System.out.println("idcard detect ret:" + ret);
         //识别身份证反面
-        idcardUrlList[0] = "http://www.csx.gov.cn/cwfw/bszn/201403/W020121030349825312574.jpg";
-        idcardUrlList[1] = "http://www.4009951551.com/upload/image/20151026/1445831136187479.png";
+        idcardUrlList[0] = "YOUR URL C";
+        idcardUrlList[1] = "YOUR URL D";
         idReq = new IdcardDetectRequest(bucketName, idcardUrlList, 1);   
         ret = imageClient.idcardDetect(idReq);
         System.out.println("idcard detect ret:" + ret);
@@ -164,8 +164,8 @@ public class Demo {
         // 1. url方式
         System.out.println("====================================================");
         String[] namecardUrlList = new String[2];
-        namecardUrlList[0] = "http://pic1.nipic.com/2008-12-03/2008123181119306_2.jpg";
-        namecardUrlList[1] = "http://pic.58pic.com/58pic/12/49/04/80k58PICzYP.jpg";
+        namecardUrlList[0] = "YOUR URL A";
+        namecardUrlList[1] = "YOUR URL B";
         NamecardDetectRequest nameReq = new NamecardDetectRequest(bucketName, namecardUrlList, 0);
  
         ret = imageClient.namecardDetect(nameReq);
@@ -193,7 +193,7 @@ public class Demo {
         ///////////////////////////////////////////////////////////////
         // 1. url方式
         System.out.println("====================================================");
-        String faceDetectUrl = "http://ent.cctv.com/20071217/images/1197849230623_8325711678927688064.jpg";
+        String faceDetectUrl = "YOUR URL";
         FaceDetectRequest faceDetectReq = new FaceDetectRequest(bucketName, faceDetectUrl, 1);
  
         ret = imageClient.faceDetect(faceDetectReq);
@@ -219,7 +219,7 @@ public class Demo {
         ///////////////////////////////////////////////////////////////
         // 1. url方式
         System.out.println("====================================================");
-        String faceShapeUrl = "http://ent.cctv.com/20071217/images/1197849230623_8325711678927688064.jpg";
+        String faceShapeUrl = "YOUR URL";
         FaceShapeRequest faceShapeReq = new FaceShapeRequest(bucketName, faceShapeUrl, 1);
  
         ret = imageClient.faceShape(faceShapeReq);
@@ -244,7 +244,7 @@ public class Demo {
         ///////////////////////////////////////////////////////////////
         // 1. url方式
         System.out.println("====================================================");
-        String personNewUrl = "http://imgsrc.baidu.com/baike/pic/item/5fdf8db1cb134954a4d833a0534e9258d0094a34.jpg";
+        String personNewUrl = "YOUR URL";
         String[] groupIds = new String[2];
         groupIds[0] = "group3";
         groupIds[1] = "group22";
@@ -291,8 +291,8 @@ public class Demo {
         // 1. url方式
         System.out.println("====================================================");
         String[] addFaceUrlList = new String[2];
-        addFaceUrlList[0] = "http://img.huainanren.wang/2016/1030/20161030044908523.jpg";
-        addFaceUrlList[1] = "http://p.ishowx.com/uploads/allimg/161024/648-161024110505.jpg";
+        addFaceUrlList[0] = "YOUR URL A";
+        addFaceUrlList[1] = "YOUR URL B";
         String addfacePersonId = "personY";
         String addfacePersonTag = "star1";
         FaceAddFaceRequest addFaceReq = new FaceAddFaceRequest(bucketName, addFaceUrlList, addfacePersonId, addfacePersonTag); 
@@ -396,7 +396,7 @@ public class Demo {
         // 1. url方式
         System.out.println("====================================================");
         String  faceVerifyPersonId = "person1";
-        String faceVerifyUrl = "http://img3.a0bi.com/upload/ttq/20160814/1471155260063.png";
+        String faceVerifyUrl = "YOUR URL";
         FaceVerifyRequest faceVerifyReq = new FaceVerifyRequest(bucketName, faceVerifyPersonId, faceVerifyUrl);
  
         ret = imageClient.faceVerify(faceVerifyReq);
@@ -478,9 +478,9 @@ public class Demo {
         ///////////////////////////////////////////////////////////////
         // 1. url方式
         System.out.println("====================================================");
-        String  idcardNumber = "330782198802084329";
-        String  idcardName = "季锦锦";       
-        String idcardCompareUrl = "http://docs.ebdoor.com/Image/CompanyCertificate/1/16844.jpg";
+        String  idcardNumber = "IDCARD NUM";
+        String  idcardName = "NAME";       
+        String idcardCompareUrl = "YOUR URL";
         String  sessionId = "";
         FaceIdCardCompareRequest idCardCompareReq = new FaceIdCardCompareRequest(bucketName, idcardNumber, idcardName, idcardCompareUrl, sessionId);
  
