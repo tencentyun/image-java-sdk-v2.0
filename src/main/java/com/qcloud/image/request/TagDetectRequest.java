@@ -8,6 +8,8 @@ package com.qcloud.image.request;
 import com.qcloud.image.common_utils.CommonParamCheckUtils;
 import com.qcloud.image.exception.ParamException;
 
+import java.io.File;
+
 /**
  *
  * @author serenazhao 标签识别请求
@@ -20,7 +22,7 @@ public class TagDetectRequest extends AbstractBaseRequest {
 	private String url = "";
         
 	// 图片内容
-        private byte[] image;
+        private File image;
         
 	public TagDetectRequest(String bucketName, String url) {
             super(bucketName);
@@ -28,7 +30,7 @@ public class TagDetectRequest extends AbstractBaseRequest {
             this.url = url;
 	}
 
-        public TagDetectRequest(String bucketName, byte[] image) {
+        public TagDetectRequest(String bucketName, File image) {
             super(bucketName);
             this.isUrl = false;
             this.image = image;
@@ -42,7 +44,7 @@ public class TagDetectRequest extends AbstractBaseRequest {
             return url;
         }
         
-        public byte[] getImage() {
+        public File getImage() {
             return image;
         }
 

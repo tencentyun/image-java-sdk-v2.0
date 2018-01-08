@@ -5,10 +5,10 @@
  */
 package com.qcloud.image.request;
 
-import java.util.ArrayList;
 import com.qcloud.image.common_utils.CommonParamCheckUtils;
 import com.qcloud.image.exception.ParamException;
-import java.util.HashMap;
+
+import java.io.File;
 
 /**
  *
@@ -24,7 +24,7 @@ public class FaceShapeRequest extends AbstractBaseRequest {
 	private String url = "";
         
 	// 图片内容列表,key=image name
-        private String image = "";
+        private File image;
 
         /**
          * @param bucketName  bucket名称
@@ -45,7 +45,7 @@ public class FaceShapeRequest extends AbstractBaseRequest {
          * @param image 图片内容
          * @param mode 检测模式，0为检测所有人脸，1为检测最大的人脸    
          */
-        public FaceShapeRequest(String bucketName, String name, String image, int mode) {
+        public FaceShapeRequest(String bucketName, String name, File image, int mode) {
 		super(bucketName);
 		this.isUrl = false;
                 this.mode = mode;
@@ -68,11 +68,11 @@ public class FaceShapeRequest extends AbstractBaseRequest {
             this.url = url;
         }
 
-        public String getImage() {
+        public File getImage() {
             return image;
         }
 
-        public void setImage(String image) {
+        public void setImage(File image) {
             this.image = image;
         }
 

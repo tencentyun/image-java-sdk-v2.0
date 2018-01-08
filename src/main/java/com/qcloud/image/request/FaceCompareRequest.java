@@ -5,11 +5,13 @@
  */
 package com.qcloud.image.request;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.qcloud.image.ClientConfig;
 import com.qcloud.image.common_utils.CommonParamCheckUtils;
 import com.qcloud.image.exception.ParamException;
-import com.qcloud.image.ClientConfig;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -32,7 +34,7 @@ public class FaceCompareRequest extends AbstractBaseRequest {
         private HashMap<String, String> keyList = new HashMap<String, String>();
         
 	// 图片内容列表,key=imageA, key=imageB
-        private HashMap<String, String> imageList = new HashMap<String, String>();
+        private HashMap<String, File> imageList = new HashMap<String, File>();
         
 	public FaceCompareRequest(String bucketName, String urlA, String urlB) {
 		super(bucketName);
@@ -41,7 +43,7 @@ public class FaceCompareRequest extends AbstractBaseRequest {
                 this.urlB = urlB;
 	}
 
-        public FaceCompareRequest(String bucketName, String[] name, String[] image) {
+        public FaceCompareRequest(String bucketName, String[] name, File[] image) {
 		super(bucketName);
 		this.isUrl = false;
                 for(int i = 0; i < name.length; i++){
@@ -76,11 +78,11 @@ public class FaceCompareRequest extends AbstractBaseRequest {
             this.urlList = urlList;
         }
 
-        public HashMap<String, String> getImageList() {
+        public HashMap<String, File> getImageList() {
             return imageList;
         }
 
-        public void setImageList(HashMap<String, String> imageList) {
+        public void setImageList(HashMap<String, File> imageList) {
             this.imageList = imageList;
         }
 

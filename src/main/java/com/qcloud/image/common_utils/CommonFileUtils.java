@@ -1,14 +1,13 @@
 package com.qcloud.image.common_utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author chengwu 
@@ -71,18 +70,6 @@ public class CommonFileUtils {
         }
     }
 
-    /**
-     * 获取小文件的全部内容
-     * 
-     * @param filePath 文件路径
-     * @return 返回文件内容 
-     * @throws Exception 异常
-     */
-    public static String getFileContent(String filePath) throws Exception {
-        int fileLength = ((Long) getFileLength(filePath)).intValue();
-        return getFileContent(filePath, 0, fileLength);
-    }
-
      /**
      * 获取小文件的全部内容
      * 
@@ -93,25 +80,6 @@ public class CommonFileUtils {
     public static byte[] getFileContentByte(String filePath) throws Exception {
         int fileLength = ((Long) getFileLength(filePath)).intValue();
         return getFileContentByte(filePath, 0, fileLength);
-    }
-
-    /**
-     * 获取文件指定块的内容
-     * 
-     * @param filePath 文件路径
-     * @param offset 偏移量，即从哪里开始读取，单位为字节
-     * @param length 读取的长度,单位为字节
-     * @return 返回读取的内容，实际读取的长度小于等于length
-     * @throws Exception 异常
-     */
-    public static String getFileContent(String filePath, long offset, int length) throws Exception {
-        FileInputStream fileInputStream = null;
-        try {
-            fileInputStream = getFileInputStream(filePath);
-            return getFileContent(fileInputStream, offset, length);
-        } finally {
-            closeFileStream(fileInputStream, filePath);
-        }
     }
 
         /**
@@ -131,20 +99,6 @@ public class CommonFileUtils {
         } finally {
             closeFileStream(fileInputStream, filePath);
         }
-    }
-    /**
-     * 读取指定流从某处开始的内容，此函数有一定的风险，如果流对应的内容过大，则会造成OOM
-     * 
-     * @param inputStream  输入文件
-     * @param offset 读取的开始偏移
-     * @param length 读取的长度
-     * @return 读取的内容
-     * @throws Exception 异常
-     */
-    public static String getFileContent(InputStream inputStream, long offset, int length)
-            throws Exception {
-        byte[] fileContent = getFileContentByte(inputStream, offset, length);
-        return new String(fileContent, Charset.forName("ISO-8859-1"));
     }
 
     public static byte[] getFileContentByte(InputStream inputStream, long offset, int length)

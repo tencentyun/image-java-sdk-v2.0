@@ -7,6 +7,7 @@ package com.qcloud.image.op;
 
 import com.qcloud.image.ClientConfig;
 import com.qcloud.image.common_utils.CommonCodecUtils;
+import com.qcloud.image.common_utils.CommonFileUtils;
 import com.qcloud.image.exception.AbstractImageException;
 import com.qcloud.image.http.AbstractImageHttpClient;
 import com.qcloud.image.http.HttpContentType;
@@ -122,7 +123,13 @@ public class DetectionOp extends BaseOp {
             httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
             httpRequest.addParam(RequestBodyKey.URL, request.getUrl());
         } else {
-            String image = CommonCodecUtils.Base64Encode(request.getImage());  
+            byte[] fileContentByte = null;
+            try {
+                fileContentByte = CommonFileUtils.getFileContentByte(request.getImage().getAbsolutePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            String image = CommonCodecUtils.Base64Encode(fileContentByte);  
             httpRequest.addParam(RequestBodyKey.IMAGE, image);                 
         }
               

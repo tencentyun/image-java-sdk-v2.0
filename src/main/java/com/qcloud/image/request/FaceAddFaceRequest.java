@@ -5,11 +5,13 @@
  */
 package com.qcloud.image.request;
 
-import java.util.ArrayList;
+import com.qcloud.image.ClientConfig;
 import com.qcloud.image.common_utils.CommonParamCheckUtils;
 import com.qcloud.image.exception.ParamException;
+
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
-import com.qcloud.image.ClientConfig;
 
 /**
  *
@@ -23,7 +25,7 @@ public class FaceAddFaceRequest extends AbstractBaseRequest {
 	private ArrayList<String> urlList = new ArrayList<String>();
         
 	// 图片内容列表
-        private HashMap<String, String> imageList = new HashMap<String, String>();
+        private HashMap<String, File> imageList = new HashMap<String, File>();
             
         //指定的个体id 
         private String personId = "";
@@ -44,7 +46,7 @@ public class FaceAddFaceRequest extends AbstractBaseRequest {
                 }
 	}
 
-        public FaceAddFaceRequest(String bucketName, String[] name, String[] image, String personId, String personTag) {
+        public FaceAddFaceRequest(String bucketName, String[] name, File[] image, String personId, String personTag) {
 		super(bucketName);
 		this.isUrl = false;
                 this.personTag = personTag;
@@ -76,7 +78,7 @@ public class FaceAddFaceRequest extends AbstractBaseRequest {
             this.urlList = urlList;
         }
 
-        public HashMap<String, String> getImageList() {
+        public HashMap<String, File> getImageList() {
             return imageList;
         }
         
@@ -84,7 +86,7 @@ public class FaceAddFaceRequest extends AbstractBaseRequest {
             return keyList;
         }
 
-        public void setImageList(HashMap<String, String> imageList) {
+        public void setImageList(HashMap<String, File> imageList) {
             this.imageList = imageList;
         }
 

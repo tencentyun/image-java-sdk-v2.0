@@ -5,10 +5,10 @@
  */
 package com.qcloud.image.request;
 
-import java.util.ArrayList;
 import com.qcloud.image.common_utils.CommonParamCheckUtils;
 import com.qcloud.image.exception.ParamException;
-import java.util.HashMap;
+
+import java.io.File;
 
 /**
  *
@@ -22,7 +22,7 @@ public class FaceNewPersonRequest extends AbstractBaseRequest {
 	private String url = "";
         
 	// 图片内容列表
-        private String image = "";
+        private File image;
         
         //加入到组的列表
         private String[] groupIds;
@@ -46,7 +46,7 @@ public class FaceNewPersonRequest extends AbstractBaseRequest {
                 this.personTag = personTag;
 	}
 
-        public FaceNewPersonRequest(String bucketName, String personId, String[] groupIds, String fileName, String image, String personName, String personTag) {
+        public FaceNewPersonRequest(String bucketName, String personId, String[] groupIds, String fileName, File image, String personName, String personTag) {
 		super(bucketName);
 		this.isUrl = false;
                 this.image = image;
@@ -68,11 +68,11 @@ public class FaceNewPersonRequest extends AbstractBaseRequest {
             this.url = url;
         }
 
-        public String getImage() {
+        public File getImage() {
             return image;
         }
 
-        public void setImage(String image) {
+        public void setImage(File image) {
             this.image = image;
         }
         

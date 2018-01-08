@@ -5,11 +5,10 @@
  */
 package com.qcloud.image.request;
 
-import java.util.ArrayList;
 import com.qcloud.image.common_utils.CommonParamCheckUtils;
 import com.qcloud.image.exception.ParamException;
-import java.util.HashMap;
-import com.qcloud.image.ClientConfig;
+
+import java.io.File;
 
 /**
  *
@@ -17,7 +16,7 @@ import com.qcloud.image.ClientConfig;
  */
 public class FaceIdCardLiveDetectFourRequest extends AbstractBaseRequest {     
 	// 图片内容
-        private String video = "";
+        private File video ;
         
         //要查询的身份证号码
          private String idcardNumber = "";
@@ -32,7 +31,7 @@ public class FaceIdCardLiveDetectFourRequest extends AbstractBaseRequest {
          private String seq = "";
          
         
-        public FaceIdCardLiveDetectFourRequest( String bucketName, String validate, String video, String idcardNumber, String idcardName, String seq) {
+        public FaceIdCardLiveDetectFourRequest( String bucketName, String validate, File video, String idcardNumber, String idcardName, String seq) {
 		super(bucketName);
                 this.idcardNumber = idcardNumber;
                 this.idcardName = idcardName;
@@ -53,7 +52,7 @@ public class FaceIdCardLiveDetectFourRequest extends AbstractBaseRequest {
                 return validate;
         }
         
-        public String getVideo() {
+        public File getVideo() {
                 return video;
         }
         

@@ -5,15 +5,17 @@
  */
 package com.qcloud.image.request;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.qcloud.image.ClientConfig;
 import com.qcloud.image.common_utils.CommonParamCheckUtils;
 import com.qcloud.image.exception.ParamException;
-import com.qcloud.image.ClientConfig;
+
+import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.net.URLEncoder;
 
 /**
  *
@@ -30,7 +32,7 @@ public class PornDetectRequest extends AbstractBaseRequest {
 	private ArrayList<String> urlList = new ArrayList<String>();
         
 	// 图片内容列表,key=image name
-        private HashMap<String, String> imageList = new HashMap<String, String>();
+        private HashMap<String, File> imageList = new HashMap<String, File>();
         
 	public PornDetectRequest(String bucketName, String[] urlList) {
 		super(bucketName);
@@ -40,7 +42,7 @@ public class PornDetectRequest extends AbstractBaseRequest {
                 }
 	}
 
-        public PornDetectRequest(String bucketName, String[] name, String[] image) {
+        public PornDetectRequest(String bucketName, String[] name, File[] image) {
 		super(bucketName);
 		this.isUrl = false;
                 String pornName;
@@ -71,11 +73,11 @@ public class PornDetectRequest extends AbstractBaseRequest {
             this.urlList = urlList;
         }
 
-        public HashMap<String, String> getImageList() {
+        public HashMap<String, File> getImageList() {
             return imageList;
         }
 
-        public void setImageList(HashMap<String, String> imageList) {
+        public void setImageList(HashMap<String, File> imageList) {
             this.imageList = imageList;
         }
 

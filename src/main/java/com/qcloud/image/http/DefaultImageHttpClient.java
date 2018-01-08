@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
@@ -141,7 +142,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
         httpPost.setEntity(stringEntity);
     }
 
-    private void setMultiPartEntity(HttpPost httpPost, Map<String, String> params, Map<String, String> images, String imageData, Map<String, String> keyList,  String imageKey)
+    private void setMultiPartEntity(HttpPost httpPost, Map<String, String> params, Map<String, File> images, File imageData, Map<String, String> keyList, String imageKey)
             throws Exception {
                 ContentType utf8TextPlain = ContentType.create("text/plain", Consts.UTF_8);
                 MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
@@ -150,15 +151,13 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
                 }
                 
                 if (images.size() > 0) {   
-                    String name = "";
-                    int cnt = 0;
-                    for (String image : images.keySet()) { 
-                        String data = images.get(image);
-                        int a = data.length();
-                        entityBuilder.addBinaryBody(keyList.get(image), images.get(image).getBytes(Charset.forName("ISO-8859-1")), ContentType.MULTIPART_FORM_DATA, image);
+                    for (String imageFileName : images.keySet()) {
+                        String paramName = keyList.get(imageFileName);
+                        File imageFile = images.get(imageFileName);
+                        entityBuilder.addBinaryBody(paramName, imageFile, ContentType.MULTIPART_FORM_DATA, imageFileName);
                     }
-                } else if((null != imageData) && (imageData.trim().length() != 0)){
-                    entityBuilder.addBinaryBody(imageKey, imageData.getBytes(Charset.forName("ISO-8859-1")));
+                } else if(imageData!=null&&imageData.exists()){
+                    entityBuilder.addBinaryBody(imageKey, imageData);
                 }
 
                 httpPost.setEntity(entityBuilder.build());

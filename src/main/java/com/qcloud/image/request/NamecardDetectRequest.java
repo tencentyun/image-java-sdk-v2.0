@@ -5,13 +5,15 @@
  */
 package com.qcloud.image.request;
 
-import java.util.ArrayList;
+import com.qcloud.image.ClientConfig;
 import com.qcloud.image.common_utils.CommonParamCheckUtils;
 import com.qcloud.image.exception.ParamException;
-import java.util.HashMap;
-import com.qcloud.image.ClientConfig;
+
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,7 +32,7 @@ public class NamecardDetectRequest extends AbstractBaseRequest {
 	private ArrayList<String> urlList = new ArrayList<String>();
         
 	// 图片内容列表,key=image name, key=image data
-        private HashMap<String, String> imageList = new HashMap<String, String>();
+        private HashMap<String, File> imageList = new HashMap<String, File>();
         
         //设置列表传参的key
         private HashMap<String, String> keyList = new HashMap<String, String>();
@@ -56,7 +58,7 @@ public class NamecardDetectRequest extends AbstractBaseRequest {
          * @param image 文件内容
          * @param retImage 0不返回图片，1返回图片
          */
-        public NamecardDetectRequest(String bucketName, String[] name, String[] image, int retImage) {
+        public NamecardDetectRequest(String bucketName, String[] name, File[] image, int retImage) {
 		super(bucketName);
 		this.isUrl = false;
                 this.retImage = retImage;
@@ -88,7 +90,7 @@ public class NamecardDetectRequest extends AbstractBaseRequest {
             this.urlList = urlList;
         }
 
-        public HashMap<String, String> getImageList() {
+        public HashMap<String, File> getImageList() {
             return imageList;
         }
 
@@ -96,7 +98,7 @@ public class NamecardDetectRequest extends AbstractBaseRequest {
             return keyList;
         }
          
-        public void setImageList(HashMap<String, String> imageList) {
+        public void setImageList(HashMap<String, File> imageList) {
             this.imageList = imageList;
         }
 

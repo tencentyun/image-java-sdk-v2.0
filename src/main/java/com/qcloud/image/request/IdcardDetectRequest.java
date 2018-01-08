@@ -5,13 +5,15 @@
  */
 package com.qcloud.image.request;
 
-import java.util.ArrayList;
+import com.qcloud.image.ClientConfig;
 import com.qcloud.image.common_utils.CommonParamCheckUtils;
 import com.qcloud.image.exception.ParamException;
-import java.util.HashMap;
-import com.qcloud.image.ClientConfig;
+
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,7 +35,7 @@ public class IdcardDetectRequest extends AbstractBaseRequest {
         private HashMap<String, String> keyList =  new HashMap<String, String>();
         
 	// 图片内容列表,key=image name
-        private HashMap<String, String> imageList = new HashMap<String, String>();
+        private HashMap<String, File> imageList = new HashMap<String, File>();
               
         /**
          * @param bucketName bucketName
@@ -56,7 +58,7 @@ public class IdcardDetectRequest extends AbstractBaseRequest {
          * @param image 图片内容
          * @param cardType  0为身份证有照片的一面，1为身份证有国徽的一面   
          */
-        public IdcardDetectRequest(String bucketName, String[] name, String[] image, int cardType) {
+        public IdcardDetectRequest(String bucketName, String[] name, File[] image, int cardType) {
 		super(bucketName);
 		this.isUrl = false;
                 this.cardType = cardType;
@@ -92,11 +94,11 @@ public class IdcardDetectRequest extends AbstractBaseRequest {
             this.urlList = urlList;
         }
 
-        public HashMap<String, String> getImageList() {
+        public HashMap<String, File> getImageList() {
             return imageList;
         }
 
-        public void setImageList(HashMap<String, String> imageList) {
+        public void setImageList(HashMap<String, File> imageList) {
             this.imageList = imageList;
         }
 

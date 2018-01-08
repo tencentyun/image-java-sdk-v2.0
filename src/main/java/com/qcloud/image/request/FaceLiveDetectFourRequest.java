@@ -5,11 +5,11 @@
  */
 package com.qcloud.image.request;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import com.qcloud.image.common_utils.CommonParamCheckUtils;
 import com.qcloud.image.exception.ParamException;
-import com.qcloud.image.ClientConfig;
+
+import java.io.File;
+import java.util.HashMap;
 
 /**
  *
@@ -17,7 +17,7 @@ import com.qcloud.image.ClientConfig;
  */
 public class FaceLiveDetectFourRequest extends AbstractBaseRequest {
         // 图片内容列表
-        private HashMap<String, String> imageList = new HashMap<String, String>();
+        private HashMap<String, File> imageList = new HashMap<String, File>();
             
         //验证码
         private String validate = "";
@@ -31,7 +31,7 @@ public class FaceLiveDetectFourRequest extends AbstractBaseRequest {
         //设置列表传参的key
         private HashMap<String, String> keyList = new HashMap<String, String>();
         
-	public FaceLiveDetectFourRequest(String bucketName,String validate, boolean compareFlag,  String video, String image, String seq) {
+	public FaceLiveDetectFourRequest(String bucketName,String validate, boolean compareFlag,  File video, File image, String seq) {
 		super(bucketName);
                 this.validate = validate;
 		this.compareFlag = String.valueOf(compareFlag);
@@ -61,7 +61,7 @@ public class FaceLiveDetectFourRequest extends AbstractBaseRequest {
             return keyList;
         }
 
-        public HashMap<String, String> getImageList() {
+        public HashMap<String, File> getImageList() {
             return imageList;
         }
 

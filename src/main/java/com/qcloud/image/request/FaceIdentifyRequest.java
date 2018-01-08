@@ -5,10 +5,10 @@
  */
 package com.qcloud.image.request;
 
-import java.util.ArrayList;
 import com.qcloud.image.common_utils.CommonParamCheckUtils;
 import com.qcloud.image.exception.ParamException;
-import java.util.HashMap;
+
+import java.io.File;
 
 /**
  *
@@ -22,7 +22,7 @@ public class FaceIdentifyRequest extends AbstractBaseRequest {
 	private String url = "";
         
 	// 图片内容列表
-        private String image = "";
+        private File image =null;
         
         //要查询的组Id
          private String groupId = "";
@@ -34,7 +34,7 @@ public class FaceIdentifyRequest extends AbstractBaseRequest {
                 this.url = url;
 	}
  
-        public FaceIdentifyRequest(String bucketName, String groupId, String name, String image) {
+        public FaceIdentifyRequest(String bucketName, String groupId, String name, File image) {
 		super(bucketName);
 		this.isUrl = false;
                 this.groupId = groupId;
@@ -57,11 +57,11 @@ public class FaceIdentifyRequest extends AbstractBaseRequest {
             this.url = url;
         }
 
-        public String getImage() {
+        public File getImage() {
             return image;
         }
 
-        public void setImage(String image) {
+        public void setImage(File image) {
             this.image = image;
         }
 

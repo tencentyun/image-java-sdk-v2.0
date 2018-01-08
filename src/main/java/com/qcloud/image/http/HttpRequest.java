@@ -1,5 +1,6 @@
 package com.qcloud.image.http;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -15,10 +16,10 @@ public class HttpRequest {
 	private Map<String, String> params = new LinkedHashMap<>();
               
         private boolean isUrl;
-        private String image = "";
+        private File image ;
         private HashMap<String, String> keyList = new HashMap<String, String>(); 
         private ArrayList<String> urlList = new ArrayList<String>();
-        private HashMap<String, String> imageList = new HashMap<String, String>();
+        private HashMap<String, File> imageList = new HashMap<String, File>();
 
 	public String getUrl() {
 		return url;
@@ -72,7 +73,7 @@ public class HttpRequest {
             return urlList;
         }
         
-        public String getImage() {
+        public File getImage() {
             return image;
         }      
 
@@ -83,28 +84,24 @@ public class HttpRequest {
             }
         }
 
-        public HashMap<String, String> getImageList() {
+        public HashMap<String, File> getImageList() {
             return imageList;
         }
         
-        public void setImageList(HashMap<String, String> imageList) {
+        public void setImageList(HashMap<String, File> imageList) {
             isUrl = false;
-            for(String image : imageList.keySet()){
-                this.imageList.put(image, imageList.get(image));
-            }
+            this.imageList.putAll(imageList);
         }   
         
         public void setKeyList(HashMap<String, String> keyList) {
-            for(String key : keyList.keySet()){
-                this.keyList.put(key, keyList.get(key));
-            }
+            this.keyList.putAll(keyList);
         }
         
         public HashMap<String, String> getKeyList() {
             return keyList;
         }
         
-        public void setImage(String image) {
+        public void setImage(File image) {
             isUrl = false;
             this.image = image;
         } 

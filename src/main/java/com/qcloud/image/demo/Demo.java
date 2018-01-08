@@ -4,34 +4,36 @@
  */
 package com.qcloud.image.demo;
 
-import com.qcloud.image.*;
-import com.qcloud.image.common_utils.CommonFileUtils;
-import com.qcloud.image.request.PornDetectRequest;
-import com.qcloud.image.request.TagDetectRequest;
-import com.qcloud.image.request.IdcardDetectRequest;
-import com.qcloud.image.request.NamecardDetectRequest;
-import com.qcloud.image.request.FaceDetectRequest;
-import com.qcloud.image.request.FaceShapeRequest;
-import com.qcloud.image.request.FaceNewPersonRequest;
-import com.qcloud.image.request.FaceDelPersonRequest;
+import com.qcloud.image.ImageClient;
 import com.qcloud.image.request.FaceAddFaceRequest;
+import com.qcloud.image.request.FaceCompareRequest;
 import com.qcloud.image.request.FaceDelFaceRequest;
-import com.qcloud.image.request.FaceSetInfoRequest;
-import com.qcloud.image.request.FaceGetInfoRequest;
-import com.qcloud.image.request.FaceGetGroupIdsRequest;
-import com.qcloud.image.request.FaceGetPersonIdsRequest;
+import com.qcloud.image.request.FaceDelPersonRequest;
+import com.qcloud.image.request.FaceDetectRequest;
 import com.qcloud.image.request.FaceGetFaceIdsRequest;
 import com.qcloud.image.request.FaceGetFaceInfoRequest;
-import com.qcloud.image.request.FaceIdentifyRequest;
-import com.qcloud.image.request.FaceVerifyRequest;
-import com.qcloud.image.request.FaceCompareRequest;
+import com.qcloud.image.request.FaceGetGroupIdsRequest;
+import com.qcloud.image.request.FaceGetInfoRequest;
+import com.qcloud.image.request.FaceGetPersonIdsRequest;
 import com.qcloud.image.request.FaceIdCardCompareRequest;
-import com.qcloud.image.request.FaceLiveGetFourRequest;
 import com.qcloud.image.request.FaceIdCardLiveDetectFourRequest;
-import com.qcloud.image.request.FaceLiveDetectFourRequest; 
+import com.qcloud.image.request.FaceIdentifyRequest;
+import com.qcloud.image.request.FaceLiveDetectFourRequest;
+import com.qcloud.image.request.FaceLiveGetFourRequest;
+import com.qcloud.image.request.FaceNewPersonRequest;
+import com.qcloud.image.request.FaceSetInfoRequest;
+import com.qcloud.image.request.FaceShapeRequest;
+import com.qcloud.image.request.FaceVerifyRequest;
+import com.qcloud.image.request.IdcardDetectRequest;
+import com.qcloud.image.request.NamecardDetectRequest;
+import com.qcloud.image.request.PornDetectRequest;
+import com.qcloud.image.request.TagDetectRequest;
+
+import org.json.JSONObject;
+
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.json.JSONObject;
 
 
 /**
@@ -71,14 +73,14 @@ public class Demo {
         //2. 图片内容方式
         System.out.println("====================================================");
         String[] pornNameList = new String[3];
-        String[] pornImageList = new String[3];
+        File[] pornImageList = new File[3];
         try {
             pornNameList[0] = "test.jpg";
-            pornImageList[0] = CommonFileUtils.getFileContent("F:\\pic\\test.jpg");
+            pornImageList[0] = new File("F:\\pic\\test.jpg");
             pornNameList[1] = "hot1.jpg";
-            pornImageList[1] = CommonFileUtils.getFileContent("F:\\pic\\hot1.jpg");
+            pornImageList[1] = new File("F:\\pic\\hot1.jpg");
             pornNameList[2] = "hot2.jpg";
-            pornImageList[2] = CommonFileUtils.getFileContent("F:\\pic\\hot2.jpg");
+            pornImageList[2] = new File("F:\\pic\\hot2.jpg");
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -98,9 +100,9 @@ public class Demo {
         
         // 2. 图片内容方式
         System.out.println("====================================================");
-        byte[] tagImage = {0};
+       File tagImage = null;
         try {
-            tagImage = CommonFileUtils.getFileContentByte("F:\\pic\\test.jpg");
+            tagImage = new File("F:\\pic\\test.jpg");
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -131,12 +133,12 @@ public class Demo {
         //2. 图片内容方式,识别身份证正面
         System.out.println("====================================================");
         String[] idcardNameList = new String[2];
-        String[] idcardImageList = new String[2];
+        File[] idcardImageList = new File[2];
         try {
             idcardNameList[0] = "id6_zheng.jpg";
-            idcardImageList[0] = CommonFileUtils.getFileContent("F:\\pic\\id6_zheng.jpg");
+            idcardImageList[0] = new File("F:\\pic\\id6_zheng.jpg");
             idcardNameList[1] = "id2_zheng.jpg";
-            idcardImageList[1] = CommonFileUtils.getFileContent("F:\\pic\\id2_zheng.jpg");
+            idcardImageList[1] = new File("F:\\pic\\id2_zheng.jpg");
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -146,9 +148,9 @@ public class Demo {
         //识别身份证反面
         try {
             idcardNameList[0] = "id5_fan.png";
-            idcardImageList[0] = CommonFileUtils.getFileContent("F:\\pic\\id5_fan.jpg");
+            idcardImageList[0] = new File("F:\\pic\\id5_fan.jpg");
             idcardNameList[1] = "id7_fan.jpg";
-            idcardImageList[1] = CommonFileUtils.getFileContent("F:\\pic\\id7_fan.png");
+            idcardImageList[1] = new File("F:\\pic\\id7_fan.png");
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -174,12 +176,12 @@ public class Demo {
         //2. 图片内容方式
         System.out.println("====================================================");
         String[] namecardNameList = new String[2];
-        String[] namecardImageList = new String[2];
+        File[] namecardImageList = new File[2];
         try {
             namecardNameList[0] = "name2.jpg";
-            namecardImageList[0] = CommonFileUtils.getFileContent("F:\\pic\\name2.jpg");
+            namecardImageList[0] = new File("F:\\pic\\name2.jpg");
             namecardNameList[1] = "名片.jpg";
-            namecardImageList[1] = CommonFileUtils.getFileContent("F:\\pic\\名片.jpg");
+            namecardImageList[1] = new File("F:\\pic\\名片.jpg");
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -202,10 +204,10 @@ public class Demo {
          //2. 图片内容方式
         System.out.println("====================================================");
         String faceDetectName  = "";
-        String faceDetectImage = "";
+        File faceDetectImage = null;
         try {
             faceDetectName = "face1.jpg";
-            faceDetectImage = CommonFileUtils.getFileContent("F:\\pic\\face1.jpg");
+            faceDetectImage = new File("F:\\pic\\face1.jpg");
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -228,10 +230,10 @@ public class Demo {
          //2. 图片内容方式
         System.out.println("====================================================");
         String faceShapeName  = "";
-        String faceShapeImage = "";
+        File faceShapeImage = null;
         try {
             faceShapeName = "face1.jpg";
-            faceShapeImage = CommonFileUtils.getFileContent("F:\\pic\\face1.jpg");
+            faceShapeImage = new File("F:\\pic\\face1.jpg");
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -259,7 +261,7 @@ public class Demo {
          //2. 图片内容方式
         System.out.println("====================================================");
         String personNewName  = "";
-        String personNewImage = "";
+        File personNewImage = null;
         groupIds[0] = "group11";
         groupIds[1] = "group33";
         personName = "yangmi";
@@ -267,7 +269,7 @@ public class Demo {
         personTag = "star";
         try {
             personNewName = "yang.jpg";
-            personNewImage = CommonFileUtils.getFileContent("F:\\pic\\yang.jpg");
+            personNewImage = new File("F:\\pic\\yang.jpg");
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -302,14 +304,14 @@ public class Demo {
         //2. 图片内容方式
         System.out.println("====================================================");
         String[] addFaceNameList = new String[2];
-        String[] addFaceImageList = new String[2];
+        File[] addFaceImageList = new File[2];
         addfacePersonId = "personY";
         addfacePersonTag = "actor";
         try {
             addFaceNameList[0] = "yang2.jpg";
-            addFaceImageList[0] = CommonFileUtils.getFileContent("F:\\pic\\yang2.jpg");
+            addFaceImageList[0] = new File("F:\\pic\\yang2.jpg");
             addFaceNameList[1] = "yang3.jpg";
-            addFaceImageList[1] = CommonFileUtils.getFileContent("F:\\pic\\yang3.jpg");
+            addFaceImageList[1] = new File("F:\\pic\\yang3.jpg");
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -405,11 +407,11 @@ public class Demo {
         //2. 图片内容方式
         System.out.println("====================================================");
         String faceVerifyName  = "";
-        String faceVerifyImage = "";
+        File faceVerifyImage = null;
         faceVerifyPersonId = "person3111";
         try {
             faceVerifyName = "yang3.jpg";
-            faceVerifyImage = CommonFileUtils.getFileContent("F:\\pic\\yang3.jpg");
+            faceVerifyImage = new File("F:\\pic\\yang3.jpg");
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -432,10 +434,10 @@ public class Demo {
         //2. 图片内容方式
         System.out.println("====================================================");
         String faceIdentifyName  = "";
-        String faceIdentifyImage = "";
+        File faceIdentifyImage = null;
         try {
             faceIdentifyName = "yang4.jpg";
-            faceIdentifyImage = CommonFileUtils.getFileContent("F:\\pic\\yang4.jpg");
+            faceIdentifyImage = new File("F:\\pic\\yang4.jpg");
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -459,12 +461,12 @@ public class Demo {
         //2. 图片内容方式
         System.out.println("====================================================");
         String[] compareNameList = new String[2]; 
-        String[] compareImageList = new String[2];
+        File[] compareImageList = new File[2];
         try {
             compareNameList[0] = "zhao1.jpg";
             compareNameList[1] = "zhao2.jpg";
-            compareImageList[0] = CommonFileUtils.getFileContent("F:\\pic\\zhao1.jpg");
-            compareImageList[1] = CommonFileUtils.getFileContent("F:\\pic\\zhao2.jpg");
+            compareImageList[0] = new File("F:\\pic\\zhao1.jpg");
+            compareImageList[1] = new File("F:\\pic\\zhao2.jpg");
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -490,10 +492,10 @@ public class Demo {
          //2. 图片内容方式
         System.out.println("====================================================");
         String idcardCompareName  = "";
-        String idcardCompareImage = "";
+        File idcardCompareImage = null;
         try {
             idcardCompareName = "idcard.jpg";
-            idcardCompareImage = CommonFileUtils.getFileContent("F:\\pic\\idcard.jpg");
+            idcardCompareImage = new File("F:\\pic\\idcard.jpg");
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -525,9 +527,9 @@ public class Demo {
         System.out.println("====================================================");
         String  liveDetectIdcardNumber = "330782198802084329";
         String  liveDetectIdcardName = "季锦锦";  
-        String  video = "";
+        File  video = null;
         try {
-            video = CommonFileUtils.getFileContent("F:\\pic\\ZOE_0171.mp4");
+            video = new File("F:\\pic\\ZOE_0171.mp4");
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -542,13 +544,13 @@ public class Demo {
         ///////////////////////////////////////////////////////////////
         // 1. url方式
         System.out.println("====================================================");
-        String  liveDetectVideo = "";
-        String  liveDetectImage = "";
+        File  liveDetectVideo = null;
+        File  liveDetectImage = null;
         String liveDetectVvalidate = "123456";        
         boolean compareFlag  = true;
         try {
-            liveDetectVideo = CommonFileUtils.getFileContent("F:\\pic\\ZOE_0171.mp4");
-            liveDetectImage = CommonFileUtils.getFileContent("F:\\pic\\zhao2.jpg");
+            liveDetectVideo = new File("F:\\pic\\ZOE_0171.mp4");
+            liveDetectImage = new File("F:\\pic\\zhao2.jpg");
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
