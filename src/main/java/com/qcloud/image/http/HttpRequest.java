@@ -12,7 +12,7 @@ public class HttpRequest {
 	private HttpMethod method = HttpMethod.POST;
 	private HttpContentType contentType = HttpContentType.MULTIPART_FORM_DATA;
 	private Map<String, String> headers = new LinkedHashMap<>();
-	private Map<String, Object> params = new LinkedHashMap<>();
+	private Map<String, String> params = new LinkedHashMap<>();
               
         private boolean isUrl;
         private String image = "";
@@ -56,7 +56,7 @@ public class HttpRequest {
 		return headers;
 	}
 
-	public Map<String, Object> getParams() {
+	public Map<String, String> getParams() {
 		return params;
 	}
 
@@ -64,7 +64,7 @@ public class HttpRequest {
 		this.headers.put(key, value);
 	}
 
-	public void addParam(String key, Object value) {
+	public void addParam(String key, String value) {
 		this.params.put(key, value);
 	}
         
@@ -123,7 +123,7 @@ public class HttpRequest {
 		}
 
 		sb.append("params:\n");
-		for (Entry<String, Object> entry : params.entrySet()) {
+		for (Entry<String, String> entry : params.entrySet()) {
 			sb.append("key:").append(entry.getKey());
 			sb.append(", value:").append(entry.getValue());
 			sb.append("\n");

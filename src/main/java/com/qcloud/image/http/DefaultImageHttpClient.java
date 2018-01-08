@@ -1,8 +1,10 @@
 package com.qcloud.image.http;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.Map;
+import com.qcloud.image.ClientConfig;
+import com.qcloud.image.exception.AbstractImageException;
+import com.qcloud.image.exception.ParamException;
+import com.qcloud.image.exception.ServerException;
+import com.qcloud.image.exception.UnknownException;
 
 import org.apache.http.Consts;
 import org.apache.http.HttpMessage;
@@ -17,17 +19,13 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.qcloud.image.ClientConfig;
-import com.qcloud.image.exception.AbstractImageException;
-import com.qcloud.image.exception.ParamException;
-import com.qcloud.image.exception.ServerException;
-import com.qcloud.image.exception.UnknownException;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * @author chengwu 封装Http发送请求类
@@ -103,7 +101,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             HttpPost httpPost = new HttpPost(url);
             httpPost.setConfig(requestConfig);
 
-            Map<String, Object> params = httpRequest.getParams();
+            Map<String, String> params = httpRequest.getParams();
             setHeaders(httpPost, httpRequest.getHeaders());
             if (httpRequest.getContentType() == HttpContentType.APPLICATION_JSON) {
                 setJsonEntity(httpPost, params);
@@ -136,14 +134,14 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
         return responseStr;
     }
 
-    private void setJsonEntity(HttpPost httpPost, Map<String, Object> params) {
+    private void setJsonEntity(HttpPost httpPost, Map<String, String> params) {
         ContentType utf8TextPlain = ContentType.create("text/plain", Consts.UTF_8);                  
         JSONObject root = new JSONObject(params);         
         StringEntity stringEntity = new StringEntity(root.toString(), utf8TextPlain);
         httpPost.setEntity(stringEntity);
     }
 
-    private void setMultiPartEntity(HttpPost httpPost, Map<String, Object> params, Map<String, String> images, String imageData, Map<String, String> keyList,  String imageKey)
+    private void setMultiPartEntity(HttpPost httpPost, Map<String, String> params, Map<String, String> images, String imageData, Map<String, String> keyList,  String imageKey)
             throws Exception {
                 ContentType utf8TextPlain = ContentType.create("text/plain", Consts.UTF_8);
                 MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
