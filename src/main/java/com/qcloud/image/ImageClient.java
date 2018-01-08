@@ -1,39 +1,38 @@
 package com.qcloud.image;
 
-import com.qcloud.image.sign.Credentials;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.qcloud.image.exception.AbstractImageException;
 import com.qcloud.image.exception.UnknownException;
 import com.qcloud.image.http.AbstractImageHttpClient;
 import com.qcloud.image.http.DefaultImageHttpClient;
 import com.qcloud.image.op.DetectionOp;
 import com.qcloud.image.request.AbstractBaseRequest;
-import com.qcloud.image.request.PornDetectRequest;
-import com.qcloud.image.request.TagDetectRequest;
-import com.qcloud.image.request.IdcardDetectRequest;
-import com.qcloud.image.request.NamecardDetectRequest;
-import com.qcloud.image.request.FaceDetectRequest;
-import com.qcloud.image.request.FaceShapeRequest;
-import com.qcloud.image.request.FaceNewPersonRequest;
-import com.qcloud.image.request.FaceDelPersonRequest;
 import com.qcloud.image.request.FaceAddFaceRequest;
+import com.qcloud.image.request.FaceCompareRequest;
 import com.qcloud.image.request.FaceDelFaceRequest;
-import com.qcloud.image.request.FaceSetInfoRequest;
-import com.qcloud.image.request.FaceGetInfoRequest;
-import com.qcloud.image.request.FaceGetGroupIdsRequest;
-import com.qcloud.image.request.FaceGetPersonIdsRequest;
+import com.qcloud.image.request.FaceDelPersonRequest;
+import com.qcloud.image.request.FaceDetectRequest;
 import com.qcloud.image.request.FaceGetFaceIdsRequest;
 import com.qcloud.image.request.FaceGetFaceInfoRequest;
-import com.qcloud.image.request.FaceIdentifyRequest;
-import com.qcloud.image.request.FaceVerifyRequest;
-import com.qcloud.image.request.FaceCompareRequest;
+import com.qcloud.image.request.FaceGetGroupIdsRequest;
+import com.qcloud.image.request.FaceGetInfoRequest;
+import com.qcloud.image.request.FaceGetPersonIdsRequest;
 import com.qcloud.image.request.FaceIdCardCompareRequest;
-import com.qcloud.image.request.FaceLiveGetFourRequest;
 import com.qcloud.image.request.FaceIdCardLiveDetectFourRequest;
+import com.qcloud.image.request.FaceIdentifyRequest;
 import com.qcloud.image.request.FaceLiveDetectFourRequest;
+import com.qcloud.image.request.FaceLiveGetFourRequest;
+import com.qcloud.image.request.FaceNewPersonRequest;
+import com.qcloud.image.request.FaceSetInfoRequest;
+import com.qcloud.image.request.FaceShapeRequest;
+import com.qcloud.image.request.FaceVerifyRequest;
+import com.qcloud.image.request.IdcardDetectRequest;
+import com.qcloud.image.request.NamecardDetectRequest;
+import com.qcloud.image.request.PornDetectRequest;
+import com.qcloud.image.request.TagDetectRequest;
+import com.qcloud.image.sign.Credentials;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -49,7 +48,7 @@ public class ImageClient implements Image {
 
     private DetectionOp detectionOp;
 
-    public ImageClient(int appId, String secretId, String secretKey) {
+    public ImageClient(String appId, String secretId, String secretKey) {
         this(new Credentials(appId, secretId, secretKey));
     }
 
