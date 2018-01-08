@@ -524,7 +524,7 @@ public class Demo {
 
         //2. 图片内容方式
         System.out.println("====================================================");
-        request = new GeneralOcrRequest(bucketName, new File("/Users/fantouch/Desktop/a74262aaa3c6eeb.jpg"));
+        request = new GeneralOcrRequest(bucketName, new File("assets","ocr.jpg"));
         ret = imageClient.generalOcr(request);
         System.out.println("ocrGeneral:" + ret);
     }
