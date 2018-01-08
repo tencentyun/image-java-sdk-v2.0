@@ -16,7 +16,7 @@ public class Credentials {
         this.secretKey = secretKey;
     }
 
-    public int getAppId() {
+    public String getAppId() {
         return appId;
     }
 
