@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.charset.Charset;
 import java.util.Map;
 
 /**
@@ -67,7 +66,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
                 throw new ParamException(errMsg);
             }
 
-            httpGet.setConfig(requestConfig);
+            httpGet.setConfig(onGetConfig());
             setHeaders(httpGet, httpRequest.getHeaders());
 
             try {
@@ -100,7 +99,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
         int maxRetryCount = this.config.getMaxFailedRetry();
         while (retry < maxRetryCount) {
             HttpPost httpPost = new HttpPost(url);
-            httpPost.setConfig(requestConfig);
+            httpPost.setConfig(onGetConfig());
 
             Map<String, String> params = httpRequest.getParams();
             setHeaders(httpPost, httpRequest.getHeaders());

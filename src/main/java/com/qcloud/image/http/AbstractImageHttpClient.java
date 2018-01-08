@@ -1,22 +1,22 @@
 package com.qcloud.image.http;
 
+import com.qcloud.image.ClientConfig;
+import com.qcloud.image.exception.AbstractImageException;
+import com.qcloud.image.exception.ParamException;
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 
-import com.qcloud.image.ClientConfig;
-import com.qcloud.image.exception.AbstractImageException;
-import com.qcloud.image.exception.ParamException;
-
 public abstract class AbstractImageHttpClient {
     protected ClientConfig config;
     protected HttpClient httpClient;
     
-    protected PoolingHttpClientConnectionManager connectionManager;
-    protected IdleConnectionMonitorThread idleConnectionMonitor;
+    private PoolingHttpClientConnectionManager connectionManager;
+    private IdleConnectionMonitorThread idleConnectionMonitor;
     
-    protected RequestConfig requestConfig;
+    private RequestConfig requestConfig;
 
     public AbstractImageHttpClient(ClientConfig config) {
         super();
@@ -25,15 +25,19 @@ public abstract class AbstractImageHttpClient {
         this.connectionManager.setMaxTotal(config.getMaxConnectionsCount());
         this.connectionManager.setDefaultMaxPerRoute(config.getMaxConnectionsCount());
         this.httpClient = HttpClients.custom().setConnectionManager(connectionManager).build();
-        this.requestConfig = RequestConfig.custom()
-                                          .setConnectionRequestTimeout(this.config.getConnectionRequestTimeout())
-                                          .setConnectTimeout(this.config.getConnectionTimeout())
-                                          .setSocketTimeout(this.config.getSocketTimeout())
-                                          .build();
         this.idleConnectionMonitor = new IdleConnectionMonitorThread(this.connectionManager);
         this.idleConnectionMonitor.start();
     }
-
+    
+    protected RequestConfig onGetConfig(){   
+        this.requestConfig =  RequestConfig.custom()
+            .setConnectionRequestTimeout(this.config.getConnectionRequestTimeout())
+            .setConnectTimeout(this.config.getConnectionTimeout())
+            .setSocketTimeout(this.config.getSocketTimeout())
+            .setProxy(this.config.getProxy())
+            .build();
+        return this.requestConfig;}
+    
     protected abstract String sendPostRequest(HttpRequest httpRequest) throws AbstractImageException;
 
     protected abstract String sendGetRequest(HttpRequest httpRequest) throws AbstractImageException;

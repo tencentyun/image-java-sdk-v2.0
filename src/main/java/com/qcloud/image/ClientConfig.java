@@ -1,5 +1,7 @@
 package com.qcloud.image;
 
+import org.apache.http.HttpHost;
+
 public class ClientConfig {
     // 多次签名的默认过期时间,单位秒
     private static final int DEFAULT_SIGN_EXPIRED = 300;
@@ -8,9 +10,9 @@ public class ClientConfig {
     // 默认的获取连接的超时时间
     private static final int DEFAULT_CONNECTION_REQUEST_TIMEOUT = -1;
     // 默认连接超时, 单位ms
-    private static final int DEFAULT_CONNECTION_TIMEOUT = 30 * 1000;
+    private static final int DEFAULT_CONNECTION_TIMEOUT = 5 * 1000;
     // 默认的SOCKET读取超时时间, 默认毫秒
-    private static final int DEFAULT_SOCKET_TIMEOUT = 30 * 1000;
+    private static final int DEFAULT_SOCKET_TIMEOUT = 5 * 1000;
     // 默认的维护最大HTTP连接数
     private static final int DEFAULT_MAX_CONNECTIONS_COUNT = 100;
     // 默认的user_agent标识
@@ -97,6 +99,15 @@ public class ClientConfig {
     private int socketTimeout = DEFAULT_SOCKET_TIMEOUT;
     private int maxConnectionsCount = DEFAULT_MAX_CONNECTIONS_COUNT;
     private String userAgent = DEFAULT_USER_AGENT;
+    private HttpHost mProxy;
+
+    public void setProxy(HttpHost proxy) {
+        mProxy = proxy;
+    }
+
+    public HttpHost getProxy() {
+        return mProxy;
+    }
 
     public int getMaxFailedRetry() {
         return maxFailedRetry;

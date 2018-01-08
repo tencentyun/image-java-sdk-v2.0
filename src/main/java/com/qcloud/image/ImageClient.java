@@ -31,6 +31,7 @@ import com.qcloud.image.request.PornDetectRequest;
 import com.qcloud.image.request.TagDetectRequest;
 import com.qcloud.image.sign.Credentials;
 
+import org.apache.http.HttpHost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,6 +68,10 @@ public class ImageClient implements Image {
     public void setCred(Credentials cred) {
         this.cred = cred;
         this.detectionOp.setCred(cred);
+    }
+
+    public void setProxy(HttpHost proxy) {
+        this.config.setProxy(proxy);
     }
 
     public ImageClient(ClientConfig config, Credentials cred) {
