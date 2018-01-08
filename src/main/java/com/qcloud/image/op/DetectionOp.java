@@ -34,6 +34,7 @@ import com.qcloud.image.request.FaceNewPersonRequest;
 import com.qcloud.image.request.FaceSetInfoRequest;
 import com.qcloud.image.request.FaceShapeRequest;
 import com.qcloud.image.request.FaceVerifyRequest;
+import com.qcloud.image.request.GeneralOcrRequest;
 import com.qcloud.image.request.IdcardDetectRequest;
 import com.qcloud.image.request.NamecardDetectRequest;
 import com.qcloud.image.request.PornDetectRequest;
@@ -215,6 +216,37 @@ public class DetectionOp extends BaseOp {
         }
               
         return httpClient.sendHttpRequest(httpRequest);
+    }
+     /**
+     * 名片识别请求
+     * 
+     * @param request 标签识别请求参数
+     * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功, 其他为失败,
+     *         message为success或者失败原因
+     * @throws AbstractImageException SDK定义的Image异常, 通常是输入参数有误或者环境问题(如网络不通)
+     */  
+    public String generalOcr(GeneralOcrRequest request) throws AbstractImageException {
+        request.check_param();
+
+        String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
+        String url = "http://" + this.config.getQCloudOcrDomain()+ "/ocr/general";
+
+        HttpRequest httpRequest = new HttpRequest();
+        httpRequest.setMethod(HttpMethod.POST);
+        httpRequest.setUrl(url);
+        httpRequest.addHeader(RequestHeaderKey.Authorization, sign);
+        httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
+        httpRequest.addParam(RequestBodyKey.APPID, String.valueOf(cred.getAppId()));
+        httpRequest.addParam(RequestBodyKey.BUCKET, request.getBucketName());
+        if (request.isUrl()) {
+            httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
+            httpRequest.addParam(RequestBodyKey.URL, request.getUrl());
+        } else {
+            httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
+            httpRequest.setImage(request.getImage());
+        }
+        return httpClient.sendHttpRequest(httpRequest);
+
     }
     
     /**

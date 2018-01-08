@@ -78,7 +78,8 @@ public class Demo {
         }
         faceIdCardLiveDetectFour(imageClient, bucketName, validate, video);
         faceLiveDetectFour(imageClient, bucketName, validate, video);
-
+        ocrGeneral(imageClient, bucketName);
+        
         // 关闭释放资源
         imageClient.shutdown();
         System.out.println("shutdown!");
@@ -509,6 +510,23 @@ public class Demo {
         nameReq = new NamecardDetectRequest(bucketName, namecardNameList, namecardImageList, 0);
         ret = imageClient.namecardDetect(nameReq);
         System.out.println("namecard detect ret:" + ret);
+    }
+    /**
+     *通用印刷体OCR
+     */
+    private static void ocrGeneral(ImageClient imageClient, String bucketName) {
+        String ret;
+        // 1. url方式
+        System.out.println("====================================================");
+        GeneralOcrRequest request = new GeneralOcrRequest(bucketName, "https://static.cnbetacdn.com/article/2018/0108/a74262aaa3c6eeb.jpg");
+        ret = imageClient.generalOcr(request);
+        System.out.println("ocrGeneral:" + ret);
+
+        //2. 图片内容方式
+        System.out.println("====================================================");
+        request = new GeneralOcrRequest(bucketName, new File("/Users/fantouch/Desktop/a74262aaa3c6eeb.jpg"));
+        ret = imageClient.generalOcr(request);
+        System.out.println("ocrGeneral:" + ret);
     }
     /**
      *身份证ocr识别操作

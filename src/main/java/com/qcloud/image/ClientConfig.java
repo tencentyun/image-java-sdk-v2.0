@@ -19,6 +19,9 @@ public class ClientConfig {
     private static final String DEFAULT_USER_AGENT = "image-java-sdk-v4.2";
     //图片服务域名
     private static final String QCLOUD_IMAGE_DOMAIN = "service.image.myqcloud.com";
+    //OCR服务域名
+    private static final String QCLOUD_OCR_DOMAIN = "recognition.image.myqcloud.com";
+
     //黄图识别服务api
     private static final String DETECTION_PORN = "/detection/porn_detect";
     //最大的识别限制
@@ -34,6 +37,8 @@ public class ClientConfig {
     
      //名片识别服务api
     private static final String DETECTION_NAMECARD = "/ocr/namecard";
+    /** 通用印刷体识别 */
+    private static final String OCR_GENERAL= "/ocr/general";
     
     //人脸识别服务api
     private static final String DETECTION_FACE = "/face/detect";
@@ -107,6 +112,10 @@ public class ClientConfig {
 
     public HttpHost getProxy() {
         return mProxy;
+    }
+
+    public String getQCloudOcrDomain() {
+        return QCLOUD_OCR_DOMAIN;
     }
 
     public int getMaxFailedRetry() {
