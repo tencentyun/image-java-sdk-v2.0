@@ -82,6 +82,7 @@ public class Demo {
         ocrDrivingLicence(imageClient, bucketName);
         ocrBizLicense(imageClient, bucketName);
         
+        ocrBankCard(imageClient,bucketName);
         // 关闭释放资源
         imageClient.shutdown();
         System.out.println("shutdown!");
@@ -545,6 +546,23 @@ public class Demo {
         System.out.println("====================================================");
         request = new OcrBizLicenseRequest(bucketName, new File("assets","biz.jpg"));
         ret = imageClient.ocrBizLicense(request);
+        System.out.println("ocrGeneral:" + ret);
+    }
+    /**
+     *OCR-银行卡识别
+     */
+    private static void ocrBankCard(ImageClient imageClient, String bucketName) {
+        String ret;
+        // 1. url方式
+        System.out.println("====================================================");
+        OcrBankCardRequest request = new OcrBankCardRequest(bucketName, "http://www.dkxxg.com/d/file/20150515/a977a58fd435db8995adc342a01b8ab2.jpg");
+        ret = imageClient.ocrBankCard(request);
+        System.out.println("ocrGeneral:" + ret);
+
+        //2. 图片内容方式
+        System.out.println("====================================================");
+        request = new OcrBankCardRequest(bucketName, new File("assets","bankcard.jpg"));
+        ret = imageClient.ocrBankCard(request);
         System.out.println("ocrGeneral:" + ret);
     }
     /**
