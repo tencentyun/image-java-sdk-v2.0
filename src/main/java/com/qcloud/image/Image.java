@@ -22,6 +22,7 @@ import com.qcloud.image.request.FaceVerifyRequest;
 import com.qcloud.image.request.GeneralOcrRequest;
 import com.qcloud.image.request.IdcardDetectRequest;
 import com.qcloud.image.request.NamecardDetectRequest;
+import com.qcloud.image.request.OcrBizLicenseRequest;
 import com.qcloud.image.request.OcrDrivingLicenceRequest;
 import com.qcloud.image.request.PornDetectRequest;
 import com.qcloud.image.request.TagDetectRequest;
@@ -33,6 +34,11 @@ import com.qcloud.image.request.TagDetectRequest;
 
 public interface Image {
 
+    /**
+     * OCR-营业执照识别
+     */
+    String ocrBizLicense(OcrBizLicenseRequest request);
+    
     /**
      * OCR-行驶证驾驶证识别
      */

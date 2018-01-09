@@ -80,6 +80,7 @@ public class Demo {
         faceLiveDetectFour(imageClient, bucketName, validate, video);
         ocrGeneral(imageClient, bucketName);
         ocrDrivingLicence(imageClient, bucketName);
+        ocrBizLicense(imageClient, bucketName);
         
         // 关闭释放资源
         imageClient.shutdown();
@@ -527,6 +528,23 @@ public class Demo {
         System.out.println("====================================================");
         request = new GeneralOcrRequest(bucketName, new File("assets","ocr.jpg"));
         ret = imageClient.generalOcr(request);
+        System.out.println("ocrGeneral:" + ret);
+    }
+    /**
+     *OCR-营业执照识别
+     */
+    private static void ocrBizLicense(ImageClient imageClient, String bucketName) {
+        String ret;
+        // 1. url方式
+        System.out.println("====================================================");
+        OcrBizLicenseRequest request = new OcrBizLicenseRequest(bucketName, "http://1001.yanwen.com//webimg/editor/2017-01-04-06b3f9cfb4-eeee-4df2-9329-663ddc084a6e.jpg");
+        ret = imageClient.ocrBizLicense(request);
+        System.out.println("ocrGeneral:" + ret);
+
+        //2. 图片内容方式
+        System.out.println("====================================================");
+        request = new OcrBizLicenseRequest(bucketName, new File("assets","biz.jpg"));
+        ret = imageClient.ocrBizLicense(request);
         System.out.println("ocrGeneral:" + ret);
     }
     /**

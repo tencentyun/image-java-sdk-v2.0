@@ -39,6 +39,8 @@ public class ClientConfig {
     private static final String DETECTION_NAMECARD = "/ocr/namecard";
     /** 行驶证驾驶证识别 */
     public static final String OCR_DRIVINGLICENCE = "/ocr/drivinglicence";
+    /** 营业执照识别 */
+    public static final String OCR_BIZLICENSE= "/ocr/bizlicense";
     /** 通用印刷体识别 */
     public static final String OCR_GENERAL= "/ocr/general";
     

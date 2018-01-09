@@ -5,9 +5,6 @@
  */
 package com.qcloud.image.op;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.qcloud.image.ClientConfig;
 import com.qcloud.image.common_utils.CommonCodecUtils;
 import com.qcloud.image.common_utils.CommonFileUtils;
@@ -18,27 +15,19 @@ import com.qcloud.image.http.HttpMethod;
 import com.qcloud.image.http.HttpRequest;
 import com.qcloud.image.http.RequestBodyKey;
 import com.qcloud.image.http.RequestHeaderKey;
-import com.qcloud.image.request.PornDetectRequest;
-import com.qcloud.image.request.TagDetectRequest;
-import com.qcloud.image.request.IdcardDetectRequest;
-import com.qcloud.image.request.NamecardDetectRequest;
-import com.qcloud.image.request.FaceDetectRequest;
-import com.qcloud.image.request.FaceShapeRequest;
-import com.qcloud.image.request.FaceNewPersonRequest;
-import com.qcloud.image.request.FaceDelPersonRequest;
 import com.qcloud.image.request.FaceAddFaceRequest;
+import com.qcloud.image.request.FaceCompareRequest;
 import com.qcloud.image.request.FaceDelFaceRequest;
-import com.qcloud.image.request.FaceSetInfoRequest;
-import com.qcloud.image.request.FaceGetInfoRequest;
-import com.qcloud.image.request.FaceGetGroupIdsRequest;
-import com.qcloud.image.request.FaceGetPersonIdsRequest;
+import com.qcloud.image.request.FaceDelPersonRequest;
+import com.qcloud.image.request.FaceDetectRequest;
 import com.qcloud.image.request.FaceGetFaceIdsRequest;
 import com.qcloud.image.request.FaceGetFaceInfoRequest;
-import com.qcloud.image.request.FaceIdentifyRequest;
-import com.qcloud.image.request.FaceVerifyRequest;
-import com.qcloud.image.request.FaceCompareRequest;
+import com.qcloud.image.request.FaceGetGroupIdsRequest;
+import com.qcloud.image.request.FaceGetInfoRequest;
+import com.qcloud.image.request.FaceGetPersonIdsRequest;
 import com.qcloud.image.request.FaceIdCardCompareRequest;
 import com.qcloud.image.request.FaceIdCardLiveDetectFourRequest;
+import com.qcloud.image.request.FaceIdentifyRequest;
 import com.qcloud.image.request.FaceLiveDetectFourRequest;
 import com.qcloud.image.request.FaceLiveGetFourRequest;
 import com.qcloud.image.request.FaceNewPersonRequest;
@@ -48,17 +37,17 @@ import com.qcloud.image.request.FaceVerifyRequest;
 import com.qcloud.image.request.GeneralOcrRequest;
 import com.qcloud.image.request.IdcardDetectRequest;
 import com.qcloud.image.request.NamecardDetectRequest;
+import com.qcloud.image.request.OcrBizLicenseRequest;
 import com.qcloud.image.request.OcrDrivingLicenceRequest;
 import com.qcloud.image.request.PornDetectRequest;
 import com.qcloud.image.request.TagDetectRequest;
 import com.qcloud.image.sign.Credentials;
-import com.qcloud.image.common_utils.CommonFileUtils;
-import com.qcloud.image.common_utils.CommonCodecUtils;
-import com.qcloud.image.request.FaceLiveGetFourRequest;
-import com.qcloud.image.request.FaceLiveDetectFourRequest; 
 import com.qcloud.image.sign.Sign;
-import java.util.logging.Level;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static com.qcloud.image.ClientConfig.OCR_BIZLICENSE;
 import static com.qcloud.image.ClientConfig.OCR_DRIVINGLICENCE;
 import static com.qcloud.image.ClientConfig.OCR_GENERAL;
 
@@ -273,6 +262,38 @@ public class DetectionOp extends BaseOp {
         httpRequest.addParam(RequestBodyKey.APPID, String.valueOf(cred.getAppId()));
         httpRequest.addParam(RequestBodyKey.BUCKET, request.getBucketName());
         httpRequest.addParam("type", request.getType());
+        if (request.isUrl()) {
+            httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
+            httpRequest.addParam(RequestBodyKey.URL, request.getUrl());
+            httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
+        } else {
+            httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
+            httpRequest.setImage(request.getImage());
+        }
+        return httpClient.sendHttpRequest(httpRequest);
+
+    }
+     /**
+     * OCR-营业执照识别
+     * 
+     * @param request 标签识别请求参数
+     * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功, 其他为失败,
+     *         message为success或者失败原因
+     * @throws AbstractImageException SDK定义的Image异常, 通常是输入参数有误或者环境问题(如网络不通)
+     */  
+    public String ocrBizLicense(OcrBizLicenseRequest request) throws AbstractImageException {
+        request.check_param();
+
+        String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
+        String url = "http://" + this.config.getQCloudOcrDomain()+ OCR_BIZLICENSE;
+
+        HttpRequest httpRequest = new HttpRequest();
+        httpRequest.setMethod(HttpMethod.POST);
+        httpRequest.setUrl(url);
+        httpRequest.addHeader(RequestHeaderKey.Authorization, sign);
+        httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
+        httpRequest.addParam(RequestBodyKey.APPID, String.valueOf(cred.getAppId()));
+        httpRequest.addParam(RequestBodyKey.BUCKET, request.getBucketName());
         if (request.isUrl()) {
             httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
             httpRequest.addParam(RequestBodyKey.URL, request.getUrl());

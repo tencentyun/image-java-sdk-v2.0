@@ -28,6 +28,7 @@ import com.qcloud.image.request.FaceVerifyRequest;
 import com.qcloud.image.request.GeneralOcrRequest;
 import com.qcloud.image.request.IdcardDetectRequest;
 import com.qcloud.image.request.NamecardDetectRequest;
+import com.qcloud.image.request.OcrBizLicenseRequest;
 import com.qcloud.image.request.OcrDrivingLicenceRequest;
 import com.qcloud.image.request.PornDetectRequest;
 import com.qcloud.image.request.TagDetectRequest;
@@ -139,6 +140,20 @@ public class ImageClient implements Image {
         } catch (Exception e) {
             UnknownException e1 = new UnknownException(e.toString());
             recordException("namecardDetect", request, e1.toString());
+            return e1.toString();
+        }
+    }
+
+    @Override
+    public String ocrBizLicense(OcrBizLicenseRequest request) {
+        try {
+            return detectionOp.ocrBizLicense(request);
+        } catch (AbstractImageException e) {
+            recordException("generalOcr", request, e.toString());
+            return e.toString();
+        } catch (Exception e) {
+            UnknownException e1 = new UnknownException(e.toString());
+            recordException("generalOcr", request, e1.toString());
             return e1.toString();
         }
     }
