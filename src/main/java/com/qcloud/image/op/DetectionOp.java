@@ -5,6 +5,9 @@
  */
 package com.qcloud.image.op;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.qcloud.image.ClientConfig;
 import com.qcloud.image.common_utils.CommonCodecUtils;
 import com.qcloud.image.common_utils.CommonFileUtils;
@@ -15,19 +18,27 @@ import com.qcloud.image.http.HttpMethod;
 import com.qcloud.image.http.HttpRequest;
 import com.qcloud.image.http.RequestBodyKey;
 import com.qcloud.image.http.RequestHeaderKey;
-import com.qcloud.image.request.FaceAddFaceRequest;
-import com.qcloud.image.request.FaceCompareRequest;
-import com.qcloud.image.request.FaceDelFaceRequest;
-import com.qcloud.image.request.FaceDelPersonRequest;
+import com.qcloud.image.request.PornDetectRequest;
+import com.qcloud.image.request.TagDetectRequest;
+import com.qcloud.image.request.IdcardDetectRequest;
+import com.qcloud.image.request.NamecardDetectRequest;
 import com.qcloud.image.request.FaceDetectRequest;
+import com.qcloud.image.request.FaceShapeRequest;
+import com.qcloud.image.request.FaceNewPersonRequest;
+import com.qcloud.image.request.FaceDelPersonRequest;
+import com.qcloud.image.request.FaceAddFaceRequest;
+import com.qcloud.image.request.FaceDelFaceRequest;
+import com.qcloud.image.request.FaceSetInfoRequest;
+import com.qcloud.image.request.FaceGetInfoRequest;
+import com.qcloud.image.request.FaceGetGroupIdsRequest;
+import com.qcloud.image.request.FaceGetPersonIdsRequest;
 import com.qcloud.image.request.FaceGetFaceIdsRequest;
 import com.qcloud.image.request.FaceGetFaceInfoRequest;
-import com.qcloud.image.request.FaceGetGroupIdsRequest;
-import com.qcloud.image.request.FaceGetInfoRequest;
-import com.qcloud.image.request.FaceGetPersonIdsRequest;
+import com.qcloud.image.request.FaceIdentifyRequest;
+import com.qcloud.image.request.FaceVerifyRequest;
+import com.qcloud.image.request.FaceCompareRequest;
 import com.qcloud.image.request.FaceIdCardCompareRequest;
 import com.qcloud.image.request.FaceIdCardLiveDetectFourRequest;
-import com.qcloud.image.request.FaceIdentifyRequest;
 import com.qcloud.image.request.FaceLiveDetectFourRequest;
 import com.qcloud.image.request.FaceLiveGetFourRequest;
 import com.qcloud.image.request.FaceNewPersonRequest;
@@ -41,11 +52,12 @@ import com.qcloud.image.request.OcrDrivingLicenceRequest;
 import com.qcloud.image.request.PornDetectRequest;
 import com.qcloud.image.request.TagDetectRequest;
 import com.qcloud.image.sign.Credentials;
+import com.qcloud.image.common_utils.CommonFileUtils;
+import com.qcloud.image.common_utils.CommonCodecUtils;
+import com.qcloud.image.request.FaceLiveGetFourRequest;
+import com.qcloud.image.request.FaceLiveDetectFourRequest; 
 import com.qcloud.image.sign.Sign;
-
-import org.json.JSONArray;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.logging.Level;
 
 import static com.qcloud.image.ClientConfig.OCR_DRIVINGLICENCE;
 import static com.qcloud.image.ClientConfig.OCR_GENERAL;
@@ -84,11 +96,7 @@ public class DetectionOp extends BaseOp {
         httpRequest.addParam(RequestBodyKey.BUCKET, request.getBucketName());
         httpRequest.setMethod(HttpMethod.POST);
         if (request.isUrl()) {
-            JSONArray jsonArray = new JSONArray();
-            for (String u : request.getUrlList()) {
-                jsonArray.put(u);
-            }
-            httpRequest.addParam(RequestBodyKey.URL_LIST, jsonArray.toString()); 
+            httpRequest.addParam(RequestBodyKey.URL_LIST, (request.getUrlList())); 
             httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON); 
         } else {         
@@ -165,12 +173,8 @@ public class DetectionOp extends BaseOp {
         
         httpRequest.setMethod(HttpMethod.POST);
         if (request.isUrl()) {
-            JSONArray jsonArray = new JSONArray();
-            for (String u : request.getUrlList()) {
-                jsonArray.put(u);
-            }
-            httpRequest.addParam(RequestBodyKey.URL_LIST, jsonArray.toString());
             httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
+            httpRequest.addParam(RequestBodyKey.URL_LIST, (request.getUrlList())); 
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON); 
         } else {
             httpRequest.setImageList(request.getImageList());
@@ -205,12 +209,8 @@ public class DetectionOp extends BaseOp {
         httpRequest.addParam(RequestBodyKey.BUCKET, request.getBucketName());
         httpRequest.addParam(RequestBodyKey.RET_IMAGE, String.valueOf(request.getRetImage()));              
         if (request.isUrl()) {
-            JSONArray jsonArray = new JSONArray();
-            for (String u : request.getUrlList()) {
-                jsonArray.put(u);
-            }
-            httpRequest.addParam(RequestBodyKey.URL_LIST, jsonArray.toString());
             httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
+            httpRequest.addParam(RequestBodyKey.URL_LIST, (request.getUrlList())); 
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON); 
         } else {
             httpRequest.setImageList(request.getImageList());
@@ -272,7 +272,7 @@ public class DetectionOp extends BaseOp {
         httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
         httpRequest.addParam(RequestBodyKey.APPID, String.valueOf(cred.getAppId()));
         httpRequest.addParam(RequestBodyKey.BUCKET, request.getBucketName());
-        httpRequest.addParam("type", request.getType()+"");
+        httpRequest.addParam("type", request.getType());
         if (request.isUrl()) {
             httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
             httpRequest.addParam(RequestBodyKey.URL, request.getUrl());
@@ -307,7 +307,7 @@ public class DetectionOp extends BaseOp {
         
         httpRequest.addParam(RequestBodyKey.APPID, String.valueOf(cred.getAppId()));
         httpRequest.addParam(RequestBodyKey.BUCKET, request.getBucketName());
-        httpRequest.addParam(RequestBodyKey.MODE, request.getMode() + "");        
+        httpRequest.addParam(RequestBodyKey.MODE, (request.getMode()));        
         if (request.isUrl()) {
             httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
             httpRequest.addParam(RequestBodyKey.URL, request.getUrl());
@@ -342,7 +342,7 @@ public class DetectionOp extends BaseOp {
         
         httpRequest.addParam(RequestBodyKey.APPID, String.valueOf(cred.getAppId()));
         httpRequest.addParam(RequestBodyKey.BUCKET, request.getBucketName());
-        httpRequest.addParam(RequestBodyKey.MODE, request.getMode()+"");
+        httpRequest.addParam(RequestBodyKey.MODE, request.getMode());
         
         if (request.isUrl()) {
             httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
@@ -384,11 +384,7 @@ public class DetectionOp extends BaseOp {
         if (request.isUrl()) {
             httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
             httpRequest.addParam(RequestBodyKey.URL, request.getUrl());
-            JSONArray jsonArray = new JSONArray();
-            for (String u :  request.getGroupIds()) {
-                jsonArray.put(u);
-            }
-            httpRequest.addParam(RequestBodyKey.GROUP_IDS, jsonArray.toString());
+            httpRequest.addParam(RequestBodyKey.GROUP_IDS, request.getGroupIds());
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON);  
         } else {
             int index;
@@ -458,11 +454,7 @@ public class DetectionOp extends BaseOp {
         httpRequest.addParam(RequestBodyKey.TAG, String.valueOf(request.getPersonTag()));        
         httpRequest.setMethod(HttpMethod.POST);       
         if (request.isUrl()) {
-            JSONArray jsonArray = new JSONArray();
-            for (String u : request.getUrlList()) {
-                jsonArray.put(u);
-            }
-            httpRequest.addParam(RequestBodyKey.URLS, jsonArray.toString());  
+            httpRequest.addParam(RequestBodyKey.URLS, (request.getUrlList()));  
             httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON); 
         } else {
@@ -495,11 +487,7 @@ public class DetectionOp extends BaseOp {
         httpRequest.addParam(RequestBodyKey.APPID, String.valueOf(cred.getAppId()));
         httpRequest.addParam(RequestBodyKey.BUCKET, request.getBucketName());
         httpRequest.addParam(RequestBodyKey.PERSON_ID, request.getPersonId());
-        JSONArray jsonArray = new JSONArray();
-        for (String u : request.getFaceIds()) {
-            jsonArray.put(u);
-        }
-        httpRequest.addParam(RequestBodyKey.FACE_IDS, jsonArray.toString());
+        httpRequest.addParam(RequestBodyKey.FACE_IDS, request.getFaceIds());
         httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
         httpRequest.setContentType(HttpContentType.APPLICATION_JSON);  
     

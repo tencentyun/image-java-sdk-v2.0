@@ -1,10 +1,8 @@
 package com.qcloud.image.http;
 
-import com.qcloud.image.ClientConfig;
-import com.qcloud.image.exception.AbstractImageException;
-import com.qcloud.image.exception.ParamException;
-import com.qcloud.image.exception.ServerException;
-import com.qcloud.image.exception.UnknownException;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Map;
 
 import org.apache.http.Consts;
 import org.apache.http.HttpMessage;
@@ -23,9 +21,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.Map;
+
+import com.qcloud.image.ClientConfig;
+import com.qcloud.image.exception.AbstractImageException;
+import com.qcloud.image.exception.ParamException;
+import com.qcloud.image.exception.ServerException;
+import com.qcloud.image.exception.UnknownException;
 
 /**
  * @author chengwu 封装Http发送请求类
@@ -57,7 +58,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             try {
                 URIBuilder urlBuilder = new URIBuilder(url);
                 for (String paramKey : httpRequest.getParams().keySet()) {
-                    urlBuilder.addParameter(paramKey, String.valueOf(httpRequest.getParams().get(paramKey)) );
+                    urlBuilder.addParameter(paramKey, String.valueOf(httpRequest.getParams().get(paramKey)));
                 }
                 httpGet = new HttpGet(urlBuilder.build());
             } catch (URISyntaxException e) {
@@ -101,7 +102,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             HttpPost httpPost = new HttpPost(url);
             httpPost.setConfig(onGetConfig());
 
-            Map<String, String> params = httpRequest.getParams();
+            Map<String, Object> params = httpRequest.getParams();
             setHeaders(httpPost, httpRequest.getHeaders());
             if (httpRequest.getContentType() == HttpContentType.APPLICATION_JSON) {
                 setJsonEntity(httpPost, params);
@@ -134,33 +135,33 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
         return responseStr;
     }
 
-    private void setJsonEntity(HttpPost httpPost, Map<String, String> params) {
-        ContentType utf8TextPlain = ContentType.create("text/plain", Consts.UTF_8);                  
-        JSONObject root = new JSONObject(params);         
+    private void setJsonEntity(HttpPost httpPost, Map<String, Object> params) {
+        ContentType utf8TextPlain = ContentType.create("text/plain", Consts.UTF_8);
+        JSONObject root = new JSONObject(params);
         StringEntity stringEntity = new StringEntity(root.toString(), utf8TextPlain);
         httpPost.setEntity(stringEntity);
     }
 
-    private void setMultiPartEntity(HttpPost httpPost, Map<String, String> params, Map<String, File> images, File imageData, Map<String, String> keyList, String imageKey)
+    private void setMultiPartEntity(HttpPost httpPost, Map<String, Object> params, Map<String, File> images, File imageData, Map<String, String> keyList, String imageKey)
             throws Exception {
-                ContentType utf8TextPlain = ContentType.create("text/plain", Consts.UTF_8);
-                MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
-                for (String paramKey : params.keySet()) {
-                    entityBuilder.addTextBody(paramKey, String.valueOf(params.get(paramKey)), utf8TextPlain);
-                }
-                
-                if (images.size() > 0) {   
-                    for (String imageFileName : images.keySet()) {
-                        String paramName = keyList.get(imageFileName);
-                        File imageFile = images.get(imageFileName);
-                        entityBuilder.addBinaryBody(paramName, imageFile, ContentType.MULTIPART_FORM_DATA, imageFileName);
-                    }
-                } else if(imageData!=null&&imageData.exists()){
-                    entityBuilder.addBinaryBody(imageKey, imageData);
-                }
+        ContentType utf8TextPlain = ContentType.create("text/plain", Consts.UTF_8);
+        MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+        for (String paramKey : params.keySet()) {
+            entityBuilder.addTextBody(paramKey, String.valueOf(params.get(paramKey)), utf8TextPlain);
+        }
 
-                httpPost.setEntity(entityBuilder.build());
+        if (images.size() > 0) {
+            for (String imageFileName : images.keySet()) {
+                String paramName = keyList.get(imageFileName);
+                File imageFile = images.get(imageFileName);
+                entityBuilder.addBinaryBody(paramName, imageFile, ContentType.MULTIPART_FORM_DATA, imageFileName);
             }
+        } else if (imageData != null && imageData.exists()) {
+            entityBuilder.addBinaryBody(imageKey, imageData);
+        }
+
+        httpPost.setEntity(entityBuilder.build());
+    }
 
     /**
      * 设置Http头部，同时添加上公共的类型，长连接，Image SDK标识
