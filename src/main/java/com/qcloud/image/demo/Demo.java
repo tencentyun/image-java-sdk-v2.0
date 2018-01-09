@@ -540,23 +540,23 @@ public class Demo {
         ret = imageClient.ocrDrivingLicence(request);
         System.out.println("ocrDrivingLicence:" + ret);
 
-        ////2. 驾驶证 图片内容方式
-        //System.out.println("====================================================");
-        //request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_DRIVER_LICENSE,new File("assets","DRIVER_LICENSE.jpg"));
-        //ret = imageClient.ocrDrivingLicence(request);
-        //System.out.println("ocrDrivingLicence:" + ret);
-        //
-        //// 1. 行驶证 url方式
-        //System.out.println("====================================================");
-        // request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_VEHICLE_LICENSE,"http://yuanmengjiaoyuasd.com/UploadFiles/20121228113712457.jpg");
-        //ret = imageClient.ocrDrivingLicence(request);
-        //System.out.println("ocrDrivingLicence:" + ret);
-        //
-        ////2. 行驶证 图片内容方式
-        //System.out.println("====================================================");
-        //request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_VEHICLE_LICENSE,new File("assets","VEHICLE_LICENSE.jpg"));
-        //ret = imageClient.ocrDrivingLicence(request);
-        //System.out.println("ocrDrivingLicence:" + ret);
+        //2. 驾驶证 图片内容方式
+        System.out.println("====================================================");
+        request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_DRIVER_LICENSE,new File("assets","DRIVER_LICENSE.jpg"));
+        ret = imageClient.ocrDrivingLicence(request);
+        System.out.println("ocrDrivingLicence:" + ret);
+
+        // 1. 行驶证 url方式
+        System.out.println("====================================================");
+         request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_VEHICLE_LICENSE,"http://yuanmengjiaoyuasd.com/UploadFiles/20121228113712457.jpg");
+        ret = imageClient.ocrDrivingLicence(request);
+        System.out.println("ocrDrivingLicence:" + ret);
+
+        //2. 行驶证 图片内容方式
+        System.out.println("====================================================");
+        request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_VEHICLE_LICENSE,new File("assets","VEHICLE_LICENSE.jpg"));
+        ret = imageClient.ocrDrivingLicence(request);
+        System.out.println("ocrDrivingLicence:" + ret);
     }
     /**
      *身份证ocr识别操作
