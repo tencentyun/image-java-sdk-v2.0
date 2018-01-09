@@ -37,8 +37,10 @@ public class ClientConfig {
     
      //名片识别服务api
     private static final String DETECTION_NAMECARD = "/ocr/namecard";
+    /** 行驶证驾驶证识别 */
+    public static final String OCR_DRIVINGLICENCE = "/ocr/drivinglicence";
     /** 通用印刷体识别 */
-    private static final String OCR_GENERAL= "/ocr/general";
+    public static final String OCR_GENERAL= "/ocr/general";
     
     //人脸识别服务api
     private static final String DETECTION_FACE = "/face/detect";

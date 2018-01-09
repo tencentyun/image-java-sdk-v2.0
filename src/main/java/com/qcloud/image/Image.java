@@ -1,4 +1,5 @@
 package com.qcloud.image;
+
 import com.qcloud.image.request.FaceAddFaceRequest;
 import com.qcloud.image.request.FaceCompareRequest;
 import com.qcloud.image.request.FaceDelFaceRequest;
@@ -21,6 +22,7 @@ import com.qcloud.image.request.FaceVerifyRequest;
 import com.qcloud.image.request.GeneralOcrRequest;
 import com.qcloud.image.request.IdcardDetectRequest;
 import com.qcloud.image.request.NamecardDetectRequest;
+import com.qcloud.image.request.OcrDrivingLicenceRequest;
 import com.qcloud.image.request.PornDetectRequest;
 import com.qcloud.image.request.TagDetectRequest;
         
@@ -31,6 +33,14 @@ import com.qcloud.image.request.TagDetectRequest;
 
 public interface Image {
 
+    /**
+     * OCR-行驶证驾驶证识别
+     */
+    String ocrDrivingLicence(OcrDrivingLicenceRequest request);
+    
+    /**
+     * OCR-通用印刷体识别
+     */
     String generalOcr(GeneralOcrRequest request);
 
     /**

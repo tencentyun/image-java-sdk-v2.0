@@ -37,6 +37,7 @@ import com.qcloud.image.request.FaceVerifyRequest;
 import com.qcloud.image.request.GeneralOcrRequest;
 import com.qcloud.image.request.IdcardDetectRequest;
 import com.qcloud.image.request.NamecardDetectRequest;
+import com.qcloud.image.request.OcrDrivingLicenceRequest;
 import com.qcloud.image.request.PornDetectRequest;
 import com.qcloud.image.request.TagDetectRequest;
 import com.qcloud.image.sign.Credentials;
@@ -46,6 +47,8 @@ import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.qcloud.image.ClientConfig.OCR_DRIVINGLICENCE;
+import static com.qcloud.image.ClientConfig.OCR_GENERAL;
 
 /**
  *
@@ -229,7 +232,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudOcrDomain()+ "/ocr/general";
+        String url = "http://" + this.config.getQCloudOcrDomain()+ OCR_GENERAL;
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -241,6 +244,39 @@ public class DetectionOp extends BaseOp {
         if (request.isUrl()) {
             httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
             httpRequest.addParam(RequestBodyKey.URL, request.getUrl());
+        } else {
+            httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
+            httpRequest.setImage(request.getImage());
+        }
+        return httpClient.sendHttpRequest(httpRequest);
+
+    }
+     /**
+     * OCR-行驶证驾驶证识别
+     * 
+     * @param request 标签识别请求参数
+     * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功, 其他为失败,
+     *         message为success或者失败原因
+     * @throws AbstractImageException SDK定义的Image异常, 通常是输入参数有误或者环境问题(如网络不通)
+     */  
+    public String ocrDrivingLicence(OcrDrivingLicenceRequest request) throws AbstractImageException {
+        request.check_param();
+
+        String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
+        String url = "http://" + this.config.getQCloudOcrDomain()+ OCR_DRIVINGLICENCE;
+
+        HttpRequest httpRequest = new HttpRequest();
+        httpRequest.setMethod(HttpMethod.POST);
+        httpRequest.setUrl(url);
+        httpRequest.addHeader(RequestHeaderKey.Authorization, sign);
+        httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
+        httpRequest.addParam(RequestBodyKey.APPID, String.valueOf(cred.getAppId()));
+        httpRequest.addParam(RequestBodyKey.BUCKET, request.getBucketName());
+        httpRequest.addParam("type", request.getType()+"");
+        if (request.isUrl()) {
+            httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
+            httpRequest.addParam(RequestBodyKey.URL, request.getUrl());
+            httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
         } else {
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
             httpRequest.setImage(request.getImage());
