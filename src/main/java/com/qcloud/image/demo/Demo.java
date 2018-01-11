@@ -83,6 +83,7 @@ public class Demo {
         ocrBizLicense(imageClient, bucketName);
         
         ocrBankCard(imageClient,bucketName);
+        ocrPlate(imageClient,bucketName);
         // 关闭释放资源
         imageClient.shutdown();
         System.out.println("shutdown!");
@@ -540,13 +541,13 @@ public class Demo {
         System.out.println("====================================================");
         OcrBizLicenseRequest request = new OcrBizLicenseRequest(bucketName, "http://1001.yanwen.com//webimg/editor/2017-01-04-06b3f9cfb4-eeee-4df2-9329-663ddc084a6e.jpg");
         ret = imageClient.ocrBizLicense(request);
-        System.out.println("ocrGeneral:" + ret);
+        System.out.println("ocrBizLicense:" + ret);
 
         //2. 图片内容方式
         System.out.println("====================================================");
         request = new OcrBizLicenseRequest(bucketName, new File("assets","biz.jpg"));
         ret = imageClient.ocrBizLicense(request);
-        System.out.println("ocrGeneral:" + ret);
+        System.out.println("ocrBizLicense:" + ret);
     }
     /**
      *OCR-银行卡识别
@@ -557,13 +558,30 @@ public class Demo {
         System.out.println("====================================================");
         OcrBankCardRequest request = new OcrBankCardRequest(bucketName, "http://www.dkxxg.com/d/file/20150515/a977a58fd435db8995adc342a01b8ab2.jpg");
         ret = imageClient.ocrBankCard(request);
-        System.out.println("ocrGeneral:" + ret);
+        System.out.println("ocrBankCard:" + ret);
 
         //2. 图片内容方式
         System.out.println("====================================================");
         request = new OcrBankCardRequest(bucketName, new File("assets","bankcard.jpg"));
         ret = imageClient.ocrBankCard(request);
-        System.out.println("ocrGeneral:" + ret);
+        System.out.println("ocrBankCard:" + ret);
+    }
+    /**
+     *OCR-银行卡识别
+     */
+    private static void ocrPlate(ImageClient imageClient, String bucketName) {
+        String ret;
+        // 1. url方式
+        System.out.println("====================================================");
+        OcrPlateRequest request = new OcrPlateRequest(bucketName, "http://img.hc360.com/auto-a/info/images/201003/201003221035454092.jpg");
+        ret = imageClient.ocrPlate(request);
+        System.out.println("ocrPlate:" + ret);
+
+        //2. 图片内容方式
+        System.out.println("====================================================");
+        request = new OcrPlateRequest(bucketName, new File("assets","plate.jpg"));
+        ret = imageClient.ocrPlate(request);
+        System.out.println("ocrPlate:" + ret);
     }
     /**
      * OCR-行驶证驾驶证识别

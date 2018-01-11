@@ -31,6 +31,7 @@ import com.qcloud.image.request.NamecardDetectRequest;
 import com.qcloud.image.request.OcrBankCardRequest;
 import com.qcloud.image.request.OcrBizLicenseRequest;
 import com.qcloud.image.request.OcrDrivingLicenceRequest;
+import com.qcloud.image.request.OcrPlateRequest;
 import com.qcloud.image.request.PornDetectRequest;
 import com.qcloud.image.request.TagDetectRequest;
 import com.qcloud.image.sign.Credentials;
@@ -163,6 +164,19 @@ public class ImageClient implements Image {
     public String ocrBankCard(OcrBankCardRequest request) {
         try {
             return detectionOp.ocrBankCard(request);
+        } catch (AbstractImageException e) {
+            recordException("generalOcr", request, e.toString());
+            return e.toString();
+        } catch (Exception e) {
+            UnknownException e1 = new UnknownException(e.toString());
+            recordException("generalOcr", request, e1.toString());
+            return e1.toString();
+        }
+    }
+    @Override
+    public String ocrPlate(OcrPlateRequest request) {
+        try {
+            return detectionOp.ocrPlate(request);
         } catch (AbstractImageException e) {
             recordException("generalOcr", request, e.toString());
             return e.toString();
