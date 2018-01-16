@@ -24,8 +24,13 @@ import com.qcloud.image.request.FaceNewPersonRequest;
 import com.qcloud.image.request.FaceSetInfoRequest;
 import com.qcloud.image.request.FaceShapeRequest;
 import com.qcloud.image.request.FaceVerifyRequest;
+import com.qcloud.image.request.GeneralOcrRequest;
 import com.qcloud.image.request.IdcardDetectRequest;
 import com.qcloud.image.request.NamecardDetectRequest;
+import com.qcloud.image.request.OcrBankCardRequest;
+import com.qcloud.image.request.OcrBizLicenseRequest;
+import com.qcloud.image.request.OcrDrivingLicenceRequest;
+import com.qcloud.image.request.OcrPlateRequest;
 import com.qcloud.image.request.PornDetectRequest;
 import com.qcloud.image.request.TagDetectRequest;
 
@@ -49,10 +54,32 @@ public class Demo {
 
         ImageClient imageClient = new ImageClient(appId, secretId, secretKey);
 
-        porn(imageClient, bucketName);
-        tag(imageClient, bucketName);
+        /*设置代理服务器*/
+        //imageClient.setProxy(new HttpHost("127.0.0.1", 8888));
+
+        /*图像识别系列*/
+        //鉴黄
+        imagePorn(imageClient, bucketName);
+        //图像内容
+        imageTag(imageClient, bucketName);
+        
+        /*文字识别系列 ( OCR )*/
+        //身份证
         ocrIdCard(imageClient, bucketName);
+        //名片
         ocrNameCard(imageClient, bucketName);
+        //通用
+        ocrGeneral(imageClient, bucketName);
+        //行驶证、驾驶证
+        ocrDrivingLicence(imageClient, bucketName);
+        //营业执照
+        ocrBizLicense(imageClient, bucketName);
+        //银行卡
+        ocrBankCard(imageClient, bucketName);
+        //车牌号
+        ocrPlate(imageClient, bucketName);
+        
+        /*人脸识别系列*/
         faceDetect(imageClient, bucketName);
         faceShape(imageClient, bucketName);
         String personId = faceNewPerson(imageClient, bucketName);
@@ -78,19 +105,14 @@ public class Demo {
         }
         faceIdCardLiveDetectFour(imageClient, bucketName, validate, video);
         faceLiveDetectFour(imageClient, bucketName, validate, video);
-        ocrGeneral(imageClient, bucketName);
-        ocrDrivingLicence(imageClient, bucketName);
-        ocrBizLicense(imageClient, bucketName);
-        
-        ocrBankCard(imageClient,bucketName);
-        ocrPlate(imageClient,bucketName);
+
         // 关闭释放资源
         imageClient.shutdown();
         System.out.println("shutdown!");
     }
 
     /**
-     *检测视频和身份证是否对上操作
+     * 检测视频和身份证是否对上操作
      */
     private static void faceLiveDetectFour(ImageClient imageClient, String bucketName, String validate, File video) {
         String ret;
@@ -108,8 +130,9 @@ public class Demo {
         ret = imageClient.faceLiveDetectFour(faceLiveDetectReq);
         System.out.println("face  live detect four ret:" + ret);
     }
+
     /**
-     *通过视频对比指定身份信息接口
+     * 通过视频对比指定身份信息接口
      */
     private static void faceIdCardLiveDetectFour(ImageClient imageClient, String bucketName, String validate, File video) {
         String ret;
@@ -122,8 +145,9 @@ public class Demo {
         ret = imageClient.faceIdCardLiveDetectFour(liveDetectReq);
         System.out.println("face idCard live detect four ret:" + ret);
     }
+
     /**
-     *获取验证码接口
+     * 获取验证码接口
      */
     private static String faceLiveGetFour(ImageClient imageClient, String bucketName) {
         System.out.println("====================================================");
@@ -140,8 +164,9 @@ public class Demo {
         }
         return validate;
     }
+
     /**
-     *身份证识别对比接口
+     * 身份证识别对比接口
      */
     private static void faceIdCardCompare(ImageClient imageClient, String bucketName) {
         String ret;
@@ -170,8 +195,9 @@ public class Demo {
         ret = imageClient.faceIdCardCompare(idCardCompareReq);
         System.out.println("face idCard Compare ret:" + ret);
     }
+
     /**
-     *人脸对比操作 
+     * 人脸对比操作
      */
     private static void faceFaceCompare(ImageClient imageClient, String bucketName) {
         String ret;
@@ -200,8 +226,9 @@ public class Demo {
         ret = imageClient.faceCompare(faceCompareReq);
         System.out.println("face compare ret:" + ret);
     }
+
     /**
-     *人脸识别操作
+     * 人脸识别操作
      */
     private static void faceFaceIdentify(ImageClient imageClient, String bucketName) {
         String ret;
@@ -228,8 +255,9 @@ public class Demo {
         ret = imageClient.faceIdentify(faceIdentifyReq);
         System.out.println("face identify ret:" + ret);
     }
+
     /**
-     *人脸验证操作
+     * 人脸验证操作
      */
     private static void faceFaceVerify(ImageClient imageClient, String bucketName) {
         String ret;
@@ -257,8 +285,9 @@ public class Demo {
         ret = imageClient.faceVerify(faceVerifyReq);
         System.out.println("face verify ret:" + ret);
     }
+
     /**
-     *获取人脸信息
+     * 获取人脸信息
      */
     private static void faceGetFaceInfo(ImageClient imageClient, String bucketName) {
         String ret;
@@ -269,8 +298,9 @@ public class Demo {
         ret = imageClient.faceGetFaceInfo(getFaceInfoReq);
         System.out.println("face get face info  ret:" + ret);
     }
+
     /**
-     *获取人脸列表
+     * 获取人脸列表
      */
     private static void faceGetFaceIdList(ImageClient imageClient, String bucketName) {
         String ret;
@@ -281,8 +311,9 @@ public class Demo {
         ret = imageClient.faceGetFaceIds(getFaceIdsReq);
         System.out.println("face get face ids  ret:" + ret);
     }
+
     /**
-     *获取人列表
+     * 获取人列表
      */
     private static void faceGetPersonId(ImageClient imageClient, String bucketName) {
         String ret;
@@ -293,8 +324,9 @@ public class Demo {
         ret = imageClient.faceGetPersonIds(getPersonIdsReq);
         System.out.println("face get person ids  ret:" + ret);
     }
+
     /**
-     *获取组列表
+     * 获取组列表
      */
     private static void faceGetGroupId(ImageClient imageClient, String bucketName) {
         String ret;
@@ -304,8 +336,9 @@ public class Demo {
         ret = imageClient.faceGetGroupIds(getGroupReq);
         System.out.println("face get group ids  ret:" + ret);
     }
+
     /**
-     *个体获取信息
+     * 个体获取信息
      */
     private static void faceGetInfo(ImageClient imageClient, String bucketName) {
         String ret;
@@ -316,8 +349,9 @@ public class Demo {
         ret = imageClient.faceGetInfo(getInfoReq);
         System.out.println("face get info  ret:" + ret);
     }
+
     /**
-     *个体设置信息
+     * 个体设置信息
      */
     private static void faceSetInfo(ImageClient imageClient, String bucketName) {
         String ret;
@@ -330,8 +364,9 @@ public class Demo {
         ret = imageClient.faceSetInfo(setInfoReq);
         System.out.println("face set info  ret:" + ret);
     }
+
     /**
-     *人脸删除操作
+     * 人脸删除操作
      */
     private static void faceDelFace(ImageClient imageClient, String bucketName) {
         String ret;
@@ -345,8 +380,9 @@ public class Demo {
         ret = imageClient.faceDelFace(delFaceReq);
         System.out.println("face del  ret:" + ret);
     }
+
     /**
-     *增加人脸操作
+     * 增加人脸操作
      */
     private static void faceAddFace(ImageClient imageClient, String bucketName) {
         String ret;
@@ -379,8 +415,9 @@ public class Demo {
         ret = imageClient.faceAddFace(addFaceReq);
         System.out.println("add face ret:" + ret);
     }
+
     /**
-     *个人删除操作
+     * 个人删除操作
      */
     private static void faceDelPerson(ImageClient imageClient, String bucketName, String personId) {
         String ret;
@@ -391,8 +428,9 @@ public class Demo {
         ret = imageClient.faceDelPerson(delPersonReq);
         System.out.println("face del  person ret:" + ret);
     }
+
     /**
-     *个体添加操作 
+     * 个体添加操作
      */
     private static String faceNewPerson(ImageClient imageClient, String bucketName) {
         String ret;
@@ -430,8 +468,9 @@ public class Demo {
         System.out.println("person new ret:" + ret);
         return personId;
     }
+
     /**
-     *五官定位操作
+     * 五官定位操作
      */
     private static void faceShape(ImageClient imageClient, String bucketName) {
         String ret;
@@ -457,14 +496,15 @@ public class Demo {
         ret = imageClient.faceShape(faceShapeReq);
         System.out.println("face shape ret:" + ret);
     }
+
     /**
-     *人脸检测操作
+     * 人脸检测操作
      */
     private static void faceDetect(ImageClient imageClient, String bucketName) {
         String ret;
         // 1. url方式
         System.out.println("====================================================");
-        String faceDetectUrl = "YOUR URL";
+        String faceDetectUrl = "http://youtu.qq.com/app/img/experience/face_img/icon_face_01.jpg";
         FaceDetectRequest faceDetectReq = new FaceDetectRequest(bucketName, faceDetectUrl, 1);
 
         ret = imageClient.faceDetect(faceDetectReq);
@@ -484,16 +524,17 @@ public class Demo {
         ret = imageClient.faceDetect(faceDetectReq);
         System.out.println("face detect ret:" + ret);
     }
+
     /**
-     *名片ocr识别操作
+     * 名片ocr识别操作
      */
     private static void ocrNameCard(ImageClient imageClient, String bucketName) {
         String ret;
         // 1. url方式
         System.out.println("====================================================");
         String[] namecardUrlList = new String[2];
-        namecardUrlList[0] = "YOUR URL A";
-        namecardUrlList[1] = "YOUR URL B";
+        namecardUrlList[0] = "http://youtu.qq.com/app/img/experience/char_general/icon_namecard_01.jpg";
+        namecardUrlList[1] = "http://youtu.qq.com/app/img/experience/char_general/icon_namecard_02.jpg";
         NamecardDetectRequest nameReq = new NamecardDetectRequest(bucketName, namecardUrlList, 0);
 
         ret = imageClient.namecardDetect(nameReq);
@@ -504,10 +545,10 @@ public class Demo {
         String[] namecardNameList = new String[2];
         File[] namecardImageList = new File[2];
         try {
-            namecardNameList[0] = "name2.jpg";
-            namecardImageList[0] = new File("F:\\pic\\name2.jpg");
-            namecardNameList[1] = "名片.jpg";
-            namecardImageList[1] = new File("F:\\pic\\名片.jpg");
+            namecardNameList[0] = "icon_namecard_01.jpg";
+            namecardImageList[0] = new File("assets", namecardNameList[0]);
+            namecardNameList[1] = "icon_namecard_02.jpg";
+            namecardImageList[1] = new File("assets", namecardNameList[1]);
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -515,74 +556,79 @@ public class Demo {
         ret = imageClient.namecardDetect(nameReq);
         System.out.println("namecard detect ret:" + ret);
     }
+
     /**
-     *通用印刷体OCR
+     * 通用印刷体OCR
      */
     private static void ocrGeneral(ImageClient imageClient, String bucketName) {
         String ret;
         // 1. url方式
         System.out.println("====================================================");
-        GeneralOcrRequest request = new GeneralOcrRequest(bucketName, "https://static.cnbetacdn.com/article/2018/0108/a74262aaa3c6eeb.jpg");
+        GeneralOcrRequest request = new GeneralOcrRequest(bucketName, "http://youtu.qq.com/app/img/experience/char_general/icon_ocr_common09.jpg");
         ret = imageClient.generalOcr(request);
         System.out.println("ocrGeneral:" + ret);
 
         //2. 图片内容方式
         System.out.println("====================================================");
-        request = new GeneralOcrRequest(bucketName, new File("assets","ocr.jpg"));
+        request = new GeneralOcrRequest(bucketName, new File("assets", "icon_ocr_common09.png"));
         ret = imageClient.generalOcr(request);
         System.out.println("ocrGeneral:" + ret);
     }
+
     /**
-     *OCR-营业执照识别
+     * OCR-营业执照识别
      */
     private static void ocrBizLicense(ImageClient imageClient, String bucketName) {
         String ret;
         // 1. url方式
         System.out.println("====================================================");
-        OcrBizLicenseRequest request = new OcrBizLicenseRequest(bucketName, "http://1001.yanwen.com//webimg/editor/2017-01-04-06b3f9cfb4-eeee-4df2-9329-663ddc084a6e.jpg");
+        OcrBizLicenseRequest request = new OcrBizLicenseRequest(bucketName, "http://youtu.qq.com/app/img/experience/char_general/icon_ocr_yyzz_01.jpg");
         ret = imageClient.ocrBizLicense(request);
         System.out.println("ocrBizLicense:" + ret);
 
         //2. 图片内容方式
         System.out.println("====================================================");
-        request = new OcrBizLicenseRequest(bucketName, new File("assets","biz.jpg"));
+        request = new OcrBizLicenseRequest(bucketName, new File("assets", "icon_ocr_yyzz_01.jpg"));
         ret = imageClient.ocrBizLicense(request);
         System.out.println("ocrBizLicense:" + ret);
     }
+
     /**
-     *OCR-银行卡识别
+     * OCR-银行卡识别
      */
     private static void ocrBankCard(ImageClient imageClient, String bucketName) {
         String ret;
         // 1. url方式
         System.out.println("====================================================");
-        OcrBankCardRequest request = new OcrBankCardRequest(bucketName, "http://www.dkxxg.com/d/file/20150515/a977a58fd435db8995adc342a01b8ab2.jpg");
+        OcrBankCardRequest request = new OcrBankCardRequest(bucketName, "http://youtu.qq.com/app/img/experience/char_general/icon_ocr_card_1.jpg");
         ret = imageClient.ocrBankCard(request);
         System.out.println("ocrBankCard:" + ret);
 
         //2. 图片内容方式
         System.out.println("====================================================");
-        request = new OcrBankCardRequest(bucketName, new File("assets","bankcard.jpg"));
+        request = new OcrBankCardRequest(bucketName, new File("assets", "icon_ocr_card_1.jpg"));
         ret = imageClient.ocrBankCard(request);
         System.out.println("ocrBankCard:" + ret);
     }
+
     /**
-     *OCR-银行卡识别
+     * OCR-银行卡识别
      */
     private static void ocrPlate(ImageClient imageClient, String bucketName) {
         String ret;
         // 1. url方式
         System.out.println("====================================================");
-        OcrPlateRequest request = new OcrPlateRequest(bucketName, "http://img.hc360.com/auto-a/info/images/201003/201003221035454092.jpg");
+        OcrPlateRequest request = new OcrPlateRequest(bucketName, "http://youtu.qq.com/app/img/experience/char_general/icon_ocr_license_3.jpg");
         ret = imageClient.ocrPlate(request);
         System.out.println("ocrPlate:" + ret);
 
         //2. 图片内容方式
         System.out.println("====================================================");
-        request = new OcrPlateRequest(bucketName, new File("assets","plate.jpg"));
+        request = new OcrPlateRequest(bucketName, new File("assets", "icon_ocr_license_3.jpg"));
         ret = imageClient.ocrPlate(request);
         System.out.println("ocrPlate:" + ret);
     }
+
     /**
      * OCR-行驶证驾驶证识别
      */
@@ -590,44 +636,45 @@ public class Demo {
         String ret;
         // 1. 驾驶证 url方式
         System.out.println("====================================================");
-        OcrDrivingLicenceRequest request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_DRIVER_LICENSE,"http://www.dgyc114.com/product/20131/2013012649566509.jpg");
+        OcrDrivingLicenceRequest request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_DRIVER_LICENSE, "http://youtu.qq.com/app/img/experience/char_general/icon_ocr_jsz_01.jpg");
         ret = imageClient.ocrDrivingLicence(request);
         System.out.println("ocrDrivingLicence:" + ret);
 
         //2. 驾驶证 图片内容方式
         System.out.println("====================================================");
-        request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_DRIVER_LICENSE,new File("assets","DRIVER_LICENSE.jpg"));
+        request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_DRIVER_LICENSE, new File("assets", "icon_ocr_jsz_01.jpg"));
         ret = imageClient.ocrDrivingLicence(request);
         System.out.println("ocrDrivingLicence:" + ret);
 
         // 1. 行驶证 url方式
         System.out.println("====================================================");
-         request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_VEHICLE_LICENSE,"http://yuanmengjiaoyuasd.com/UploadFiles/20121228113712457.jpg");
+        request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_VEHICLE_LICENSE, "http://youtu.qq.com/app/img/experience/char_general/icon_ocr_xsz_01.jpg");
         ret = imageClient.ocrDrivingLicence(request);
         System.out.println("ocrDrivingLicence:" + ret);
 
         //2. 行驶证 图片内容方式
         System.out.println("====================================================");
-        request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_VEHICLE_LICENSE,new File("assets","VEHICLE_LICENSE.jpg"));
+        request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_VEHICLE_LICENSE, new File("assets", "icon_ocr_xsz_01.jpg"));
         ret = imageClient.ocrDrivingLicence(request);
         System.out.println("ocrDrivingLicence:" + ret);
     }
+
     /**
-     *身份证ocr识别操作
+     * 身份证ocr识别操作
      */
     private static void ocrIdCard(ImageClient imageClient, String bucketName) {
         String ret;
         // 1. url方式,识别身份证正面
         System.out.println("====================================================");
         String[] idcardUrlList = new String[2];
-        idcardUrlList[0] = "YOUR URL A";
-        idcardUrlList[1] = "YOUR URL B";
+        idcardUrlList[0] = "http://youtu.qq.com/app/img/experience/char_general/icon_id_01.jpg";
+        idcardUrlList[1] = "http://youtu.qq.com/app/img/experience/char_general/icon_id_02.jpg";
         IdcardDetectRequest idReq = new IdcardDetectRequest(bucketName, idcardUrlList, 0);
         ret = imageClient.idcardDetect(idReq);
         System.out.println("idcard detect ret:" + ret);
         //识别身份证反面
-        idcardUrlList[0] = "YOUR URL C";
-        idcardUrlList[1] = "YOUR URL D";
+        idcardUrlList[0] = "https://gss0.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/314e251f95cad1c89e04bea2763e6709c83d51f3.jpg";
+        idcardUrlList[1] = "http://image2.sina.com.cn/dy/c/2004-03-29/U48P1T1D3073262F23DT20040329135445.jpg";
         idReq = new IdcardDetectRequest(bucketName, idcardUrlList, 1);
         ret = imageClient.idcardDetect(idReq);
         System.out.println("idcard detect ret:" + ret);
@@ -637,10 +684,10 @@ public class Demo {
         String[] idcardNameList = new String[2];
         File[] idcardImageList = new File[2];
         try {
-            idcardNameList[0] = "id6_zheng.jpg";
-            idcardImageList[0] = new File("F:\\pic\\id6_zheng.jpg");
-            idcardNameList[1] = "id2_zheng.jpg";
-            idcardImageList[1] = new File("F:\\pic\\id2_zheng.jpg");
+            idcardNameList[0] = "icon_id_01.jpg";
+            idcardImageList[0] = new File("assets", idcardNameList[0]);
+            idcardNameList[1] = "icon_id_02.jpg";
+            idcardImageList[1] = new File("assets", idcardNameList[1]);
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -649,10 +696,10 @@ public class Demo {
         System.out.println("idcard detect ret:" + ret);
         //识别身份证反面
         try {
-            idcardNameList[0] = "id5_fan.png";
-            idcardImageList[0] = new File("F:\\pic\\id5_fan.jpg");
-            idcardNameList[1] = "id7_fan.jpg";
-            idcardImageList[1] = new File("F:\\pic\\id7_fan.png");
+            idcardNameList[0] = "icon_id_03.jpg";
+            idcardImageList[0] = new File("assets", idcardNameList[0]);
+            idcardNameList[1] = "icon_id_04.jpg";
+            idcardImageList[1] = new File("assets", idcardNameList[1]);
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -660,14 +707,15 @@ public class Demo {
         ret = imageClient.idcardDetect(idReq);
         System.out.println("idcard detect ret:" + ret);
     }
+
     /**
-     *标签识别操作
+     * 标签识别操作
      */
-    private static void tag(ImageClient imageClient, String bucketName) {
+    private static void imageTag(ImageClient imageClient, String bucketName) {
         String ret;
         // 1. url方式
         System.out.println("====================================================");
-        String tagUrl = "YOUR URL";
+        String tagUrl = "http://youtu.qq.com/app/img/experience/image/icon_imag_01.jpg";
         TagDetectRequest tagReq = new TagDetectRequest(bucketName, tagUrl);
         ret = imageClient.tagDetect(tagReq);
         System.out.println("tag detect ret:" + ret);
@@ -676,7 +724,7 @@ public class Demo {
         System.out.println("====================================================");
         File tagImage = null;
         try {
-            tagImage = new File("F:\\pic\\test.jpg");
+            tagImage = new File("assets", "icon_imag_01.jpg");
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -685,17 +733,18 @@ public class Demo {
         ret = imageClient.tagDetect(tagReq);
         System.out.println("tag detect ret:" + ret);
     }
+
     /**
-     *黄图识别操作
+     * 黄图识别操作
      */
-    private static void porn(ImageClient imageClient, String bucketName) {
+    private static void imagePorn(ImageClient imageClient, String bucketName) {
         String ret;
         // 1. url方式
         System.out.println("====================================================");
         String[] pornUrlList = new String[3];
-        pornUrlList[0] = "YOUR URL A";
-        pornUrlList[1] = "YOUR URL B";
-        pornUrlList[2] = "YOUR URL C";
+        pornUrlList[0] = "http://youtu.qq.com/app/img/experience/porn/icon_porn04.jpg";
+        pornUrlList[1] = "http://youtu.qq.com/app/img/experience/porn/icon_porn05.jpg";
+        pornUrlList[2] = "http://youtu.qq.com/app/img/experience/porn/icon_porn06.jpg";
         PornDetectRequest pornReq = new PornDetectRequest(bucketName, pornUrlList);
 
         ret = imageClient.pornDetect(pornReq);
@@ -706,12 +755,12 @@ public class Demo {
         String[] pornNameList = new String[3];
         File[] pornImageList = new File[3];
         try {
-            pornNameList[0] = "test.jpg";
-            pornImageList[0] = new File("F:\\pic\\test.jpg");
-            pornNameList[1] = "hot1.jpg";
-            pornImageList[1] = new File("F:\\pic\\hot1.jpg");
-            pornNameList[2] = "hot2.jpg";
-            pornImageList[2] = new File("F:\\pic\\hot2.jpg");
+            pornNameList[0] = "icon_porn04.jpg";
+            pornImageList[0] = new File("assets", pornNameList[0]);
+            pornNameList[1] = "icon_porn05.jpg";
+            pornImageList[1] = new File("assets", pornNameList[1]);
+            pornNameList[2] = "icon_porn06.jpg";
+            pornImageList[2] = new File("assets", pornNameList[2]);
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
         }

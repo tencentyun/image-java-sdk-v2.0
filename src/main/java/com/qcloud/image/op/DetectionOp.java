@@ -231,14 +231,15 @@ public class DetectionOp extends BaseOp {
         httpRequest.setMethod(HttpMethod.POST);
         httpRequest.setUrl(url);
         httpRequest.addHeader(RequestHeaderKey.Authorization, sign);
-        httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
         httpRequest.addParam(RequestBodyKey.APPID, String.valueOf(cred.getAppId()));
         httpRequest.addParam(RequestBodyKey.BUCKET, request.getBucketName());
         if (request.isUrl()) {
+            httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
             httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
             httpRequest.addParam(RequestBodyKey.URL, request.getUrl());
         } else {
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
+            httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.MULTIPART_FORM_DATA));
             httpRequest.setImage(request.getImage());
         }
         return httpClient.sendHttpRequest(httpRequest);

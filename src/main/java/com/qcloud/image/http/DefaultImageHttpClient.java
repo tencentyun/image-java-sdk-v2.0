@@ -1,10 +1,13 @@
 package com.qcloud.image.http;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.Map;
+import com.qcloud.image.ClientConfig;
+import com.qcloud.image.exception.AbstractImageException;
+import com.qcloud.image.exception.ParamException;
+import com.qcloud.image.exception.ServerException;
+import com.qcloud.image.exception.UnknownException;
 
 import org.apache.http.Consts;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpMessage;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
@@ -21,12 +24,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-
-import com.qcloud.image.ClientConfig;
-import com.qcloud.image.exception.AbstractImageException;
-import com.qcloud.image.exception.ParamException;
-import com.qcloud.image.exception.ServerException;
-import com.qcloud.image.exception.UnknownException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author chengwu 封装Http发送请求类
@@ -108,7 +110,11 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
                 setJsonEntity(httpPost, params);
             } else if (httpRequest.getContentType() == HttpContentType.MULTIPART_FORM_DATA) {
                 try {
-                    setMultiPartEntity(httpPost, params, httpRequest.getImageList(), httpRequest.getImage(), httpRequest.getKeyList(), httpRequest.getImageKey());
+                    HashMap<String, String> keyList = httpRequest.getKeyList();
+                    HashMap<String, File> imageList = httpRequest.getImageList();
+                    String imageKey = httpRequest.getImageKey();
+                    File image = httpRequest.getImage();
+                    setMultiPartEntity(httpPost, params, imageList, image, keyList, imageKey);
                 } catch (Exception e) {
                     throw new UnknownException(e.toString());
                 }
@@ -154,13 +160,24 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             for (String imageFileName : images.keySet()) {
                 String paramName = keyList.get(imageFileName);
                 File imageFile = images.get(imageFileName);
-                entityBuilder.addBinaryBody(paramName, imageFile, ContentType.MULTIPART_FORM_DATA, imageFileName);
+                if (imageFile == null) {
+                    throw new FileNotFoundException("File is null: " + imageFileName);
+                }
+                if (!imageFile.exists()) {
+                    throw new FileNotFoundException("File Not Exists: " + imageFile.getAbsolutePath());
+                }
+                entityBuilder.addBinaryBody(paramName, imageFile);
             }
-        } else if (imageData != null && imageData.exists()) {
-            entityBuilder.addBinaryBody(imageKey, imageData);
+        } else if (imageData != null) {
+            if (imageData.exists()) {
+                entityBuilder.addBinaryBody(imageKey, imageData);
+            } else {
+                throw new FileNotFoundException("File Not Exists: " + imageData.getAbsolutePath());
+            }
         }
 
-        httpPost.setEntity(entityBuilder.build());
+        HttpEntity entity = entityBuilder.build();
+        httpPost.setEntity(entity);
     }
 
     /**
