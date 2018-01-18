@@ -166,13 +166,12 @@ public class DetectionOp extends BaseOp {
         
         httpRequest.setMethod(HttpMethod.POST);
         if (request.isUrl()) {
-            httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
-            httpRequest.addParam(RequestBodyKey.URL_LIST, (request.getUrlList())); 
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON); 
+            httpRequest.addParam(RequestBodyKey.URL_LIST, (request.getUrlList())); 
         } else {
+            httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
             httpRequest.setImageList(request.getImageList());
             httpRequest.setKeyList(request.getKeyList());
-            httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
         }
               
         return httpClient.sendHttpRequest(httpRequest);
@@ -239,7 +238,6 @@ public class DetectionOp extends BaseOp {
             httpRequest.addParam(RequestBodyKey.URL, request.getUrl());
         } else {
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
-            httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.MULTIPART_FORM_DATA));
             httpRequest.setImage(request.getImage());
         }
         return httpClient.sendHttpRequest(httpRequest);
