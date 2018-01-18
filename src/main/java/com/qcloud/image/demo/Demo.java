@@ -533,8 +533,8 @@ public class Demo {
         // 1. url方式
         System.out.println("====================================================");
         String[] namecardUrlList = new String[2];
-        namecardUrlList[0] = "http://youtu.qq.com/app/img/experience/char_general/icon_namecard_01.jpg";
-        namecardUrlList[1] = "http://youtu.qq.com/app/img/experience/char_general/icon_namecard_02.jpg";
+        namecardUrlList[0] = "http://youtu.qq.com/app/img/experience/char_general/ocr_namecard_01.jpg";
+        namecardUrlList[1] = "http://youtu.qq.com/app/img/experience/char_general/ocr_namecard_02.jpg";
         NamecardDetectRequest nameReq = new NamecardDetectRequest(bucketName, namecardUrlList, 0);
 
         ret = imageClient.namecardDetect(nameReq);
@@ -545,9 +545,9 @@ public class Demo {
         String[] namecardNameList = new String[2];
         File[] namecardImageList = new File[2];
         try {
-            namecardNameList[0] = "icon_namecard_01.jpg";
+            namecardNameList[0] = "ocr_namecard_01.jpg";
             namecardImageList[0] = new File("assets", namecardNameList[0]);
-            namecardNameList[1] = "icon_namecard_02.jpg";
+            namecardNameList[1] = "ocr_namecard_02.jpg";
             namecardImageList[1] = new File("assets", namecardNameList[1]);
         } catch (Exception ex) {
             Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
@@ -564,13 +564,13 @@ public class Demo {
         String ret;
         // 1. url方式
         System.out.println("====================================================");
-        GeneralOcrRequest request = new GeneralOcrRequest(bucketName, "http://youtu.qq.com/app/img/experience/char_general/icon_ocr_common09.jpg");
+        GeneralOcrRequest request = new GeneralOcrRequest(bucketName, "http://youtu.qq.com/app/img/experience/char_general/ocr_common09.jpg");
         ret = imageClient.generalOcr(request);
         System.out.println("ocrGeneral:" + ret);
 
         //2. 图片内容方式
         System.out.println("====================================================");
-        request = new GeneralOcrRequest(bucketName, new File("assets", "icon_ocr_common09.png"));
+        request = new GeneralOcrRequest(bucketName, new File("assets", "ocr_common09.jpg"));
         ret = imageClient.generalOcr(request);
         System.out.println("ocrGeneral:" + ret);
     }
@@ -582,13 +582,13 @@ public class Demo {
         String ret;
         // 1. url方式
         System.out.println("====================================================");
-        OcrBizLicenseRequest request = new OcrBizLicenseRequest(bucketName, "http://youtu.qq.com/app/img/experience/char_general/icon_ocr_yyzz_01.jpg");
+        OcrBizLicenseRequest request = new OcrBizLicenseRequest(bucketName, "http://youtu.qq.com/app/img/experience/char_general/ocr_yyzz_02.jpg");
         ret = imageClient.ocrBizLicense(request);
         System.out.println("ocrBizLicense:" + ret);
 
         //2. 图片内容方式
         System.out.println("====================================================");
-        request = new OcrBizLicenseRequest(bucketName, new File("assets", "icon_ocr_yyzz_01.jpg"));
+        request = new OcrBizLicenseRequest(bucketName, new File("assets", "ocr_yyzz_02.jpg"));
         ret = imageClient.ocrBizLicense(request);
         System.out.println("ocrBizLicense:" + ret);
     }
