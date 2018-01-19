@@ -189,7 +189,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getDetectionNamecard();
+        String url = "http://" + this.config.getQCloudOcrDomain() + this.config.getDetectionNamecard();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
