@@ -1,4 +1,4 @@
-#腾讯云 [智能图像服务](https://cloud.tencent.com/document/product/641/12437) SDK for JAVA
+# 腾讯云 [智能图像服务](https://cloud.tencent.com/document/product/641/12437) SDK for JAVA
 
 
 ## 使用前准备​		
@@ -8,7 +8,7 @@
 
 ## 快速体验
 1. 修改文件 src/main/java/com/qcloud/image/demo/Demo.java 的 main() 方法，填入上述申请到的 **APPID**、**SecretId**、**SecretKey**、**BucketName**
-2. 视网络环境，可能要设置代理，例如 `imageClient.setProxy(new HttpHost("127.0.0.1", 8080));`
+
 3. 导入到 IDE：工程用 Maven 构建，以 Intellij IDEA 为例，导入方式为：Import Project -> 选择工程目录 -> 
   Import project from external model -> Maven
 4. 运行：Demo.java 右键，Run Demo.main()
@@ -16,7 +16,16 @@
 ## 使用简介
 ### 初始化
 
-`ImageClient imageClient = new ImageClient(APPID, SecretId, SecretKey);`
+```java
+ImageClient imageClient = new ImageClient(APPID, SecretId, SecretKey);
+```
+
+### 设置代理
+根据实际网络环境，可能要设置代理，例如: 
+
+```java
+imageClient.setProxy(new HttpHost("127.0.0.1", 8080));
+```
 
 ### 使用
 SDK 提供功能如下：
