@@ -10,7 +10,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.qcloud</groupId>
     <artifactId>qcloud-sdk</artifactId>
-	<version>2.1.0</version>
+	<version>2.2.0</version>
 	<packaging>jar</packaging>
 	<licenses>
 		<license>
@@ -175,7 +175,22 @@
 					</formats>
 				</configuration>
 			</plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <!--这部分可有可无,加上的话则直接生成可运行jar包-->
+                    <!--<archive>-->
+                    <!--<manifest>-->
+                    <!--<mainClass>${exec.mainClass}</mainClass>-->
+                    <!--</manifest>-->
+                    <!--</archive>-->
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
 		</plugins>
+        
 	</build>
 
 </project>
