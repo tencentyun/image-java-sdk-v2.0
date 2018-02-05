@@ -38,7 +38,9 @@ SDK 提供功能如下：
 详情可参见 `Demo.java` 的代码。
 
 ### 释放资源
-`imageClient.shutdown();`
+```java
+imageClient.shutdown();
+```
 
 ## 集成到你的项目中
 ### 获得 SDK jar 文件

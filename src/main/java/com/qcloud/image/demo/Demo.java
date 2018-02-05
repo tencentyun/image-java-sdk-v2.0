@@ -612,7 +612,7 @@ public class Demo {
     }
 
     /**
-     * OCR-银行卡识别
+     * OCR-车牌识别
      */
     private static void ocrPlate(ImageClient imageClient, String bucketName) {
         String ret;
