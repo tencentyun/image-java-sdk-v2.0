@@ -30,7 +30,7 @@ public class CommonCodecUtils {
 	 * @return 编码后的字符串
 	 */
 	public static String Base64Encode(byte[] binaryData) {
-		String encodedstr = Base64.encodeBase64String(binaryData);
+		String encodedstr =new String(Base64.encodeBase64(binaryData));
 		return encodedstr;
 	}
 
