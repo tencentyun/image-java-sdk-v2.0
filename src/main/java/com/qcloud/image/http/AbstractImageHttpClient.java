@@ -4,40 +4,36 @@ import com.qcloud.image.ClientConfig;
 import com.qcloud.image.exception.AbstractImageException;
 import com.qcloud.image.exception.ParamException;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-
 public abstract class AbstractImageHttpClient {
+
     protected ClientConfig config;
-    protected HttpClient httpClient;
+/*    protected HttpClient httpClient;
     
     private PoolingHttpClientConnectionManager connectionManager;
     private IdleConnectionMonitorThread idleConnectionMonitor;
     
-    private RequestConfig requestConfig;
+    private RequestConfig requestConfig;*/
 
     public AbstractImageHttpClient(ClientConfig config) {
         super();
         this.config = config;
-        this.connectionManager = new PoolingHttpClientConnectionManager();
+/*        this.connectionManager = new PoolingHttpClientConnectionManager();
         this.connectionManager.setMaxTotal(config.getMaxConnectionsCount());
         this.connectionManager.setDefaultMaxPerRoute(config.getMaxConnectionsCount());
         this.httpClient = HttpClients.custom().setConnectionManager(connectionManager).build();
         this.idleConnectionMonitor = new IdleConnectionMonitorThread(this.connectionManager);
-        this.idleConnectionMonitor.start();
+        this.idleConnectionMonitor.start();*/
     }
     
-    protected RequestConfig onGetConfig(){   
+/*    protected RequestConfig onGetConfig(){   
         this.requestConfig =  RequestConfig.custom()
             .setConnectionRequestTimeout(this.config.getConnectionRequestTimeout())
             .setConnectTimeout(this.config.getConnectionTimeout())
             .setSocketTimeout(this.config.getSocketTimeout())
             .setProxy(this.config.getProxy())
             .build();
-        return this.requestConfig;}
-    
+        return this.requestConfig;}*/
+
     protected abstract String sendPostRequest(HttpRequest httpRequest) throws AbstractImageException;
 
     protected abstract String sendGetRequest(HttpRequest httpRequest) throws AbstractImageException;
@@ -53,8 +49,8 @@ public abstract class AbstractImageHttpClient {
             throw new ParamException("Unsupported Http Method");
         }
     }
-    
-    public void shutdown() {
+
+    public abstract void shutdown();/* {
         this.idleConnectionMonitor.shutdown();
-    }
+    }*/
 }

@@ -1,59 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-	</parent>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
 
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.qcloud</groupId>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.qcloud</groupId>
     <artifactId>qcloud-sdk</artifactId>
-	<version>2.2.0</version>
-	<packaging>jar</packaging>
-	<licenses>
-		<license>
+    <version>2.2.0</version>
+    <packaging>jar</packaging>
+    <licenses>
+        <license>
             <name>qcloud-java-sdk</name>
             <url>https://github.com/tencentyun/image-java-sdk-v2.0</url>
-		</license>
-	</licenses>
+        </license>
+    </licenses>
 
-	<developers>
-		<developer>
+    <developers>
+        <developer>
             <name>tencentyun</name>
             <email>hoshinight@gmail.com</email>
-		</developer>
-	</developers>
+        </developer>
+    </developers>
 
-	<scm>
+    <scm>
         <connection>scm:git:https://github.com/tencentyun/image-java-sdk-v2.0.git</connection>
         <developerConnection>scm:git:https://github.com/tencentyun/image-java-sdk-v2.0.git</developerConnection>
         <url>https://github.com/tencentyun/image-java-sdk-v2.0</url>
-	</scm>
+    </scm>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
-	</properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+    </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.hynnet</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.hynnet</groupId>
-                    <artifactId>httpcore</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>com.hynnet</groupId>-->
+        <!--<artifactId>httpclient</artifactId>-->
+        <!--<version>4.5.1</version>-->
+        <!--<exclusions>-->
+        <!--<exclusion>-->
+        <!--<groupId>com.hynnet</groupId>-->
+        <!--<artifactId>httpcore</artifactId>-->
+        <!--</exclusion>-->
+        <!--</exclusions>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
             <version>4.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>2.7.5</version>
         </dependency>
         <dependency>
             <groupId>net.sf.json-lib</groupId>
@@ -94,87 +100,87 @@
             <type>jar</type>
         </dependency>
     </dependencies>
-	<distributionManagement>
-		<repository>
-			<id>oss</id>
-			<name>qcloud-sdk</name>
-			<url>
-                    https://oss.sonatype.org/service/local/staging/deploy/maven2
-			</url>
-		</repository>
-
-		<snapshotRepository>
-			<id>oss</id>
+    <distributionManagement>
+        <repository>
+            <id>oss</id>
             <name>qcloud-sdk</name>
-			<url>
-                    https://oss.sonatype.org/content/repositories/snapshots
-			</url>
-		</snapshotRepository>
-	</distributionManagement>
+            <url>
+                https://oss.sonatype.org/service/local/staging/deploy/maven2
+            </url>
+        </repository>
 
-	<build>
+        <snapshotRepository>
+            <id>oss</id>
+            <name>qcloud-sdk</name>
+            <url>
+                https://oss.sonatype.org/content/repositories/snapshots
+            </url>
+        </snapshotRepository>
+    </distributionManagement>
 
-		<plugins>
-			<plugin>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1</version>
-				<configuration>
-					<attach>true</attach>
+    <build>
 
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+        <plugins>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <attach>true</attach>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.9.1</version>
-				<configuration>
-					<aggregate>true</aggregate>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<version>1.5</version>
-				<executions>
-					<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<formats>
-						<format>html</format>
-						<format>xml</format>
-					</formats>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                </configuration>
+            </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
@@ -189,8 +195,8 @@
                     </descriptorRefs>
                 </configuration>
             </plugin>
-		</plugins>
-        
-	</build>
+        </plugins>
+
+    </build>
 
 </project>
