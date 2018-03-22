@@ -108,9 +108,6 @@ public class Demo {
         faceIdCardLiveDetectFour(imageClient, bucketName, validate, video);
         faceLiveDetectFour(imageClient, bucketName, validate, video);
 
-        // 关闭释放资源
-        imageClient.shutdown();
-        System.out.println("shutdown!");
     }
 
     /**
