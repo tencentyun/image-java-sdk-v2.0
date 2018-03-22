@@ -36,10 +36,10 @@ import com.qcloud.image.request.PornDetectRequest;
 import com.qcloud.image.request.TagDetectRequest;
 import com.qcloud.image.sign.Credentials;
 
-import org.apache.http.HttpHost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.Proxy;
 
 /**
  * @author chengwu 封装Image JAVA SDK暴露给用户的接口函数
@@ -75,7 +75,7 @@ public class ImageClient implements Image {
         this.detectionOp.setCred(cred);
     }
 
-    public void setProxy(HttpHost proxy) {
+    public void setProxy(Proxy proxy) {
         this.config.setProxy(proxy);
     }
 

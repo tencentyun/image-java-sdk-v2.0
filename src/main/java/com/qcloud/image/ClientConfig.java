@@ -1,6 +1,6 @@
 package com.qcloud.image;
 
-import org.apache.http.HttpHost;
+import java.net.Proxy;
 
 public class ClientConfig {
     // 多次签名的默认过期时间,单位秒
@@ -113,15 +113,16 @@ public class ClientConfig {
     private int socketTimeout = DEFAULT_SOCKET_TIMEOUT;
     private int maxConnectionsCount = DEFAULT_MAX_CONNECTIONS_COUNT;
     private String userAgent = DEFAULT_USER_AGENT;
-    private HttpHost mProxy;
+    private Proxy mProxy;
 
-    public void setProxy(HttpHost proxy) {
+    public void setProxy(Proxy proxy) {
         mProxy = proxy;
     }
 
-    public HttpHost getProxy() {
+    public Proxy getProxy() {
         return mProxy;
     }
+    
 
     public String getQCloudOcrDomain() {
         return QCLOUD_OCR_DOMAIN;

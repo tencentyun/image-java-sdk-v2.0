@@ -15,16 +15,12 @@ import com.squareup.okhttp.Request.Builder;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
-import org.apache.http.HttpHost;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
-import java.net.Proxy.Type;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,9 +47,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
 
     @Override
     protected String sendGetRequest(HttpRequest httpRequest) throws AbstractImageException {
-        HttpHost httpHost = config.getProxy();
-        Proxy proxy = new Proxy(Type.HTTP, new InetSocketAddress(httpHost.getHostName(), httpHost.getPort()));
-        mOkHttpClient.setProxy(proxy);
+        mOkHttpClient.setProxy(config.getProxy());
         
         //url
         HttpUrl.Builder urlBuilder = HttpUrl.parse(httpRequest.getUrl()).newBuilder();
@@ -140,10 +134,8 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
 
     @Override
     protected String sendPostRequest(HttpRequest httpRequest) throws AbstractImageException {
-        HttpHost httpHost = config.getProxy();
-        Proxy proxy = new Proxy(Type.HTTP, new InetSocketAddress(httpHost.getHostName(), httpHost.getPort()));
-        mOkHttpClient.setProxy(proxy);
-        
+        mOkHttpClient.setProxy(config.getProxy());
+
         if (httpRequest.getContentType() == HttpContentType.APPLICATION_JSON) {
             Map<String, Object> params = httpRequest.getParams();
             JSONObject root = new JSONObject(params);
