@@ -43,7 +43,7 @@ String result = imageClient.ocrPlate(new OcrPlateRequest("bucketName", imageUrl)
 System.out.println(result);
 ```
 
-更多例子详情可参见 `Demo.java` 的代码。
+更多例子详情可参见 [Demo.java](https://github.com/tencentyun/image-java-sdk-v2.0/blob/master/src/main/java/com/qcloud/image/demo/Demo.java) 的代码。
 
 ### 释放资源
 ```java
