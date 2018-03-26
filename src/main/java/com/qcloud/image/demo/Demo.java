@@ -233,24 +233,20 @@ public class Demo {
         String ret;
         // 1. url方式
         System.out.println("====================================================");
-        String faceIdentifyGroupId = "group1";
-        String faceIdentifyUrl = "YOUR URL";
-        FaceIdentifyRequest faceIdentifyReq = new FaceIdentifyRequest(bucketName, faceIdentifyGroupId, faceIdentifyUrl);
-
+        String groupId = "groupA";
+        String[] groupIds = {"groupA", "groupB"};
+        String faceImageUrl = "YOUR URL";
+        FaceIdentifyRequest faceIdentifyReq = new FaceIdentifyRequest(bucketName, groupId, faceImageUrl);// 一个 groupId
+        //FaceIdentifyRequest  faceIdentifyReq = new FaceIdentifyRequest(bucketName, groupIds, faceImageUrl);// 多个 groupId
         ret = imageClient.faceIdentify(faceIdentifyReq);
         System.out.println("face identify ret:" + ret);
 
         //2. 图片内容方式
         System.out.println("====================================================");
-        String faceIdentifyName = "";
-        File faceIdentifyImage = null;
-        try {
-            faceIdentifyName = "yang4.jpg";
-            faceIdentifyImage = new File("F:\\pic\\yang4.jpg");
-        } catch (Exception ex) {
-            Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        faceIdentifyReq = new FaceIdentifyRequest(bucketName, faceIdentifyGroupId, faceIdentifyName, faceIdentifyImage);
+        String faceImageFileParamName = "image";
+        File   faceImageFile = new File("/home/test.jpg");
+        faceIdentifyReq = new FaceIdentifyRequest(bucketName, groupId, faceImageFileParamName, faceImageFile);// 一个 groupId
+        //faceIdentifyReq = new FaceIdentifyRequest(bucketName, groupIds, faceImageFileParamName, faceImageFile);// 多个 groupId
         ret = imageClient.faceIdentify(faceIdentifyReq);
         System.out.println("face identify ret:" + ret);
     }

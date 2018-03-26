@@ -26,6 +26,8 @@ public class FaceIdentifyRequest extends AbstractBaseRequest {
         
         //要查询的组Id
          private String groupId = "";
+
+    private String[] groupIds = {""};
               
         public FaceIdentifyRequest(String bucketName, String groupId, String url) {
 		super(bucketName);
@@ -40,8 +42,22 @@ public class FaceIdentifyRequest extends AbstractBaseRequest {
                 this.groupId = groupId;
                 this.image = image;             
 	}
-        
-        public boolean isUrl() {
+
+    public FaceIdentifyRequest(String bucketName, String[] groupIds, String url) {
+        super(bucketName);
+        this.isUrl = true;
+        this.url = url;
+        this.groupIds = groupIds;
+    }
+
+    public FaceIdentifyRequest(String bucketName, String[] groupIds, String name, File image) {
+        super(bucketName);
+        this.isUrl = false;
+        this.groupIds = groupIds;
+        this.image = image;
+    }
+
+    public boolean isUrl() {
             return isUrl;
         }
         
@@ -53,7 +69,11 @@ public class FaceIdentifyRequest extends AbstractBaseRequest {
             return groupId;
         }
 
-        public void setUrl(String url) {
+    public String[] getGroupIds() {
+        return groupIds;
+    }
+
+    public void setUrl(String url) {
             this.url = url;
         }
 

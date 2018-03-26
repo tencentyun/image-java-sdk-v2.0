@@ -9,6 +9,7 @@ import com.qcloud.image.ClientConfig;
 import com.qcloud.image.common_utils.CommonCodecUtils;
 import com.qcloud.image.common_utils.CommonFileUtils;
 import com.qcloud.image.exception.AbstractImageException;
+import com.qcloud.image.exception.ParamException;
 import com.qcloud.image.http.AbstractImageHttpClient;
 import com.qcloud.image.http.HttpContentType;
 import com.qcloud.image.http.HttpMethod;
@@ -765,15 +766,37 @@ public class DetectionOp extends BaseOp {
         httpRequest.addHeader(RequestHeaderKey.USER_AGENT, this.config.getUserAgent());
         httpRequest.addParam(RequestBodyKey.APPID, String.valueOf(cred.getAppId()));
         httpRequest.addParam(RequestBodyKey.BUCKET, request.getBucketName());
-        httpRequest.addParam(RequestBodyKey.GROUP_ID, (request.getGroupId()));
         httpRequest.setMethod(HttpMethod.POST);
+
+        String groupId = request.getGroupId();
+        String[] groupIds = request.getGroupIds();
+        
         if (request.isUrl()) {
             httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
             httpRequest.addParam(RequestBodyKey.URL, request.getUrl());
-            httpRequest.setContentType(HttpContentType.APPLICATION_JSON);  
+            httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
+            if (groupId != null && !groupId.isEmpty()) {
+                httpRequest.addParam(RequestBodyKey.GROUP_ID, groupId);
+            } else if (groupIds != null && groupIds.length > 0) {
+                httpRequest.addParam(RequestBodyKey.GROUP_IDS, request.getGroupIds());
+            } else {
+                throw new ParamException("groupId and groupIds both null or empty!!");
+            }
         } else {
             httpRequest.setImage(request.getImage());
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
+            if (groupId != null && !groupId.isEmpty()) {
+                httpRequest.addParam(RequestBodyKey.GROUP_ID, groupId);
+            } else if (groupIds != null && groupIds.length > 0) {
+                int index;
+                for (index = 0; index < groupIds.length; index++) {
+                    String key = String.format("group_ids[%d]", index);
+                    String data = groupIds[index];
+                    httpRequest.addParam(key, data);
+                }
+            } else {
+                throw new ParamException("groupId and groupIds both null or empty!!");
+            }
         }
               
         return httpClient.sendHttpRequest(httpRequest);
