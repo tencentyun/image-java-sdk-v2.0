@@ -45,11 +45,6 @@ System.out.println(result);
 
 更多例子详情可参见 [Demo.java](https://github.com/tencentyun/image-java-sdk-v2.0/blob/master/src/main/java/com/qcloud/image/demo/Demo.java) 的代码。
 
-### 释放资源
-```java
-imageClient.shutdown();
-```
-
 ## 集成到你的项目中
 ### 获得 SDK jar 文件
 1. 直接使用 release/*-with-dependencies.jar
