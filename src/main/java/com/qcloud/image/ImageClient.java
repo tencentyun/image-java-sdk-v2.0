@@ -7,8 +7,10 @@ import com.qcloud.image.http.DefaultImageHttpClient;
 import com.qcloud.image.op.DetectionOp;
 import com.qcloud.image.request.AbstractBaseRequest;
 import com.qcloud.image.request.FaceAddFaceRequest;
+import com.qcloud.image.request.FaceAddGroupIdsRequest;
 import com.qcloud.image.request.FaceCompareRequest;
 import com.qcloud.image.request.FaceDelFaceRequest;
+import com.qcloud.image.request.FaceDelGroupIdsRequest;
 import com.qcloud.image.request.FaceDelPersonRequest;
 import com.qcloud.image.request.FaceDetectRequest;
 import com.qcloud.image.request.FaceGetFaceIdsRequest;
@@ -341,7 +343,35 @@ public class ImageClient implements Image {
             return e1.toString();
         }
     }
-    
+
+    @Override
+    public String faceAddGroupIds(FaceAddGroupIdsRequest request, boolean useNewDomain) {
+        try {
+            return detectionOp.faceAddGroupIds(request, useNewDomain);
+        } catch (AbstractImageException e) {
+            recordException("faceGetGroupIds", request, e.toString());
+            return e.toString();
+        } catch (Exception e) {
+            UnknownException e1 = new UnknownException(e.toString());
+            recordException("faceGetGroupIds", request, e1.toString());
+            return e1.toString();
+        }
+    }
+
+    @Override
+    public String faceDelGroupIds(FaceDelGroupIdsRequest request, boolean useNewDomain) {
+        try {
+            return detectionOp.faceDelGroupIds(request, useNewDomain);
+        } catch (AbstractImageException e) {
+            recordException("faceGetGroupIds", request, e.toString());
+            return e.toString();
+        } catch (Exception e) {
+            UnknownException e1 = new UnknownException(e.toString());
+            recordException("faceGetGroupIds", request, e1.toString());
+            return e1.toString();
+        }
+    }
+
     @Override
     public String faceGetPersonIds(FaceGetPersonIdsRequest request) {
         try {

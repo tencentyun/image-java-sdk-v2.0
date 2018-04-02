@@ -17,8 +17,10 @@ import com.qcloud.image.http.HttpRequest;
 import com.qcloud.image.http.RequestBodyKey;
 import com.qcloud.image.http.RequestHeaderKey;
 import com.qcloud.image.request.FaceAddFaceRequest;
+import com.qcloud.image.request.FaceAddGroupIdsRequest;
 import com.qcloud.image.request.FaceCompareRequest;
 import com.qcloud.image.request.FaceDelFaceRequest;
+import com.qcloud.image.request.FaceDelGroupIdsRequest;
 import com.qcloud.image.request.FaceDelPersonRequest;
 import com.qcloud.image.request.FaceDetectRequest;
 import com.qcloud.image.request.FaceGetFaceIdsRequest;
@@ -646,13 +648,13 @@ public class DetectionOp extends BaseOp {
      * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功, 其他为失败,
      *         message为success或者失败原因
      * @throws AbstractImageException SDK定义的Image异常, 通常是输入参数有误或者环境问题(如网络不通)
-     */  
+     */
     public String faceGetGroupIds(FaceGetGroupIdsRequest request) throws AbstractImageException {
         request.check_param();
-        
+
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
         String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceGetGroupIdsInfo();
-        
+
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
         httpRequest.addHeader(RequestHeaderKey.Authorization, sign);
@@ -660,8 +662,80 @@ public class DetectionOp extends BaseOp {
         httpRequest.addParam(RequestBodyKey.APPID, String.valueOf(cred.getAppId()));
         httpRequest.addParam(RequestBodyKey.BUCKET, request.getBucketName());
         httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
-        httpRequest.setContentType(HttpContentType.APPLICATION_JSON);  
-    
+        httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
+
+        return httpClient.sendHttpRequest(httpRequest);
+    }
+
+    /**
+     * Person新增组信息, 文档见 https://cloud.tencent.com/document/product/641/12417
+     * @param useNewDomain 是否使用新域名，<br>
+     * true: http://recognition.image.myqcloud.com/face/multidentify <br>
+     * false: http://service.image.myqcloud.com/face/multidentify <br>
+     * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
+     * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功, 其他为失败,
+     * message为success或者失败原因
+     * @throws AbstractImageException SDK定义的Image异常, 通常是输入参数有误或者环境问题(如网络不通)
+     */
+    public String faceAddGroupIds(FaceAddGroupIdsRequest request, boolean useNewDomain) throws AbstractImageException {
+        request.check_param();
+
+        String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
+        String url = useNewDomain ? "http://recognition.image.myqcloud.com/face/addgroupids"
+                : "http://service.image.myqcloud.com/face/addgroupids";
+
+        HttpRequest httpRequest = new HttpRequest();
+        httpRequest.setMethod(HttpMethod.POST);
+        httpRequest.setUrl(url);
+        httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
+
+        httpRequest.addHeader(RequestHeaderKey.Authorization, sign);
+        httpRequest.addHeader(RequestHeaderKey.USER_AGENT, this.config.getUserAgent());
+
+        httpRequest.addParam(RequestBodyKey.APPID, String.valueOf(cred.getAppId()));
+        httpRequest.addParam("person_id", request.getPerson_id());
+        httpRequest.addParam("group_ids", request.getGroup_ids());
+        String session_id = request.getSession_id();
+        if (session_id != null && !session_id.isEmpty()) {
+            httpRequest.addParam("session_id", session_id);
+        }
+
+        return httpClient.sendHttpRequest(httpRequest);
+    }
+
+    /**
+     * Person删除组信息, 文档见 https://cloud.tencent.com/document/product/641/12417
+     * @param useNewDomain 是否使用新域名，<br>
+     * true: http://recognition.image.myqcloud.com/face/multidentify <br>
+     * false: http://service.image.myqcloud.com/face/multidentify <br>
+     * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
+     * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功, 其他为失败,
+     * message为success或者失败原因
+     * @throws AbstractImageException SDK定义的Image异常, 通常是输入参数有误或者环境问题(如网络不通)
+     */
+    public String faceDelGroupIds(FaceDelGroupIdsRequest request, boolean useNewDomain) throws AbstractImageException {
+        request.check_param();
+
+        String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
+        String url = useNewDomain ? "http://recognition.image.myqcloud.com/face/delgroupids"
+                : "http://service.image.myqcloud.com/face/delgroupids";
+
+        HttpRequest httpRequest = new HttpRequest();
+        httpRequest.setMethod(HttpMethod.POST);
+        httpRequest.setUrl(url);
+        httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
+
+        httpRequest.addHeader(RequestHeaderKey.Authorization, sign);
+        httpRequest.addHeader(RequestHeaderKey.USER_AGENT, this.config.getUserAgent());
+
+        httpRequest.addParam(RequestBodyKey.APPID, String.valueOf(cred.getAppId()));
+        httpRequest.addParam("person_id", request.getPerson_id());
+        httpRequest.addParam("group_ids", request.getGrooup_ids());
+        String session_id = request.getSession_id();
+        if (session_id != null && !session_id.isEmpty()) {
+            httpRequest.addParam("session_id", session_id);
+        }
+
         return httpClient.sendHttpRequest(httpRequest);
     }
     

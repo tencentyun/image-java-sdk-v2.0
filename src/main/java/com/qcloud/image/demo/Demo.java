@@ -91,6 +91,8 @@ public class Demo {
         faceSetInfo(imageClient, bucketName);
         faceGetInfo(imageClient, bucketName);
         faceGetGroupId(imageClient, bucketName);
+        faceAddGroupId(imageClient, bucketName);
+        faceDelGroupId(imageClient, bucketName);
         faceGetPersonId(imageClient, bucketName);
         faceGetFaceIdList(imageClient, bucketName);
         faceGetFaceInfo(imageClient, bucketName);
@@ -347,6 +349,30 @@ public class Demo {
     }
 
     /**
+     * Person新增组信息, 文档 https://cloud.tencent.com/document/product/641/12417
+     */
+    private static void faceAddGroupId(ImageClient imageClient, String bucketName) {
+        String ret;
+        System.out.println("====================================================");
+        FaceAddGroupIdsRequest request = new FaceAddGroupIdsRequest(bucketName, "personId1", "group2");
+
+        ret = imageClient.faceAddGroupIds(request, false);
+        System.out.println("face add group ids  ret:" + ret);
+    }
+
+    /**
+     * Person删除组信息, 文档 https://cloud.tencent.com/document/product/641/12417
+     */
+    private static void faceDelGroupId(ImageClient imageClient, String bucketName) {
+        String ret;
+        System.out.println("====================================================");
+        FaceDelGroupIdsRequest request = new FaceDelGroupIdsRequest(bucketName, "personId1", "group2");
+
+        ret = imageClient.faceDelGroupIds(request, false);
+        System.out.println("face del group ids  ret:" + ret);
+    }
+
+    /**
      * 个体获取信息
      */
     private static void faceGetInfo(ImageClient imageClient, String bucketName) {
@@ -443,36 +469,25 @@ public class Demo {
      */
     private static String faceNewPerson(ImageClient imageClient, String bucketName) {
         String ret;
+        FaceNewPersonRequest personNewReq;
+        String[] groupIds = new String[2];
+        groupIds[0] = "group0";
+        groupIds[1] = "group1";
+        String personName = "yangmi1";
+        String personId = "personId1";
+        String personTag = "star1";
+        
         // 1. url方式
         System.out.println("====================================================");
         String personNewUrl = "YOUR URL";
-        String[] groupIds = new String[2];
-        groupIds[0] = "group3";
-        groupIds[1] = "group22";
-        String personName = "yangmi";
-        String personId = "personY";
-        String personTag = "star";
-        FaceNewPersonRequest personNewReq = new FaceNewPersonRequest(bucketName, personId, groupIds, personNewUrl, personName, personTag);
-
+        personNewReq = new FaceNewPersonRequest(bucketName, personId, groupIds, personNewUrl, personName, personTag);
         ret = imageClient.faceNewPerson(personNewReq);
         System.out.println("person new  ret:" + ret);
 
         //2. 图片内容方式
         System.out.println("====================================================");
-        String personNewName = "";
-        File personNewImage = null;
-        groupIds[0] = "group11";
-        groupIds[1] = "group33";
-        personName = "yangmi";
-        personId = "persony";
-        personTag = "star";
-        try {
-            personNewName = "yang.jpg";
-            personNewImage = new File("F:\\pic\\yang.jpg");
-        } catch (Exception ex) {
-            Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        personNewReq = new FaceNewPersonRequest(bucketName, personId, groupIds, personNewName, personNewImage, personName, personTag);
+        File personNewImage = new File("assets","icon_face_01.jpg");
+        personNewReq = new FaceNewPersonRequest(bucketName, personId, groupIds, personName, personNewImage, personName, personTag);
         ret = imageClient.faceNewPerson(personNewReq);
         System.out.println("person new ret:" + ret);
         return personId;

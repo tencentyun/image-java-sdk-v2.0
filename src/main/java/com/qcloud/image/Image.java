@@ -1,8 +1,10 @@
 package com.qcloud.image;
 
 import com.qcloud.image.request.FaceAddFaceRequest;
+import com.qcloud.image.request.FaceAddGroupIdsRequest;
 import com.qcloud.image.request.FaceCompareRequest;
 import com.qcloud.image.request.FaceDelFaceRequest;
+import com.qcloud.image.request.FaceDelGroupIdsRequest;
 import com.qcloud.image.request.FaceDelPersonRequest;
 import com.qcloud.image.request.FaceDetectRequest;
 import com.qcloud.image.request.FaceGetFaceIdsRequest;
@@ -191,6 +193,28 @@ public interface Image {
 	 *         其他为失败, message为success或者失败原因
 	 */    
      String faceGetGroupIds(FaceGetGroupIdsRequest request);
+
+    /**
+     * Person新增组信息 https://cloud.tencent.com/document/product/641/12417
+     * @param useNewDomain 是否使用新域名，<br>
+     * true: http://recognition.image.myqcloud.com/face/multidentify <br>
+     * false: http://service.image.myqcloud.com/face/multidentify <br>
+     * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
+     * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功,
+     * 其他为失败, message为success或者失败原因
+     */
+    String faceAddGroupIds(FaceAddGroupIdsRequest request, boolean useNewDomain);
+
+    /**
+     * Person删除组信息 https://cloud.tencent.com/document/product/641/12417
+     * @param useNewDomain 是否使用新域名，<br>
+     * true: http://recognition.image.myqcloud.com/face/multidentify <br>
+     * false: http://service.image.myqcloud.com/face/multidentify <br>
+     * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
+     * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功,
+     * 其他为失败, message为success或者失败原因
+     */
+    String faceDelGroupIds(FaceDelGroupIdsRequest request, boolean useNewDomain);
      
       /**
 	 *获取人列表接口
