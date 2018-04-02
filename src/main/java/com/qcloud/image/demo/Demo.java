@@ -106,6 +106,30 @@ public class Demo {
         String validate = faceLiveGetFour(imageClient, bucketName);
         faceIdCardLiveDetectFour(imageClient, bucketName, validate);
         faceLiveDetectFour(imageClient, bucketName, validate);
+        faceLiveDetectPicture(imageClient, bucketName);//人脸静态活体检测
+    }
+
+    /**
+     * 人脸静态活体检测，文档 https://cloud.tencent.com/document/product/641/12558
+     */
+    private static void faceLiveDetectPicture(ImageClient imageClient, String bucketName) {
+        String result;
+        FaceLiveDetectPictureRequest request;
+        boolean useNewDomain = false;
+
+        // 1. url方式
+        System.out.println("====================================================");
+        String imageUrl = "";//照片url
+        request = new FaceLiveDetectPictureRequest(bucketName, imageUrl);
+        result = imageClient.faceLiveDetectPicture(request, useNewDomain);
+        System.out.println("face  live detect picture result:" + result);
+
+        //2. 图片内容方式
+        System.out.println("====================================================");
+        File image = new File("assets", "livedetectpicture.jpg");
+        request = new FaceLiveDetectPictureRequest(bucketName, image);
+        result = imageClient.faceLiveDetectPicture(request, useNewDomain);
+        System.out.println("face  live detect picture result:" + result);
     }
 
     /**

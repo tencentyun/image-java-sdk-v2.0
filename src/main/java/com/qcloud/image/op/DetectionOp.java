@@ -32,6 +32,7 @@ import com.qcloud.image.request.FaceIdCardCompareRequest;
 import com.qcloud.image.request.FaceIdCardLiveDetectFourRequest;
 import com.qcloud.image.request.FaceIdentifyRequest;
 import com.qcloud.image.request.FaceLiveDetectFourRequest;
+import com.qcloud.image.request.FaceLiveDetectPictureRequest;
 import com.qcloud.image.request.FaceLiveGetFourRequest;
 import com.qcloud.image.request.FaceMultiIdentifyRequest;
 import com.qcloud.image.request.FaceNewPersonRequest;
@@ -1138,6 +1139,39 @@ public class DetectionOp extends BaseOp {
         httpRequest.setKeyList(request.getKeyList());
         httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
    
+        return httpClient.sendHttpRequest(httpRequest);
+    }
+
+    /**
+     * 人脸静态活体检测
+     * @param useNewDomain 是否使用新域名，<br>
+     * true: http://recognition.image.myqcloud.com/face/multidentify <br>
+     * false: http://service.image.myqcloud.com/face/multidentify <br>
+     * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
+     * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功, 其他为失败,
+     * message为success或者失败原因
+     * @throws AbstractImageException SDK定义的Image异常, 通常是输入参数有误或者环境问题(如网络不通)
+     */
+    public String faceLiveDetectPicture(FaceLiveDetectPictureRequest request, boolean useNewDomain) throws AbstractImageException {
+        request.check_param();
+
+        String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
+        String url = useNewDomain ? "http://recognition.image.myqcloud.com/face/livedetectpicture"
+                : "http://service.image.myqcloud.com/face/livedetectpicture";
+
+        HttpRequest httpRequest = new HttpRequest();
+        httpRequest.setUrl(url);
+        httpRequest.addHeader(RequestHeaderKey.Authorization, sign);
+        httpRequest.addHeader(RequestHeaderKey.USER_AGENT, this.config.getUserAgent());
+        httpRequest.addParam(RequestBodyKey.APPID, String.valueOf(cred.getAppId()));
+        if (request.isUrl()) {
+            httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
+            httpRequest.addParam("url", request.getImageUrl());
+        } else {
+            httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
+            httpRequest.setImage(request.getImage());
+        }
+
         return httpClient.sendHttpRequest(httpRequest);
     }
     

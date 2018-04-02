@@ -16,6 +16,7 @@ import com.qcloud.image.request.FaceIdCardCompareRequest;
 import com.qcloud.image.request.FaceIdCardLiveDetectFourRequest;
 import com.qcloud.image.request.FaceIdentifyRequest;
 import com.qcloud.image.request.FaceLiveDetectFourRequest;
+import com.qcloud.image.request.FaceLiveDetectPictureRequest;
 import com.qcloud.image.request.FaceLiveGetFourRequest;
 import com.qcloud.image.request.FaceMultiIdentifyRequest;
 import com.qcloud.image.request.FaceNewPersonRequest;
@@ -324,6 +325,17 @@ public interface Image {
 	 *         其他为失败, message为success或者失败原因
 	 */    
      String faceLiveDetectFour(FaceLiveDetectFourRequest request);
+
+    /**
+     * 人脸静态活体检测 https://cloud.tencent.com/document/product/641/12558
+     * @param useNewDomain 是否使用新域名，<br>
+     * true: http://recognition.image.myqcloud.com/face/multidentify <br>
+     * false: http://service.image.myqcloud.com/face/multidentify <br>
+     * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
+     * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功,
+     * 其他为失败, message为success或者失败原因
+     */
+    String faceLiveDetectPicture(FaceLiveDetectPictureRequest request, boolean useNewDomain);
      
     /**
      * 关闭Image客户端连接池，释放涉及的资源，释放后，不能再使用Image的接口，必须重新生成一个新对象

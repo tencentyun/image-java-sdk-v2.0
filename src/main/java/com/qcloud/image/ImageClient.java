@@ -22,6 +22,7 @@ import com.qcloud.image.request.FaceIdCardCompareRequest;
 import com.qcloud.image.request.FaceIdCardLiveDetectFourRequest;
 import com.qcloud.image.request.FaceIdentifyRequest;
 import com.qcloud.image.request.FaceLiveDetectFourRequest;
+import com.qcloud.image.request.FaceLiveDetectPictureRequest;
 import com.qcloud.image.request.FaceLiveGetFourRequest;
 import com.qcloud.image.request.FaceMultiIdentifyRequest;
 import com.qcloud.image.request.FaceNewPersonRequest;
@@ -516,6 +517,19 @@ public class ImageClient implements Image {
     public String faceLiveDetectFour(FaceLiveDetectFourRequest request) {
         try {
             return detectionOp.faceLiveDetectFour(request);
+        } catch (AbstractImageException e) {
+            recordException("faceLiveDetectFour", request, e.toString());
+            return e.toString();
+        } catch (Exception e) {
+            UnknownException e1 = new UnknownException(e.toString());
+            recordException("faceLiveDetectFour", request, e1.toString());
+            return e1.toString();
+        }
+    }
+    @Override
+    public String faceLiveDetectPicture(FaceLiveDetectPictureRequest request,boolean useNewDomain) {
+        try {
+            return detectionOp.faceLiveDetectPicture(request,useNewDomain);
         } catch (AbstractImageException e) {
             recordException("faceLiveDetectFour", request, e.toString());
             return e.toString();
