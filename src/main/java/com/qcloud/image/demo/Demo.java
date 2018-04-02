@@ -97,33 +97,24 @@ public class Demo {
         faceFaceVerify(imageClient, bucketName);
         faceFaceIdentify(imageClient, bucketName);
         faceFaceCompare(imageClient, bucketName);
+        faceMultiIdentifyRequest(imageClient,bucketName);//多脸检索
+
+        /*人脸核身系列*/
         faceIdCardCompare(imageClient, bucketName);
         String validate = faceLiveGetFour(imageClient, bucketName);
-        File video = null;
-        try {
-            video = new File("F:\\pic\\ZOE_0171.mp4");
-        } catch (Exception ex) {
-            Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        faceIdCardLiveDetectFour(imageClient, bucketName, validate, video);
-        faceLiveDetectFour(imageClient, bucketName, validate, video);
-
+        faceIdCardLiveDetectFour(imageClient, bucketName, validate);
+        faceLiveDetectFour(imageClient, bucketName, validate);
     }
 
     /**
      * 检测视频和身份证是否对上操作
      */
-    private static void faceLiveDetectFour(ImageClient imageClient, String bucketName, String validate, File video) {
+    private static void faceLiveDetectFour(ImageClient imageClient, String bucketName, String validate) {
         String ret;
-        // 1. url方式
         System.out.println("====================================================");
-        File liveDetectImage = null;
         boolean compareFlag = true;
-        try {
-            liveDetectImage = new File("F:\\pic\\zhao2.jpg");
-        } catch (Exception ex) {
-            Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        File liveDetectImage = new File("F:\\pic\\zhao2.jpg");
+        File video = new File("/home/video.mp4");
 
         FaceLiveDetectFourRequest faceLiveDetectReq = new FaceLiveDetectFourRequest(bucketName, validate, compareFlag, video, liveDetectImage, "seq");
         ret = imageClient.faceLiveDetectFour(faceLiveDetectReq);
@@ -133,12 +124,12 @@ public class Demo {
     /**
      * 通过视频对比指定身份信息接口
      */
-    private static void faceIdCardLiveDetectFour(ImageClient imageClient, String bucketName, String validate, File video) {
+    private static void faceIdCardLiveDetectFour(ImageClient imageClient, String bucketName, String validate) {
         String ret;
-        // 1. url方式
         System.out.println("====================================================");
         String liveDetectIdcardNumber = "330782198802084329";
         String liveDetectIdcardName = "季锦锦";
+        File video = new File("/home/video.mp4");
 
         FaceIdCardLiveDetectFourRequest liveDetectReq = new FaceIdCardLiveDetectFourRequest(bucketName, validate, video, liveDetectIdcardNumber, liveDetectIdcardName, "seq");
         ret = imageClient.faceIdCardLiveDetectFour(liveDetectReq);
@@ -224,6 +215,29 @@ public class Demo {
         faceCompareReq = new FaceCompareRequest(bucketName, compareNameList, compareImageList);
         ret = imageClient.faceCompare(faceCompareReq);
         System.out.println("face compare ret:" + ret);
+    }
+
+    /**
+     * 多脸检索
+     * <a href="https://cloud.tencent.com/document/product/641/14349">点击查看文档</a>
+     */
+    private static void faceMultiIdentifyRequest(ImageClient imageClient, String bucketName) {
+        FaceMultiIdentifyRequest request;
+        String result;
+
+        // 1. url方式
+        System.out.println("====================================================");
+        String imageUrl = "http://youtu.qq.com/app/img/experience/face_img/icon_face_01.jpg";
+        request = new FaceMultiIdentifyRequest(bucketName, imageUrl, "tencent", "group_id_A", "group_id_B", "group_id_C");
+        result = imageClient.faceMultiIdentify(request, false);
+        System.out.println("face compare result:" + result);
+
+        //2. 图片内容方式
+        System.out.println("====================================================");
+        File imageFile = new File("assets","icon_face_01.jpg");
+        request = new FaceMultiIdentifyRequest(bucketName, imageFile, "tencent", "group_id_A", "group_id_B", "group_id_C");
+        result = imageClient.faceMultiIdentify(request, false);
+        System.out.println("face compare result:" + result);
     }
 
     /**

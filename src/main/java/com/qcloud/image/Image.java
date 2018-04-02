@@ -15,6 +15,7 @@ import com.qcloud.image.request.FaceIdCardLiveDetectFourRequest;
 import com.qcloud.image.request.FaceIdentifyRequest;
 import com.qcloud.image.request.FaceLiveDetectFourRequest;
 import com.qcloud.image.request.FaceLiveGetFourRequest;
+import com.qcloud.image.request.FaceMultiIdentifyRequest;
 import com.qcloud.image.request.FaceNewPersonRequest;
 import com.qcloud.image.request.FaceSetInfoRequest;
 import com.qcloud.image.request.FaceShapeRequest;
@@ -240,16 +241,25 @@ public interface Image {
 	 *         其他为失败, message为success或者失败原因
 	 */    
      String faceVerify(FaceVerifyRequest request);
-     
-      /**
-	 *人脸对比接口
-	 * 
-	 * @param request
-	 *            人脸对比接口
-	 * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功,
-	 *         其他为失败, message为success或者失败原因
-	 */    
-     String faceCompare(FaceCompareRequest request);
+
+    /**
+     * 人脸对比接口
+     * @param request 人脸对比接口
+     * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功,
+     * 其他为失败, message为success或者失败原因
+     */
+    String faceCompare(FaceCompareRequest request);
+
+    /**
+     * 多脸检索
+     * @param useNewDomain 是否使用新域名，<br>
+     * true: http://recognition.image.myqcloud.com/face/multidentify <br>
+     * false: http://service.image.myqcloud.com/face/multidentify <br>
+     * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
+     * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功,
+     * 其他为失败, message为success或者失败原因
+     */
+    String faceMultiIdentify(FaceMultiIdentifyRequest request, boolean useNewDomain);
      
      /**
 	 *身份证对比接口

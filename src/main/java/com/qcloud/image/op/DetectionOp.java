@@ -31,6 +31,7 @@ import com.qcloud.image.request.FaceIdCardLiveDetectFourRequest;
 import com.qcloud.image.request.FaceIdentifyRequest;
 import com.qcloud.image.request.FaceLiveDetectFourRequest;
 import com.qcloud.image.request.FaceLiveGetFourRequest;
+import com.qcloud.image.request.FaceMultiIdentifyRequest;
 import com.qcloud.image.request.FaceNewPersonRequest;
 import com.qcloud.image.request.FaceSetInfoRequest;
 import com.qcloud.image.request.FaceShapeRequest;
@@ -868,6 +869,67 @@ public class DetectionOp extends BaseOp {
         }
               
         return httpClient.sendHttpRequest(httpRequest);
+    }
+
+    /**
+     * @param useNewDomain 是否使用新域名，<br>
+     * true: http://recognition.image.myqcloud.com/face/multidentify <br>
+     * false: http://service.image.myqcloud.com/face/multidentify <br>
+     * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
+     */
+    public String faceMultiIdentify(FaceMultiIdentifyRequest request, boolean useNewDomain) throws AbstractImageException {
+        request.check_param();
+        String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
+        String url = useNewDomain ? "http://recognition.image.myqcloud.com/face/multidentify"
+                : "http://service.image.myqcloud.com/face/multidentify";
+
+        HttpRequest httpRequest = new HttpRequest();
+        httpRequest.setMethod(HttpMethod.POST);
+        httpRequest.setUrl(url);
+
+        httpRequest.addHeader(RequestHeaderKey.Authorization, sign);
+        httpRequest.addHeader(RequestHeaderKey.USER_AGENT, this.config.getUserAgent());
+
+        httpRequest.addParam(RequestBodyKey.APPID, String.valueOf(cred.getAppId()));
+
+        String session_id = request.getSession_id();
+        if (session_id != null && !session_id.isEmpty()) {
+            httpRequest.addParam("session_id", session_id);
+        }
+
+        if (request.isUrl()) {
+            httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
+            httpRequest.addParam("url", request.getImageUrl());
+            String[] groupIds = request.getGroup_ids();
+            if (groupIds != null && groupIds.length == 1) {
+                httpRequest.addParam(RequestBodyKey.GROUP_ID, groupIds[0]);
+            } else if (groupIds != null && groupIds.length > 1) {
+                httpRequest.addParam(RequestBodyKey.GROUP_IDS, groupIds);
+            } else {
+                throw new ParamException("group_ids can not be null or empty!!");
+            }
+
+        } else {
+            httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
+            httpRequest.setImage( request.getImageFile());
+            String[] groupIds = request.getGroup_ids();
+
+            if (groupIds != null && groupIds.length == 1) {
+                httpRequest.addParam(RequestBodyKey.GROUP_ID, groupIds[0]);
+            } else if (groupIds != null && groupIds.length > 1) {
+                int index;
+                for (index = 0; index < groupIds.length; index++) {
+                    String key = String.format("group_ids[%d]", index);
+                    String data = groupIds[index];
+                    httpRequest.addParam(key, data);
+                }
+            } else {
+                throw new ParamException("group_ids can not be null or empty!!");
+            }
+
+        }
+        return httpClient.sendHttpRequest(httpRequest);
+
     }
     
     /**

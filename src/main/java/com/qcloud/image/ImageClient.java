@@ -21,6 +21,7 @@ import com.qcloud.image.request.FaceIdCardLiveDetectFourRequest;
 import com.qcloud.image.request.FaceIdentifyRequest;
 import com.qcloud.image.request.FaceLiveDetectFourRequest;
 import com.qcloud.image.request.FaceLiveGetFourRequest;
+import com.qcloud.image.request.FaceMultiIdentifyRequest;
 import com.qcloud.image.request.FaceNewPersonRequest;
 import com.qcloud.image.request.FaceSetInfoRequest;
 import com.qcloud.image.request.FaceShapeRequest;
@@ -424,7 +425,21 @@ public class ImageClient implements Image {
             return e1.toString();
         }
     }
-    
+
+    @Override
+    public String faceMultiIdentify(FaceMultiIdentifyRequest request, boolean useNewDomain) {
+        try {
+            return detectionOp.faceMultiIdentify(request,useNewDomain);
+        } catch (AbstractImageException e) {
+            recordException("faceMultiIdentify", request, e.toString());
+            return e.toString();
+        } catch (Exception e) {
+            UnknownException e1 = new UnknownException(e.toString());
+            recordException("faceMultiIdentify", request, e1.toString());
+            return e1.toString();
+        }
+    }
+
     @Override
     public String faceIdCardCompare(FaceIdCardCompareRequest request) {
         try {
