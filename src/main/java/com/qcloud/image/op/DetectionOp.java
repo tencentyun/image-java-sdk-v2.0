@@ -218,7 +218,7 @@ public class DetectionOp extends BaseOp {
         return httpClient.sendHttpRequest(httpRequest);
     }
      /**
-     * 名片识别请求
+     * 通用OCR
      * 
      * @param request 标签识别请求参数
      * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功, 其他为失败,

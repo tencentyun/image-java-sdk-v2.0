@@ -8,11 +8,11 @@ public class ClientConfig {
     // 默认的最大重试次数(发生了socketException时)
     private static final int DEFAULT_MAX_RETRIES = 3;
     // 默认的获取连接的超时时间
-    private static final int DEFAULT_CONNECTION_REQUEST_TIMEOUT = -1;
+    private static final int DEFAULT_CONNECTION_REQUEST_TIMEOUT = 60 * 1000;
     // 默认连接超时, 单位ms
-    private static final int DEFAULT_CONNECTION_TIMEOUT = 5 * 1000;
+    private static final int DEFAULT_CONNECTION_TIMEOUT = 60 * 1000;
     // 默认的SOCKET读取超时时间, 默认毫秒
-    private static final int DEFAULT_SOCKET_TIMEOUT = 5 * 1000;
+    private static final int DEFAULT_SOCKET_TIMEOUT = 60 * 1000;
     // 默认的维护最大HTTP连接数
     private static final int DEFAULT_MAX_CONNECTIONS_COUNT = 100;
     // 默认的user_agent标识

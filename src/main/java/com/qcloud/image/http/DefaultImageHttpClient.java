@@ -23,6 +23,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author chengwu 封装Http发送请求类
@@ -48,7 +49,11 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
     @Override
     protected String sendGetRequest(HttpRequest httpRequest) throws AbstractImageException {
         mOkHttpClient.setProxy(config.getProxy());
-        
+                
+        mOkHttpClient.setConnectTimeout(config.getConnectionTimeout(), TimeUnit.MILLISECONDS);
+        mOkHttpClient.setReadTimeout(config.getSocketTimeout(), TimeUnit.MILLISECONDS);   
+        mOkHttpClient.setWriteTimeout(config.getSocketTimeout(),TimeUnit.MILLISECONDS);
+
         //url
         HttpUrl.Builder urlBuilder = HttpUrl.parse(httpRequest.getUrl()).newBuilder();
         for (String paramKey : httpRequest.getParams().keySet()) {
@@ -135,6 +140,9 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
     @Override
     protected String sendPostRequest(HttpRequest httpRequest) throws AbstractImageException {
         mOkHttpClient.setProxy(config.getProxy());
+        mOkHttpClient.setConnectTimeout(config.getConnectionTimeout(), TimeUnit.MILLISECONDS);
+        mOkHttpClient.setReadTimeout(config.getSocketTimeout(), TimeUnit.MILLISECONDS);
+        mOkHttpClient.setWriteTimeout(config.getSocketTimeout(),TimeUnit.MILLISECONDS);
 
         if (httpRequest.getContentType() == HttpContentType.APPLICATION_JSON) {
             Map<String, Object> params = httpRequest.getParams();
