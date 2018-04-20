@@ -163,7 +163,14 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
                 throw new ServerException(e.getMessage());
             }
             if (!response.isSuccessful()) {
-                throw new ServerException("Unexpected code " + response);
+                String string = null;
+                try {
+                    string = response.body().string();
+                } catch (IOException e) {
+                    throw new ServerException(e.getMessage());
+                }
+                String msg = String.format("Unexpected response: %s, content: %s", response, string);
+                throw new ServerException(msg);
             }
 
             String string = null;
@@ -206,7 +213,14 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
                 throw new ServerException(e.getMessage());
             }
             if (!response.isSuccessful()) {
-                throw new ServerException("Unexpected code " + response);
+                String string = null;
+                try {
+                    string = response.body().string();
+                } catch (IOException e) {
+                    throw new ServerException(e.getMessage());
+                }
+                String msg = String.format("Unexpected response: %s, content: %s", response, string);
+                throw new ServerException(msg);
             }
             String string = null;
             try {
