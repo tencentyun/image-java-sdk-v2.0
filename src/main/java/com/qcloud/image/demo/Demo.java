@@ -499,7 +499,6 @@ public class Demo {
     private static void faceDelPerson(ImageClient imageClient, String bucketName, String personId) {
         String ret;
         System.out.println("====================================================");
-        String delPersonId = "personY";
         FaceDelPersonRequest delPersonReq = new FaceDelPersonRequest(bucketName, personId);
 
         ret = imageClient.faceDelPerson(delPersonReq);

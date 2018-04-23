@@ -676,8 +676,8 @@ public class DetectionOp extends BaseOp {
     /**
      * Person新增组信息, 文档见 https://cloud.tencent.com/document/product/641/12417
      * @param useNewDomain 是否使用新域名，<br>
-     * true: http://recognition.image.myqcloud.com/face/multidentify <br>
-     * false: http://service.image.myqcloud.com/face/multidentify <br>
+     * true: http://recognition.image.myqcloud.com/face/addgroupids <br>
+     * false: http://service.image.myqcloud.com/face/addgroupids <br>
      * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
      * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功, 其他为失败,
      * message为success或者失败原因
@@ -712,8 +712,8 @@ public class DetectionOp extends BaseOp {
     /**
      * Person删除组信息, 文档见 https://cloud.tencent.com/document/product/641/12417
      * @param useNewDomain 是否使用新域名，<br>
-     * true: http://recognition.image.myqcloud.com/face/multidentify <br>
-     * false: http://service.image.myqcloud.com/face/multidentify <br>
+     * true: http://recognition.image.myqcloud.com/face/delgroupids <br>
+     * false: http://service.image.myqcloud.com/face/delgroupids <br>
      * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
      * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功, 其他为失败,
      * message为success或者失败原因
@@ -1154,8 +1154,8 @@ public class DetectionOp extends BaseOp {
     /**
      * 人脸静态活体检测
      * @param useNewDomain 是否使用新域名，<br>
-     * true: http://recognition.image.myqcloud.com/face/multidentify <br>
-     * false: http://service.image.myqcloud.com/face/multidentify <br>
+     * true: http://recognition.image.myqcloud.com/face/livedetectpicture <br>
+     * false: http://service.image.myqcloud.com/face/livedetectpicture <br>
      * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
      * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功, 其他为失败,
      * message为success或者失败原因
