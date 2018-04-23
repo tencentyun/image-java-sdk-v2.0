@@ -46,7 +46,7 @@ public class FaceNewPersonRequest extends AbstractBaseRequest {
                 this.personTag = personTag;
 	}
 
-        public FaceNewPersonRequest(String bucketName, String personId, String[] groupIds, String fileName, File image, String personName, String personTag) {
+        public FaceNewPersonRequest(String bucketName, String personId, String[] groupIds, File image, String personName, String personTag) {
 		super(bucketName);
 		this.isUrl = false;
                 this.image = image;
@@ -55,6 +55,16 @@ public class FaceNewPersonRequest extends AbstractBaseRequest {
                 this.personName = personName;
                 this.personTag = personTag;            
 	}
+
+    public FaceNewPersonRequest(String bucketName, String personId, String[] groupIds, byte[] image, String personName, String personTag) {
+        super(bucketName);
+        this.isUrl = false;
+        setBytesContent("image", image);
+        this.groupIds = groupIds;
+        this.personId = personId;
+        this.personName = personName;
+        this.personTag = personTag;
+    }
         
         public boolean isUrl() {
             return isUrl;
@@ -118,7 +128,7 @@ public class FaceNewPersonRequest extends AbstractBaseRequest {
                 if(isUrl){
                     CommonParamCheckUtils.AssertNotNull("url", url);
                 }else{
-                    CommonParamCheckUtils.AssertNotNull("image content", image);
+                    //CommonParamCheckUtils.AssertNotNull("image content", image);
                 }
 	}
 }

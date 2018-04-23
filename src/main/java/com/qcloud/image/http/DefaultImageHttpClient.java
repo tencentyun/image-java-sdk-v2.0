@@ -194,7 +194,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             Map<String, Object> params = httpRequest.getParams();
             MultipartBuilder multipartBuilder = new MultipartBuilder();
             try {
-                setMultiPartEntity(multipartBuilder, params, imageList, image, keyList, imageKey);
+                setMultiPartEntity(multipartBuilder, params, imageList, httpRequest.getBytesContentList(), image, keyList, imageKey);
             } catch (FileNotFoundException e) {
                 throw new ParamException(e.getMessage());
             }
@@ -333,6 +333,16 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             }
         }
 
+        for (String key : contentList.keySet()) {
+            byte[] content = contentList.get(key);
+            if (content != null && content.length > 0) {
+                multipartBuilder.addPart(
+                        Headers.of("Content-Disposition", String.format("form-data; name=\"%s\"", key)),
+                        RequestBody.create(MediaType.parse("image/jpg"), content)
+                );
+            }
+        }
+        
         //HttpEntity entity = entityBuilder.build();
         //httpPost.setEntity(entity);
     }

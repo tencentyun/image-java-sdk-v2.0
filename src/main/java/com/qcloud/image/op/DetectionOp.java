@@ -16,6 +16,7 @@ import com.qcloud.image.http.HttpMethod;
 import com.qcloud.image.http.HttpRequest;
 import com.qcloud.image.http.RequestBodyKey;
 import com.qcloud.image.http.RequestHeaderKey;
+import com.qcloud.image.request.AbstractBaseRequest.BytesContent;
 import com.qcloud.image.request.FaceAddFaceRequest;
 import com.qcloud.image.request.FaceAddGroupIdsRequest;
 import com.qcloud.image.request.FaceCompareRequest;
@@ -480,6 +481,7 @@ public class DetectionOp extends BaseOp {
             httpRequest.addParam(RequestBodyKey.GROUP_IDS, request.getGroupIds());
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON);  
         } else {
+            httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
             int index;
             String[] groupIds = request.getGroupIds();
             for (index = 0;index < groupIds.length; index++) {
@@ -488,7 +490,10 @@ public class DetectionOp extends BaseOp {
                 httpRequest.addParam(key, data); 
             } 
             httpRequest.setImage(request.getImage());
-            httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
+            BytesContent bytesContent = request.getBytesContent();
+            if (bytesContent != null) {
+                httpRequest.addBytes(bytesContent.getKey(), bytesContent.getContent());
+            }
         }
               
         return httpClient.sendHttpRequest(httpRequest);
@@ -859,8 +864,12 @@ public class DetectionOp extends BaseOp {
                 throw new ParamException("groupId and groupIds both null or empty!!");
             }
         } else {
-            httpRequest.setImage(request.getImage());
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
+            httpRequest.setImage(request.getImage());
+            BytesContent bytesContent = request.getBytesContent();
+            if (bytesContent != null) {
+                httpRequest.addBytes(bytesContent.getKey(), bytesContent.getContent());
+            }
             if (groupId != null && !groupId.isEmpty()) {
                 httpRequest.addParam(RequestBodyKey.GROUP_ID, groupId);
             } else if (groupIds != null && groupIds.length > 0) {
@@ -1170,6 +1179,10 @@ public class DetectionOp extends BaseOp {
         } else {
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
             httpRequest.setImage(request.getImage());
+            BytesContent bytesContent = request.getBytesContent();
+            if (bytesContent != null) {
+                httpRequest.addBytes(bytesContent.getKey(), bytesContent.getContent());
+            }
         }
 
         return httpClient.sendHttpRequest(httpRequest);

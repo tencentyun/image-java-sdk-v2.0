@@ -10,6 +10,8 @@ public abstract class AbstractBaseRequest {
     // bucket名
     private String bucketName;
 
+    private BytesContent mBytesContent;
+
     public AbstractBaseRequest(String bucketName) {
         super();
         this.bucketName = bucketName;
@@ -44,5 +46,32 @@ public abstract class AbstractBaseRequest {
     // 检查用户的输入参数
     public void check_param() throws ParamException {
     	CommonParamCheckUtils.AssertNotNull("bucketName", this.bucketName);
+    }
+
+    void setBytesContent(String key, byte[] content) {
+        mBytesContent = new BytesContent(key, content);
+    }
+
+    public BytesContent getBytesContent() {
+        return mBytesContent;
+    }
+
+    public static class BytesContent {
+
+        String key;
+        byte[] content;
+
+        BytesContent(String key, byte[] content) {
+            this.key = key;
+            this.content = content;
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public byte[] getContent() {
+            return content;
+        }
     }
 }

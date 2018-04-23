@@ -35,8 +35,15 @@ public class FaceIdentifyRequest extends AbstractBaseRequest {
                 this.groupId = groupId;
                 this.url = url;
 	}
- 
-        public FaceIdentifyRequest(String bucketName, String groupId, String name, File image) {
+
+    public FaceIdentifyRequest(String bucketName, String groupId, byte[] image) {
+        super(bucketName);
+        this.isUrl = false;
+        this.groupId = groupId;
+        setBytesContent("image",image);
+    }
+
+    public FaceIdentifyRequest(String bucketName, String groupId, File image) {
 		super(bucketName);
 		this.isUrl = false;
                 this.groupId = groupId;
@@ -50,11 +57,17 @@ public class FaceIdentifyRequest extends AbstractBaseRequest {
         this.groupIds = groupIds;
     }
 
-    public FaceIdentifyRequest(String bucketName, String[] groupIds, String name, File image) {
+    public FaceIdentifyRequest(String bucketName, String[] groupIds, File image) {
         super(bucketName);
         this.isUrl = false;
         this.groupIds = groupIds;
         this.image = image;
+    }
+    public FaceIdentifyRequest(String bucketName, String[] groupIds, byte[] image) {
+        super(bucketName);
+        this.isUrl = false;
+        this.groupIds = groupIds;
+        setBytesContent("image", image);
     }
 
     public boolean isUrl() {
@@ -91,7 +104,7 @@ public class FaceIdentifyRequest extends AbstractBaseRequest {
                 if(isUrl){
                     CommonParamCheckUtils.AssertNotNull("url", url);
                 }else{
-                    CommonParamCheckUtils.AssertNotNull("image content", image);
+                    //CommonParamCheckUtils.AssertNotNull("image content", image);
                 }
 	}
 }

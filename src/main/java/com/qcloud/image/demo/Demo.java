@@ -41,6 +41,9 @@ import com.qcloud.image.request.TagDetectRequest;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -287,12 +290,23 @@ public class Demo {
 
         //2. 图片内容方式
         System.out.println("====================================================");
-        String faceImageFileParamName = "image";
-        File   faceImageFile = new File("/home/test.jpg");
-        faceIdentifyReq = new FaceIdentifyRequest(bucketName, groupId, faceImageFileParamName, faceImageFile);// 一个 groupId
-        //faceIdentifyReq = new FaceIdentifyRequest(bucketName, groupIds, faceImageFileParamName, faceImageFile);// 多个 groupId
-        ret = imageClient.faceIdentify(faceIdentifyReq);
+        File faceImageFile = new File("assets", "icon_face_01.jpg");
+        FaceIdentifyRequest faceIdentifyReq2 = new FaceIdentifyRequest(bucketName, groupId, faceImageFile);// 一个 groupId
+        //FaceIdentifyRequest    faceIdentifyReq2 = new FaceIdentifyRequest(bucketName, groupIds, faceImageFile);// 多个 groupId
+        ret = imageClient.faceIdentify(faceIdentifyReq2);
         System.out.println("face identify ret:" + ret);
+
+        //3. 图片内容方式(byte[])
+        System.out.println("====================================================");
+        byte[] imgBytes = getFileBytes(faceImageFile);
+        if (imgBytes != null) {
+            FaceIdentifyRequest faceIdentifyReq3 = new FaceIdentifyRequest(bucketName, groupId, imgBytes);// 一个 groupId
+            //FaceIdentifyRequest faceIdentifyReq3 = new FaceIdentifyRequest(bucketName, groupIds, imgBytes);// 多个 groupId
+            ret = imageClient.faceIdentify(faceIdentifyReq3);
+            System.out.println("face identify ret:" + ret);
+        } else {
+            System.out.println("face identify ret: get image content fail");
+        }
     }
 
     /**
@@ -515,9 +529,21 @@ public class Demo {
         //2. 图片内容方式
         System.out.println("====================================================");
         File personNewImage = new File("assets","icon_face_01.jpg");
-        personNewReq = new FaceNewPersonRequest(bucketName, personId, groupIds, personName, personNewImage, personName, personTag);
+        personNewReq = new FaceNewPersonRequest(bucketName, personId, groupIds, personNewImage, personName, personTag);
         ret = imageClient.faceNewPerson(personNewReq);
         System.out.println("person new ret:" + ret);
+        
+        //3. 图片内容方式(byte[])
+        System.out.println("====================================================");
+        byte[] imageContent = getFileBytes(personNewImage);
+        if (imageContent != null) {
+            personNewReq = new FaceNewPersonRequest(bucketName, personId, groupIds, imageContent, personName, personTag);
+            ret = imageClient.faceNewPerson(personNewReq);
+            System.out.println("person new ret:" + ret);
+        } else {
+            System.out.println("person new ret: get image content fail");
+        }
+        
         return personId;
     }
 
@@ -819,6 +845,22 @@ public class Demo {
         pornReq = new PornDetectRequest(bucketName, pornNameList, pornImageList);
         ret = imageClient.pornDetect(pornReq);
         System.out.println("porn detect ret:" + ret);
+    }
+
+    private static byte[] getFileBytes(File file) {
+        byte[] imgBytes = null;
+        try {
+            RandomAccessFile f = new RandomAccessFile(file, "r");
+            imgBytes = new byte[(int) f.length()];
+            f.readFully(imgBytes);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return imgBytes;
     }
 
 }

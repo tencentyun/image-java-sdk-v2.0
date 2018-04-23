@@ -21,6 +21,8 @@ public class HttpRequest {
         private ArrayList<String> urlList = new ArrayList<String>();
         private HashMap<String, File> imageList = new HashMap<String, File>();
 
+    private Map<String, byte[]> bytesContentList = new HashMap<String, byte[]>();
+
 	public String getUrl() {
 		return url;
 	}
@@ -105,8 +107,16 @@ public class HttpRequest {
             isUrl = false;
             this.image = image;
         } 
+        
+        public void addBytes(String key,byte[] content){
+            bytesContentList.put(key, content);
+        }
 
-	@Override
+    public Map<String, byte[]> getBytesContentList() {
+        return bytesContentList;
+    }
+
+    @Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("url:").append(url).append(", method:").append(method).append(", ConentType:")
