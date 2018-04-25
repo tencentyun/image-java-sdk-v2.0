@@ -137,6 +137,12 @@ public class Demo {
         request = new FaceLiveDetectPictureRequest(bucketName, image);
         result = imageClient.faceLiveDetectPicture(request, useNewDomain);
         System.out.println("face  live detect picture result:" + result);
+        
+        //3. 图片内容方式(byte[])
+        System.out.println("====================================================");
+        request = new FaceLiveDetectPictureRequest(bucketName, getFileBytes(image));
+        result = imageClient.faceLiveDetectPicture(request, useNewDomain);
+        System.out.println("face  live detect picture result:" + result);
     }
 
     /**

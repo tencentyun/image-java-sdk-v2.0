@@ -21,6 +21,11 @@ public class FaceLiveDetectPictureRequest extends AbstractBaseRequest {
         mImage = image;
         isUrl = false;
     }
+    public FaceLiveDetectPictureRequest(String bucketName, byte[] image) {
+        super(bucketName);
+        setBytesContent("image", image);
+        isUrl = false;
+    }
 
     public FaceLiveDetectPictureRequest(String bucketName, String imageUrl) {
         super(bucketName);
