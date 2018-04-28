@@ -55,6 +55,9 @@ import com.qcloud.image.sign.Sign;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.util.HashMap;
+
 import static com.qcloud.image.ClientConfig.OCR_BANKCARD;
 import static com.qcloud.image.ClientConfig.OCR_BIZLICENSE;
 import static com.qcloud.image.ClientConfig.OCR_DRIVINGLICENCE;
@@ -99,9 +102,12 @@ public class DetectionOp extends BaseOp {
             httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON); 
         } else {         
-            httpRequest.setImageList(request.getImageList());
-            httpRequest.setKeyList(request.getKeyList());
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
+            HashMap<String, String> keys = request.getKeyList();
+            HashMap<String, File> images = request.getImageList();
+            for (String k : keys.keySet()) {
+                httpRequest.addFile(keys.get(k), images.get(k));
+            }
         }
               
         return httpClient.sendHttpRequest(httpRequest);
@@ -176,8 +182,11 @@ public class DetectionOp extends BaseOp {
             httpRequest.addParam(RequestBodyKey.URL_LIST, (request.getUrlList())); 
         } else {
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
-            httpRequest.setImageList(request.getImageList());
-            httpRequest.setKeyList(request.getKeyList());
+            HashMap<String, String> keys = request.getKeyList();
+            HashMap<String, File> images = request.getImageList();
+            for (String k : keys.keySet()) {
+                httpRequest.addFile(keys.get(k), images.get(k));
+            }
         }
               
         return httpClient.sendHttpRequest(httpRequest);
@@ -211,9 +220,12 @@ public class DetectionOp extends BaseOp {
             httpRequest.addParam(RequestBodyKey.URL_LIST, (request.getUrlList())); 
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON); 
         } else {
-            httpRequest.setImageList(request.getImageList());
-            httpRequest.setKeyList(request.getKeyList());
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
+            HashMap<String, String> keys = request.getKeyList();
+            HashMap<String, File> images = request.getImageList();
+            for (String k : keys.keySet()) {
+                httpRequest.addFile(keys.get(k), images.get(k));
+            }
         }
               
         return httpClient.sendHttpRequest(httpRequest);
@@ -244,7 +256,7 @@ public class DetectionOp extends BaseOp {
             httpRequest.addParam(RequestBodyKey.URL, request.getUrl());
         } else {
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
-            httpRequest.setImage(request.getImage());
+            httpRequest.addFile("image",request.getImage());
         }
         return httpClient.sendHttpRequest(httpRequest);
 
@@ -277,7 +289,7 @@ public class DetectionOp extends BaseOp {
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
         } else {
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
-            httpRequest.setImage(request.getImage());
+            httpRequest.addFile("image",request.getImage());
         }
         return httpClient.sendHttpRequest(httpRequest);
 
@@ -309,7 +321,7 @@ public class DetectionOp extends BaseOp {
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
         } else {
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
-            httpRequest.setImage(request.getImage());
+            httpRequest.addFile("image",request.getImage());
         }
         return httpClient.sendHttpRequest(httpRequest);
 
@@ -341,7 +353,7 @@ public class DetectionOp extends BaseOp {
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
         } else {
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
-            httpRequest.setImage(request.getImage());
+            httpRequest.addFile("image",request.getImage());
         }
         return httpClient.sendHttpRequest(httpRequest);
 
@@ -373,7 +385,7 @@ public class DetectionOp extends BaseOp {
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON);
         } else {
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
-            httpRequest.setImage(request.getImage());
+            httpRequest.addFile("image",request.getImage());
         }
         return httpClient.sendHttpRequest(httpRequest);
 
@@ -407,7 +419,7 @@ public class DetectionOp extends BaseOp {
             httpRequest.addParam(RequestBodyKey.URL, request.getUrl());
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON);  
         } else {
-            httpRequest.setImage(request.getImage());
+            httpRequest.addFile("image",request.getImage());
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
         }
               
@@ -443,7 +455,7 @@ public class DetectionOp extends BaseOp {
             httpRequest.addParam(RequestBodyKey.URL, request.getUrl());
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON);  
         } else {
-            httpRequest.setImage(request.getImage());
+            httpRequest.addFile("image",request.getImage());
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
         }
               
@@ -488,8 +500,8 @@ public class DetectionOp extends BaseOp {
                 String key =  String.format("group_ids[%d]", index);
                 String data = groupIds[index];
                 httpRequest.addParam(key, data); 
-            } 
-            httpRequest.setImage(request.getImage());
+            }
+            httpRequest.addFile("image",request.getImage());
             BytesContent bytesContent = request.getBytesContent();
             if (bytesContent != null) {
                 httpRequest.addBytes(bytesContent.getKey(), bytesContent.getContent());
@@ -556,9 +568,12 @@ public class DetectionOp extends BaseOp {
             httpRequest.addHeader(RequestHeaderKey.Content_TYPE, String.valueOf(HttpContentType.APPLICATION_JSON));
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON); 
         } else {
-            httpRequest.setKeyList(request.getKeyList());
-            httpRequest.setImageList(request.getImageList());
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
+            HashMap<String, String> keys = request.getKeyList();
+            HashMap<String, File> images = request.getImageList();
+            for (String k : keys.keySet()) {
+                httpRequest.addFile(keys.get(k), images.get(k));
+            }
         }
               
         return httpClient.sendHttpRequest(httpRequest);
@@ -865,7 +880,7 @@ public class DetectionOp extends BaseOp {
             }
         } else {
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
-            httpRequest.setImage(request.getImage());
+            httpRequest.addFile("image",request.getImage());
             BytesContent bytesContent = request.getBytesContent();
             if (bytesContent != null) {
                 httpRequest.addBytes(bytesContent.getKey(), bytesContent.getContent());
@@ -914,7 +929,7 @@ public class DetectionOp extends BaseOp {
             httpRequest.addParam(RequestBodyKey.URL, request.getUrl());
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON);  
         } else {
-            httpRequest.setImage(request.getImage());
+            httpRequest.addFile("image",request.getImage());
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
         }
               
@@ -947,9 +962,12 @@ public class DetectionOp extends BaseOp {
             httpRequest.addParam(RequestBodyKey.URLB, (request.getUrlB()));
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON);  
         } else {
-            httpRequest.setImageList(request.getImageList());
-            httpRequest.setKeyList(request.getKeyList());
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
+            HashMap<String, String> keys = request.getKeyList();
+            HashMap<String, File> images = request.getImageList();
+            for (String k : keys.keySet()) {
+                httpRequest.addFile(keys.get(k), images.get(k));
+            }
         }
               
         return httpClient.sendHttpRequest(httpRequest);
@@ -995,7 +1013,7 @@ public class DetectionOp extends BaseOp {
 
         } else {
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
-            httpRequest.setImage( request.getImageFile());
+            httpRequest.addFile("image", request.getImageFile());
             String[] groupIds = request.getGroup_ids();
 
             if (groupIds != null && groupIds.length == 1) {
@@ -1046,7 +1064,7 @@ public class DetectionOp extends BaseOp {
             httpRequest.addParam(RequestBodyKey.URL, request.getUrl());
             httpRequest.setContentType(HttpContentType.APPLICATION_JSON);  
         } else {
-            httpRequest.setImage(request.getImage());
+            httpRequest.addFile("image",request.getImage());
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
         }
               
@@ -1110,8 +1128,7 @@ public class DetectionOp extends BaseOp {
         if ( (request.getSeq()!=null) && (request.getSeq()).trim().length() != 0 ) {
             httpRequest.addParam(RequestBodyKey.SEQ, request.getSeq());
         }
-        httpRequest.setImage(request.getVideo());
-        httpRequest.setImageKey("video");
+        httpRequest.addFile("video",request.getVideo());
         httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
         httpRequest.setMethod(HttpMethod.POST);  
         return httpClient.sendHttpRequest(httpRequest);
@@ -1143,10 +1160,13 @@ public class DetectionOp extends BaseOp {
         if ( (request.getSeq()!=null) && (request.getSeq()).trim().length() != 0 ) {
             httpRequest.addParam(RequestBodyKey.SEQ, request.getSeq());
         }
-          
-        httpRequest.setImageList(request.getImageList());
-        httpRequest.setKeyList(request.getKeyList());
+
         httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
+        HashMap<String, String> keys = request.getKeyList();
+        HashMap<String, File> images = request.getImageList();
+        for (String k : keys.keySet()) {
+            httpRequest.addFile(keys.get(k), images.get(k));
+        }
    
         return httpClient.sendHttpRequest(httpRequest);
     }
@@ -1178,7 +1198,7 @@ public class DetectionOp extends BaseOp {
             httpRequest.addParam("url", request.getImageUrl());
         } else {
             httpRequest.setContentType(HttpContentType.MULTIPART_FORM_DATA);
-            httpRequest.setImage(request.getImage());
+            httpRequest.addFile("image",request.getImage());
             BytesContent bytesContent = request.getBytesContent();
             if (bytesContent != null) {
                 httpRequest.addBytes(bytesContent.getKey(), bytesContent.getContent());

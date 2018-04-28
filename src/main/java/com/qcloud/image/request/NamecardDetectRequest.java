@@ -10,12 +10,8 @@ import com.qcloud.image.common_utils.CommonParamCheckUtils;
 import com.qcloud.image.exception.ParamException;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -51,28 +47,22 @@ public class NamecardDetectRequest extends AbstractBaseRequest {
                 }
 	}
 
-        /**
-         * 
-         * @param bucketName bucketName
-         * @param name 文件名
-         * @param image 文件内容
-         * @param retImage 0不返回图片，1返回图片
-         */
-        public NamecardDetectRequest(String bucketName, String[] name, File[] image, int retImage) {
-		super(bucketName);
-		this.isUrl = false;
-                this.retImage = retImage;
-                String pornName;
-                for(int i = 0; i < name.length; i++){
-                    try {
-                        pornName = URLEncoder.encode(name[i],"UTF-8");
-                        this.imageList.put(pornName, image[i]);
-                        this.keyList.put(pornName,String.format( "image[%d]", i));
-                    } catch (UnsupportedEncodingException ex) {
-                        Logger.getLogger(NamecardDetectRequest.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-	}
+    /**
+     * @param bucketName bucketName
+     * @param image 文件内容
+     * @param retImage 0不返回图片，1返回图片
+     */
+    public NamecardDetectRequest(String bucketName, File[] image, int retImage) {
+        super(bucketName);
+        this.isUrl = false;
+        this.retImage = retImage;
+        String pornName;
+        for (int i = 0; i < image.length; i++) {
+            pornName = i + "";
+            this.imageList.put(pornName, image[i]);
+            this.keyList.put(pornName, String.format("image[%d]", i));
+        }
+    }
         
         public boolean isUrl() {
             return isUrl;

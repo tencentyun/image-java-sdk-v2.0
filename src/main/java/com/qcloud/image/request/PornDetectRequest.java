@@ -10,12 +10,8 @@ import com.qcloud.image.common_utils.CommonParamCheckUtils;
 import com.qcloud.image.exception.ParamException;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -42,20 +38,15 @@ public class PornDetectRequest extends AbstractBaseRequest {
                 }
 	}
 
-        public PornDetectRequest(String bucketName, String[] name, File[] image) {
-		super(bucketName);
-		this.isUrl = false;
-                String pornName;
-                for(int i = 0; i < name.length; i++){
-                    try {
-                        pornName = URLEncoder.encode(name[i],"UTF-8");
-                        this.imageList.put(pornName, image[i]);
-                        this.keyList.put(pornName, String.format( "image[%d]", i));
-                    } catch (UnsupportedEncodingException ex) {
-                        Logger.getLogger(PornDetectRequest.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-	}
+    public PornDetectRequest(String bucketName, File... image) {
+        super(bucketName);
+        this.isUrl = false;
+        for (int i = 0; i < image.length; i++) {
+            String key = i + "";
+            this.imageList.put(key, image[i]);
+            this.keyList.put(key, String.format("image[%d]", i));
+        }
+    }
         
         public boolean isUrl() {
             return isUrl;

@@ -132,14 +132,11 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             return string;
 
         } else if (httpRequest.getContentType() == HttpContentType.MULTIPART_FORM_DATA) {
-            HashMap<String, String> keyList = httpRequest.getKeyList();
             HashMap<String, File> imageList = httpRequest.getImageList();
-            String imageKey = httpRequest.getImageKey();
-            File image = httpRequest.getImage();
             Map<String, Object> params = httpRequest.getParams();
             MultipartBuilder multipartBuilder = new MultipartBuilder();
             try {
-                setMultiPartEntity(multipartBuilder, params, imageList, httpRequest.getBytesContentList(), image, keyList, imageKey);
+                setMultiPartEntity(multipartBuilder, params, imageList, httpRequest.getBytesContentList());
             } catch (FileNotFoundException e) {
                 throw new ParamException(e.getMessage());
             }
@@ -184,7 +181,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
         }
     }
 
-    private void setMultiPartEntity(MultipartBuilder multipartBuilder, Map<String, Object> params, Map<String, File> images, Map<String, byte[]> contentList,File imageData, Map<String, String> keyList, String imageKey)
+    private void setMultiPartEntity(MultipartBuilder multipartBuilder, Map<String, Object> params, Map<String, File> files, Map<String, byte[]> fileContents)
             throws FileNotFoundException {
 
         multipartBuilder.type(MultipartBuilder.FORM);
@@ -192,37 +189,28 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             multipartBuilder.addFormDataPart(paramKey, String.valueOf(params.get(paramKey)));
         }
 
-        if (images.size() > 0) {
-            for (String imageFileName : images.keySet()) {
-                String paramName = keyList.get(imageFileName);
-                File imageFile = images.get(imageFileName);
-                if (imageFile == null) {
-                    throw new FileNotFoundException("File is null: " + imageFileName);
+        if (files.size() > 0) {
+            for (String key : files.keySet()) {
+                File file = files.get(key);
+                if (file == null) {
+                    throw new FileNotFoundException("File is null: " + key);
                 }
-                if (!imageFile.exists()) {
-                    throw new FileNotFoundException("File Not Exists: " + imageFile.getAbsolutePath());
+                if (!file.exists()) {
+                    throw new FileNotFoundException("File Not Exists: " + file.getAbsolutePath());
                 }
                 multipartBuilder.addPart(
-                        Headers.of("Content-Disposition", String.format("form-data; name=\"%s\"", paramName)),
-                        RequestBody.create(MediaType.parse("image/jpg"), imageFile)
+                        Headers.of("Content-Disposition", String.format("form-data; name=\"%s\"; filename=\"%s\"", key, file.getName())),
+                        RequestBody.create(MediaType.parse("image/jpg"), file)
                 );
-            }
-        } else if (imageData != null) {
-            if (imageData.exists()) {
-                multipartBuilder.addPart(
-                        Headers.of("Content-Disposition", String.format("form-data; name=\"%s\"", imageKey)),
-                        RequestBody.create(MediaType.parse("image/jpg"), imageData)
-                );
-            } else {
-                throw new FileNotFoundException("File Not Exists: " + imageData.getAbsolutePath());
             }
         }
 
-        for (String key : contentList.keySet()) {
-            byte[] content = contentList.get(key);
+        for (String key : fileContents.keySet()) {
+            byte[] content = fileContents.get(key);
             if (content != null && content.length > 0) {
                 multipartBuilder.addPart(
-                        Headers.of("Content-Disposition", String.format("form-data; name=\"%s\"", key)),
+                        //TODO file name not resolved
+                        Headers.of("Content-Disposition", String.format("form-data; name=\"%s\"; filename=\"%s\"", key, "bytes" + System.currentTimeMillis())),
                         RequestBody.create(MediaType.parse("image/jpg"), content)
                 );
             }

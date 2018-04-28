@@ -126,14 +126,14 @@ public class Demo {
 
         // 1. url方式
         System.out.println("====================================================");
-        String imageUrl = "";//照片url
+        String imageUrl = "http://open.youtu.qq.com/app/img/experience/face_img/face_34.jpg";//照片url
         request = new FaceLiveDetectPictureRequest(bucketName, imageUrl);
         result = imageClient.faceLiveDetectPicture(request, useNewDomain);
         System.out.println("face  live detect picture result:" + result);
 
         //2. 图片内容方式
         System.out.println("====================================================");
-        File image = new File("assets", "livedetectpicture.jpg");
+        File image = new File("assets", "face_34.jpg");
         request = new FaceLiveDetectPictureRequest(bucketName, image);
         result = imageClient.faceLiveDetectPicture(request, useNewDomain);
         System.out.println("face  live detect picture result:" + result);
@@ -241,17 +241,9 @@ public class Demo {
 
         //2. 图片内容方式
         System.out.println("====================================================");
-        String[] compareNameList = new String[2];
-        File[] compareImageList = new File[2];
-        try {
-            compareNameList[0] = "zhao1.jpg";
-            compareNameList[1] = "zhao2.jpg";
-            compareImageList[0] = new File("F:\\pic\\zhao1.jpg");
-            compareImageList[1] = new File("F:\\pic\\zhao2.jpg");
-        } catch (Exception ex) {
-            Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        faceCompareReq = new FaceCompareRequest(bucketName, compareNameList, compareImageList);
+        File imageA = new File("F:\\pic\\zhao1.jpg");
+        File imageB = new File("F:\\pic\\zhao2.jpg");
+        faceCompareReq = new FaceCompareRequest(bucketName, imageA, imageB);
         ret = imageClient.faceCompare(faceCompareReq);
         System.out.println("face compare ret:" + ret);
     }
@@ -482,19 +474,12 @@ public class Demo {
 
         //2. 图片内容方式
         System.out.println("====================================================");
-        String[] addFaceNameList = new String[2];
         File[] addFaceImageList = new File[2];
         addfacePersonId = "personY";
         addfacePersonTag = "actor";
-        try {
-            addFaceNameList[0] = "yang2.jpg";
-            addFaceImageList[0] = new File("F:\\pic\\yang2.jpg");
-            addFaceNameList[1] = "yang3.jpg";
-            addFaceImageList[1] = new File("F:\\pic\\yang3.jpg");
-        } catch (Exception ex) {
-            Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        addFaceReq = new FaceAddFaceRequest(bucketName, addFaceNameList, addFaceImageList, addfacePersonId, addfacePersonTag);
+        addFaceImageList[0] = new File("F:\\pic\\yang2.jpg");
+        addFaceImageList[1] = new File("F:\\pic\\yang3.jpg");
+        addFaceReq = new FaceAddFaceRequest(bucketName, addFaceImageList, addfacePersonId, addfacePersonTag);
         ret = imageClient.faceAddFace(addFaceReq);
         System.out.println("add face ret:" + ret);
     }
@@ -625,17 +610,10 @@ public class Demo {
 
         //2. 图片内容方式
         System.out.println("====================================================");
-        String[] namecardNameList = new String[2];
         File[] namecardImageList = new File[2];
-        try {
-            namecardNameList[0] = "ocr_namecard_01.jpg";
-            namecardImageList[0] = new File("assets", namecardNameList[0]);
-            namecardNameList[1] = "ocr_namecard_02.jpg";
-            namecardImageList[1] = new File("assets", namecardNameList[1]);
-        } catch (Exception ex) {
-            Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        nameReq = new NamecardDetectRequest(bucketName, namecardNameList, namecardImageList, 0);
+        namecardImageList[0] = new File("assets", "ocr_namecard_01.jpg");
+        namecardImageList[1] = new File("assets", "ocr_namecard_02.jpg");
+        nameReq = new NamecardDetectRequest(bucketName, namecardImageList, 0);
         ret = imageClient.namecardDetect(nameReq);
         System.out.println("namecard detect ret:" + ret);
     }
@@ -764,29 +742,16 @@ public class Demo {
 
         //2. 图片内容方式,识别身份证正面
         System.out.println("====================================================");
-        String[] idcardNameList = new String[2];
         File[] idcardImageList = new File[2];
-        try {
-            idcardNameList[0] = "icon_id_01.jpg";
-            idcardImageList[0] = new File("assets", idcardNameList[0]);
-            idcardNameList[1] = "icon_id_02.jpg";
-            idcardImageList[1] = new File("assets", idcardNameList[1]);
-        } catch (Exception ex) {
-            Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        idReq = new IdcardDetectRequest(bucketName, idcardNameList, idcardImageList, 0);
+        idcardImageList[0] = new File("assets", "icon_id_01.jpg");
+        idcardImageList[1] = new File("assets", "icon_id_02.jpg");
+        idReq = new IdcardDetectRequest(bucketName, idcardImageList, 0);
         ret = imageClient.idcardDetect(idReq);
         System.out.println("idcard detect ret:" + ret);
         //识别身份证反面
-        try {
-            idcardNameList[0] = "icon_id_03.jpg";
-            idcardImageList[0] = new File("assets", idcardNameList[0]);
-            idcardNameList[1] = "icon_id_04.jpg";
-            idcardImageList[1] = new File("assets", idcardNameList[1]);
-        } catch (Exception ex) {
-            Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        idReq = new IdcardDetectRequest(bucketName, idcardNameList, idcardImageList, 1);
+        idcardImageList[0] = new File("assets", "icon_id_03.jpg");
+        idcardImageList[1] = new File("assets", "icon_id_04.jpg");
+        idReq = new IdcardDetectRequest(bucketName,  idcardImageList, 1);
         ret = imageClient.idcardDetect(idReq);
         System.out.println("idcard detect ret:" + ret);
     }
@@ -835,19 +800,11 @@ public class Demo {
 
         //2. 图片内容方式
         System.out.println("====================================================");
-        String[] pornNameList = new String[3];
         File[] pornImageList = new File[3];
-        try {
-            pornNameList[0] = "icon_porn04.jpg";
-            pornImageList[0] = new File("assets", pornNameList[0]);
-            pornNameList[1] = "icon_porn05.jpg";
-            pornImageList[1] = new File("assets", pornNameList[1]);
-            pornNameList[2] = "icon_porn06.jpg";
-            pornImageList[2] = new File("assets", pornNameList[2]);
-        } catch (Exception ex) {
-            Logger.getLogger(Demo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        pornReq = new PornDetectRequest(bucketName, pornNameList, pornImageList);
+        pornImageList[0] = new File("assets", "icon_porn04.jpg");
+        pornImageList[1] = new File("assets", "icon_porn05.jpg");
+        pornImageList[2] = new File("assets", "icon_porn06.jpg");
+        pornReq = new PornDetectRequest(bucketName,  pornImageList);
         ret = imageClient.pornDetect(pornReq);
         System.out.println("porn detect ret:" + ret);
     }

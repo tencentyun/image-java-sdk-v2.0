@@ -43,16 +43,14 @@ public class FaceCompareRequest extends AbstractBaseRequest {
                 this.urlB = urlB;
 	}
 
-        public FaceCompareRequest(String bucketName, String[] name, File[] image) {
-		super(bucketName);
-		this.isUrl = false;
-                for(int i = 0; i < name.length; i++){
-                    this.imageList.put(name[i], image[i]);
-                    
-                }
-                this.keyList.put(name[0], String.format( "imageA"));
-                this.keyList.put(name[1], String.format( "imageB"));
-	}
+    public FaceCompareRequest(String bucketName, File imageA, File imageB) {
+        super(bucketName);
+        this.isUrl = false;
+        this.keyList.put("key1", "imageA");
+        this.keyList.put("key2", "imageB");
+        this.imageList.put("key1", imageA);
+        this.imageList.put("key2", imageB);
+    }
         
         public boolean isUrl() {
             return isUrl;

@@ -46,16 +46,16 @@ public class FaceAddFaceRequest extends AbstractBaseRequest {
                 }
 	}
 
-        public FaceAddFaceRequest(String bucketName, String[] name, File[] image, String personId, String personTag) {
-		super(bucketName);
-		this.isUrl = false;
-                this.personTag = personTag;
-                this.personId = personId;
-                for(int i = 0; i < name.length; i++){
-                    this.imageList.put(name[i], image[i]);
-                    this.keyList.put(name[i],String.format( "images[%d]", i));
-                }
-	}
+    public FaceAddFaceRequest(String bucketName, File[] image, String personId, String personTag) {
+        super(bucketName);
+        this.isUrl = false;
+        this.personTag = personTag;
+        this.personId = personId;
+        for (int i = 0; i < image.length; i++) {
+            this.imageList.put(i + "", image[i]);
+            this.keyList.put(i + "", String.format("images[%d]", i));
+        }
+    }
         
         public boolean isUrl() {
             return isUrl;

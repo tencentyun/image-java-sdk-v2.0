@@ -10,12 +10,8 @@ import com.qcloud.image.common_utils.CommonParamCheckUtils;
 import com.qcloud.image.exception.ParamException;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -54,25 +50,18 @@ public class IdcardDetectRequest extends AbstractBaseRequest {
         /**
          * 
          * @param bucketName bucketName
-         * @param name 文件名
          * @param image 图片内容
          * @param cardType  0为身份证有照片的一面，1为身份证有国徽的一面   
          */
-        public IdcardDetectRequest(String bucketName, String[] name, File[] image, int cardType) {
-		super(bucketName);
-		this.isUrl = false;
-                this.cardType = cardType;
-                String pornName;
-                for(int i = 0; i < name.length; i++){
-                    try {
-                        pornName = URLEncoder.encode(name[i],"UTF-8");
-                        this.imageList.put(pornName, image[i]);
-                        this.keyList.put(pornName, String.format( "image[%d]", i));
-                    } catch (UnsupportedEncodingException ex) {
-                        Logger.getLogger(IdcardDetectRequest.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-	}
+        public IdcardDetectRequest(String bucketName, File[] image, int cardType) {
+            super(bucketName);
+            this.isUrl = false;
+            this.cardType = cardType;
+            for (int i = 0; i < image.length; i++) {
+                this.imageList.put(i + "", image[i]);
+                this.keyList.put(i + "", String.format("image[%d]", i));
+            }
+        }
         
         public boolean isUrl() {
             return isUrl;
