@@ -47,9 +47,15 @@ System.out.println(result);
 更多例子详情可参见 [Demo.java](https://github.com/tencentyun/image-java-sdk-v2.0/blob/master/src/main/java/com/qcloud/image/demo/Demo.java) 的代码。
 
 ## 如何运行这个 Demo 工程
+### 使用 Intellij IEDA
 1. 修改文件 src/main/java/com/qcloud/image/demo/Demo.java 的 main() 方法，填入上述申请到的 **APPID**、**SecretId**、**SecretKey**、**BucketName**
 
 2. 导入到 IDE：这个 Demo 工程是用 Maven 构建的，以 Intellij IDEA 为例，导入方式为：Import Project -> 选择工程目录 -> 
   Import project from external model -> Maven
 3. 运行：Demo.java 右键，Run Demo.main()
+
+### 使用 Eclipse
+1. Eclipse 需要先安装 maven 插件: 点击 Eclipse 菜单栏 Help -> Eclipse Marketplace, 搜索框 Find 中输入 maven, 点击右侧的 Go, 搜索到插件 `Maven Integration for Eclipse`, 安装之.
+2. 导入到 Eclipse: Eclipse 菜单栏 File -> Import… -> Maven -> Existing Maven Project -> 选择工程目录 -> 点击 Finish.
+3. 运行: Eclipse 菜单栏 Run -> Run.
 
