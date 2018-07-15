@@ -1,4 +1,4 @@
-package com.qcloud.cos.http;
+package com.qcloud.image.http;
 
 /**
  * @author chengwu

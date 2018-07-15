@@ -1,6 +1,7 @@
 package com.qcloud.image.exception;
 
-import com.qcloud.cos.http.ResponseBodyKey;
+import com.qcloud.image.http.ResponseBodyKey;
+
 import org.json.JSONObject;
 
 /**
