@@ -204,7 +204,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudOcrDomain() + this.config.getDetectionNamecard();
+        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getDetectionNamecard();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -242,7 +242,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudOcrDomain()+ OCR_GENERAL;
+        String url = "http://" + this.config.getQCloudImageDomain()+ OCR_GENERAL;
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -273,7 +273,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudOcrDomain()+ OCR_DRIVINGLICENCE;
+        String url = "http://" + this.config.getQCloudImageDomain()+ OCR_DRIVINGLICENCE;
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -306,7 +306,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudOcrDomain()+ OCR_BIZLICENSE;
+        String url = "http://" + this.config.getQCloudImageDomain()+ OCR_BIZLICENSE;
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -338,7 +338,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudOcrDomain()+ OCR_BANKCARD;
+        String url = "http://" + this.config.getQCloudImageDomain()+ OCR_BANKCARD;
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -370,7 +370,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudOcrDomain()+ OCR_PLATE;
+        String url = "http://" + this.config.getQCloudImageDomain()+ OCR_PLATE;
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -690,20 +690,15 @@ public class DetectionOp extends BaseOp {
 
     /**
      * Person新增组信息, 文档见 https://cloud.tencent.com/document/product/641/12417
-     * @param useNewDomain 是否使用新域名，<br>
-     * true: http://recognition.image.myqcloud.com/face/addgroupids <br>
-     * false: http://service.image.myqcloud.com/face/addgroupids <br>
-     * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
      * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功, 其他为失败,
      * message为success或者失败原因
      * @throws AbstractImageException SDK定义的Image异常, 通常是输入参数有误或者环境问题(如网络不通)
      */
-    public String faceAddGroupIds(FaceAddGroupIdsRequest request, boolean useNewDomain) throws AbstractImageException {
+    public String faceAddGroupIds(FaceAddGroupIdsRequest request) throws AbstractImageException {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = useNewDomain ? "http://recognition.image.myqcloud.com/face/addgroupids"
-                : "http://service.image.myqcloud.com/face/addgroupids";
+        String url = "http://" + this.config.getQCloudImageDomain() + "/face/addgroupids";
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -726,20 +721,15 @@ public class DetectionOp extends BaseOp {
 
     /**
      * Person删除组信息, 文档见 https://cloud.tencent.com/document/product/641/12417
-     * @param useNewDomain 是否使用新域名，<br>
-     * true: http://recognition.image.myqcloud.com/face/delgroupids <br>
-     * false: http://service.image.myqcloud.com/face/delgroupids <br>
-     * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
      * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功, 其他为失败,
      * message为success或者失败原因
      * @throws AbstractImageException SDK定义的Image异常, 通常是输入参数有误或者环境问题(如网络不通)
      */
-    public String faceDelGroupIds(FaceDelGroupIdsRequest request, boolean useNewDomain) throws AbstractImageException {
+    public String faceDelGroupIds(FaceDelGroupIdsRequest request) throws AbstractImageException {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = useNewDomain ? "http://recognition.image.myqcloud.com/face/delgroupids"
-                : "http://service.image.myqcloud.com/face/delgroupids";
+        String url = "http://" + this.config.getQCloudImageDomain() + "/face/delgroupids";
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -974,16 +964,11 @@ public class DetectionOp extends BaseOp {
     }
 
     /**
-     * @param useNewDomain 是否使用新域名，<br>
-     * true: http://recognition.image.myqcloud.com/face/multidentify <br>
-     * false: http://service.image.myqcloud.com/face/multidentify <br>
-     * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
      */
-    public String faceMultiIdentify(FaceMultiIdentifyRequest request, boolean useNewDomain) throws AbstractImageException {
+    public String faceMultiIdentify(FaceMultiIdentifyRequest request) throws AbstractImageException {
         request.check_param();
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = useNewDomain ? "http://recognition.image.myqcloud.com/face/multidentify"
-                : "http://service.image.myqcloud.com/face/multidentify";
+        String url = "http://" + this.config.getQCloudImageDomain() + "/face/multidentify";
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -1173,20 +1158,15 @@ public class DetectionOp extends BaseOp {
 
     /**
      * 人脸静态活体检测
-     * @param useNewDomain 是否使用新域名，<br>
-     * true: http://recognition.image.myqcloud.com/face/livedetectpicture <br>
-     * false: http://service.image.myqcloud.com/face/livedetectpicture <br>
-     * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
      * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功, 其他为失败,
      * message为success或者失败原因
      * @throws AbstractImageException SDK定义的Image异常, 通常是输入参数有误或者环境问题(如网络不通)
      */
-    public String faceLiveDetectPicture(FaceLiveDetectPictureRequest request, boolean useNewDomain) throws AbstractImageException {
+    public String faceLiveDetectPicture(FaceLiveDetectPictureRequest request) throws AbstractImageException {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = useNewDomain ? "http://recognition.image.myqcloud.com/face/livedetectpicture"
-                : "http://service.image.myqcloud.com/face/livedetectpicture";
+        String url = "http://" + this.config.getQCloudImageDomain() + "/face/livedetectpicture";
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);

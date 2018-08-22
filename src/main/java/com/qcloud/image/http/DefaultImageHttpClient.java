@@ -112,7 +112,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
                 try {
                     string = response.body().string();
                 } catch (IOException e) {
-                    throw new ServerException(e.getMessage());
+                    throw new ServerException("Unexpected response code and IOException while reading response string,\n" +response+",\n" + e.getMessage());
                 }
                 String msg = String.format("Unexpected response: %s, content: %s", response, string);
                 throw new ServerException(msg);
@@ -122,12 +122,12 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             try {
                 string = response.body().string();
             } catch (IOException e) {
-                throw new ServerException(e.getMessage());
+                throw new ServerException("IOException while reading response string.\n" + e.getMessage());
             }
             try {
                 new JSONObject(string);
             } catch (JSONException e) {
-                throw new UnknownException(e.getMessage());
+                throw new UnknownException("response is not json: " + string + ",\n" + e.getMessage());
             }
             return string;
 
@@ -159,7 +159,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
                 try {
                     string = response.body().string();
                 } catch (IOException e) {
-                    throw new ServerException(e.getMessage());
+                    throw new ServerException("Unexpected response code and IOException while reading response string,\n" +response+",\n" + e.getMessage());
                 }
                 String msg = String.format("Unexpected response: %s, content: %s", response, string);
                 throw new ServerException(msg);
@@ -168,12 +168,12 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             try {
                 string = response.body().string();
             } catch (IOException e) {
-                throw new ServerException(e.getMessage());
+                throw new ServerException("IOException while reading response string.\n" + e.getMessage());
             }
             try {
                 new JSONObject(string);
             } catch (JSONException e) {
-                throw new UnknownException(e.getMessage());
+                throw new UnknownException("response is not json: " + string + ",\n" + e.getMessage());
             }
             return string;
         } else {

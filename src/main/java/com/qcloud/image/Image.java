@@ -197,25 +197,17 @@ public interface Image {
 
     /**
      * Person新增组信息 https://cloud.tencent.com/document/product/641/12417
-     * @param useNewDomain 是否使用新域名，<br>
-     * true: http://recognition.image.myqcloud.com/face/multidentify <br>
-     * false: http://service.image.myqcloud.com/face/multidentify <br>
-     * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
      * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功,
      * 其他为失败, message为success或者失败原因
      */
-    String faceAddGroupIds(FaceAddGroupIdsRequest request, boolean useNewDomain);
+    String faceAddGroupIds(FaceAddGroupIdsRequest request);
 
     /**
      * Person删除组信息 https://cloud.tencent.com/document/product/641/12417
-     * @param useNewDomain 是否使用新域名，<br>
-     * true: http://recognition.image.myqcloud.com/face/multidentify <br>
-     * false: http://service.image.myqcloud.com/face/multidentify <br>
-     * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
      * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功,
      * 其他为失败, message为success或者失败原因
      */
-    String faceDelGroupIds(FaceDelGroupIdsRequest request, boolean useNewDomain);
+    String faceDelGroupIds(FaceDelGroupIdsRequest request);
      
       /**
 	 *获取人列表接口
@@ -277,14 +269,10 @@ public interface Image {
 
     /**
      * 多脸检索
-     * @param useNewDomain 是否使用新域名，<br>
-     * true: http://recognition.image.myqcloud.com/face/multidentify <br>
-     * false: http://service.image.myqcloud.com/face/multidentify <br>
-     * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
      * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功,
      * 其他为失败, message为success或者失败原因
      */
-    String faceMultiIdentify(FaceMultiIdentifyRequest request, boolean useNewDomain);
+    String faceMultiIdentify(FaceMultiIdentifyRequest request);
      
      /**
 	 *身份证对比接口
@@ -328,14 +316,10 @@ public interface Image {
 
     /**
      * 人脸静态活体检测 https://cloud.tencent.com/document/product/641/12558
-     * @param useNewDomain 是否使用新域名，<br>
-     * true: http://recognition.image.myqcloud.com/face/multidentify <br>
-     * false: http://service.image.myqcloud.com/face/multidentify <br>
-     * 如果开发者使用的是原域名（service.image.myqcloud.com）且已产生调用，则无需更换域名。
      * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功,
      * 其他为失败, message为success或者失败原因
      */
-    String faceLiveDetectPicture(FaceLiveDetectPictureRequest request, boolean useNewDomain);
+    String faceLiveDetectPicture(FaceLiveDetectPictureRequest request);
      
     /**
      * 关闭Image客户端连接池，释放涉及的资源，释放后，不能再使用Image的接口，必须重新生成一个新对象

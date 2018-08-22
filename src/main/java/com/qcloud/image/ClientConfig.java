@@ -16,11 +16,9 @@ public class ClientConfig {
     // 默认的维护最大HTTP连接数
     private static final int DEFAULT_MAX_CONNECTIONS_COUNT = 100;
     // 默认的user_agent标识
-    private static final String DEFAULT_USER_AGENT = "image-java-sdk-v4.2";
-    //图片服务域名
-    private static final String QCLOUD_IMAGE_DOMAIN = "service.image.myqcloud.com";
-    //OCR服务域名
-    private static final String QCLOUD_OCR_DOMAIN = "recognition.image.myqcloud.com";
+    private static final String DEFAULT_USER_AGENT = "image-java-sdk-v2.3.0";
+    
+    public static  String QCLOUD_IMAGE_DOMAIN = "service.image.myqcloud.com";
 
     //黄图识别服务api
     private static final String DETECTION_PORN = "/detection/porn_detect";
@@ -123,11 +121,6 @@ public class ClientConfig {
         return mProxy;
     }
     
-
-    public String getQCloudOcrDomain() {
-        return QCLOUD_OCR_DOMAIN;
-    }
-
     public int getMaxFailedRetry() {
         return maxFailedRetry;
     }

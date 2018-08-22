@@ -58,8 +58,17 @@ public class ImageClient implements Image {
 
     private DetectionOp detectionOp;
 
-    public ImageClient(String appId, String secretId, String secretKey) {
+    /** 老域名 */
+    public static final String OLD_DOMAIN_service_image_myqcloud_com = "service.image.myqcloud.com";
+    /** 新域名 */
+    public static final String NEW_DOMAIN_recognition_image_myqcloud_com = "recognition.image.myqcloud.com";
+    
+    /**
+     * @param domain {@link #OLD_DOMAIN_service_image_myqcloud_com} or {@link #NEW_DOMAIN_recognition_image_myqcloud_com}
+     */
+    public ImageClient(String appId, String secretId, String secretKey, String domain) {
         this(new Credentials(appId, secretId, secretKey));
+        ClientConfig.QCLOUD_IMAGE_DOMAIN = domain;
     }
 
     public ImageClient(Credentials cred) {
@@ -346,9 +355,9 @@ public class ImageClient implements Image {
     }
 
     @Override
-    public String faceAddGroupIds(FaceAddGroupIdsRequest request, boolean useNewDomain) {
+    public String faceAddGroupIds(FaceAddGroupIdsRequest request) {
         try {
-            return detectionOp.faceAddGroupIds(request, useNewDomain);
+            return detectionOp.faceAddGroupIds(request);
         } catch (AbstractImageException e) {
             recordException("faceGetGroupIds", request, e.toString());
             return e.toString();
@@ -360,9 +369,9 @@ public class ImageClient implements Image {
     }
 
     @Override
-    public String faceDelGroupIds(FaceDelGroupIdsRequest request, boolean useNewDomain) {
+    public String faceDelGroupIds(FaceDelGroupIdsRequest request) {
         try {
-            return detectionOp.faceDelGroupIds(request, useNewDomain);
+            return detectionOp.faceDelGroupIds(request);
         } catch (AbstractImageException e) {
             recordException("faceGetGroupIds", request, e.toString());
             return e.toString();
@@ -458,9 +467,9 @@ public class ImageClient implements Image {
     }
 
     @Override
-    public String faceMultiIdentify(FaceMultiIdentifyRequest request, boolean useNewDomain) {
+    public String faceMultiIdentify(FaceMultiIdentifyRequest request) {
         try {
-            return detectionOp.faceMultiIdentify(request,useNewDomain);
+            return detectionOp.faceMultiIdentify(request);
         } catch (AbstractImageException e) {
             recordException("faceMultiIdentify", request, e.toString());
             return e.toString();
@@ -527,9 +536,9 @@ public class ImageClient implements Image {
         }
     }
     @Override
-    public String faceLiveDetectPicture(FaceLiveDetectPictureRequest request,boolean useNewDomain) {
+    public String faceLiveDetectPicture(FaceLiveDetectPictureRequest request) {
         try {
-            return detectionOp.faceLiveDetectPicture(request,useNewDomain);
+            return detectionOp.faceLiveDetectPicture(request);
         } catch (AbstractImageException e) {
             recordException("faceLiveDetectFour", request, e.toString());
             return e.toString();

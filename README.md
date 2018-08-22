@@ -18,10 +18,11 @@
 ### 初始化
 
 ```java
-ImageClient imageClient = new ImageClient(APPID, SecretId, SecretKey);
+ImageClient imageClient = new ImageClient(appId, secretId, secretKey, ImageClient.NEW_DOMAIN_recognition_image_myqcloud_com/*默认使用新域名, 如果你是老用户, 请选择旧域名*/);
 ```
 
 ### 设置代理
+
 根据实际网络环境，可能要设置代理，例如: 
 
 ```java
@@ -30,6 +31,7 @@ imageClient.setProxy(proxy);
 ```
 
 ### 使用
+
 SDK 提供功能如下：
 
 **图像识别**：鉴黄，标签  
