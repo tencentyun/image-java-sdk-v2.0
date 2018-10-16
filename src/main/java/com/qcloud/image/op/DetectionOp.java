@@ -70,6 +70,7 @@ import static com.qcloud.image.ClientConfig.OCR_PLATE;
  */
 public class DetectionOp extends BaseOp {
     private static final Logger LOG = LoggerFactory.getLogger(DetectionOp.class);
+    private static final String PROTOCOL = "https://";
 
     public DetectionOp(ClientConfig config, Credentials cred, AbstractImageHttpClient client) {
         super(config, cred, client);
@@ -87,7 +88,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getDetectionPorn();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getDetectionPorn();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -125,7 +126,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getDetectionTag();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getDetectionTag();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -165,7 +166,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getDetectionIdcard();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getDetectionIdcard();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -204,7 +205,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getDetectionNamecard();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getDetectionNamecard();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -242,7 +243,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain()+ OCR_GENERAL;
+        String url = PROTOCOL + this.config.getQCloudImageDomain()+ OCR_GENERAL;
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -273,7 +274,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain()+ OCR_DRIVINGLICENCE;
+        String url = PROTOCOL + this.config.getQCloudImageDomain()+ OCR_DRIVINGLICENCE;
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -306,7 +307,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain()+ OCR_BIZLICENSE;
+        String url = PROTOCOL + this.config.getQCloudImageDomain()+ OCR_BIZLICENSE;
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -338,7 +339,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain()+ OCR_BANKCARD;
+        String url = PROTOCOL + this.config.getQCloudImageDomain()+ OCR_BANKCARD;
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -370,7 +371,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain()+ OCR_PLATE;
+        String url = PROTOCOL + this.config.getQCloudImageDomain()+ OCR_PLATE;
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -403,7 +404,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getDetectionFace();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getDetectionFace();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -438,7 +439,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceShape();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceShape();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -474,7 +475,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceNewPerson();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceNewPerson();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -523,7 +524,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceDelPerson();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceDelPerson();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -551,7 +552,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceAddFace();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceAddFace();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -591,7 +592,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceDelFace();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceDelFace();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -619,7 +620,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceSetInfo();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceSetInfo();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -648,7 +649,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceGetInfo();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceGetInfo();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -674,7 +675,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceGetGroupIdsInfo();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceGetGroupIdsInfo();
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -698,7 +699,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + "/face/addgroupids";
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + "/face/addgroupids";
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -729,7 +730,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + "/face/delgroupids";
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + "/face/delgroupids";
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -762,7 +763,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceGetPersonIdsInfo();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceGetPersonIdsInfo();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -789,7 +790,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceGetFaceIdsInfo();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceGetFaceIdsInfo();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -816,7 +817,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceGetFaceInfo();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceGetFaceInfo();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -844,7 +845,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceIdentify();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceIdentify();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -904,7 +905,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceVerify();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceVerify();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -937,7 +938,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceCompare();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceCompare();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -968,7 +969,7 @@ public class DetectionOp extends BaseOp {
     public String faceMultiIdentify(FaceMultiIdentifyRequest request) throws AbstractImageException {
         request.check_param();
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + "/face/multidentify";
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + "/face/multidentify";
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod(HttpMethod.POST);
@@ -1031,7 +1032,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceIdcardCompare();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceIdcardCompare();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -1068,7 +1069,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceLiveGetFour();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceLiveGetFour();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -1098,7 +1099,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceIdCardLiveDetectFour();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceIdCardLiveDetectFour();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -1131,7 +1132,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
         
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + this.config.getFaceLiveDetectFour();
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + this.config.getFaceLiveDetectFour();
         
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
@@ -1166,7 +1167,7 @@ public class DetectionOp extends BaseOp {
         request.check_param();
 
         String sign = Sign.appSign(cred, request.getBucketName(), this.config.getSignExpired());
-        String url = "http://" + this.config.getQCloudImageDomain() + "/face/livedetectpicture";
+        String url = PROTOCOL + this.config.getQCloudImageDomain() + "/face/livedetectpicture";
 
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setUrl(url);
