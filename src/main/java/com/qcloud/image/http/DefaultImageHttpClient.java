@@ -105,7 +105,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             try {
                 response = mOkHttpClient.newCall(requestBuilder.build()).execute();
             } catch (IOException e) {
-                throw new ServerException(e.getMessage());
+                throw new ServerException(e);
             }
             if (!response.isSuccessful()) {
                 String string = null;
@@ -152,7 +152,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             try {
                 response = mOkHttpClient.newCall(requestBuilder.build()).execute();
             } catch (IOException e) {
-                throw new ServerException(e.getMessage());
+                throw new ServerException(e);
             }
             if (!response.isSuccessful()) {
                 String string = null;
