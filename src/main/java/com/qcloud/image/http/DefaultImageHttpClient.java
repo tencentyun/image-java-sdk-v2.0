@@ -6,11 +6,9 @@ import com.qcloud.image.exception.ParamException;
 import com.qcloud.image.exception.ServerException;
 import com.qcloud.image.exception.UnknownException;
 import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Request.Builder;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
@@ -34,48 +32,6 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
 
     public DefaultImageHttpClient(ClientConfig config) {
         super(config);
-    }
-
-    @Override
-    protected String sendGetRequest(HttpRequest httpRequest) throws AbstractImageException {
-        mOkHttpClient.setProxy(config.getProxy());
-                
-        mOkHttpClient.setConnectTimeout(config.getConnectionTimeout(), TimeUnit.MILLISECONDS);
-        mOkHttpClient.setReadTimeout(config.getSocketTimeout(), TimeUnit.MILLISECONDS);   
-        mOkHttpClient.setWriteTimeout(config.getSocketTimeout(),TimeUnit.MILLISECONDS);
-
-        //url
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(httpRequest.getUrl()).newBuilder();
-        for (String paramKey : httpRequest.getParams().keySet()) {
-            urlBuilder.addQueryParameter(paramKey, String.valueOf(httpRequest.getParams().get(paramKey)));
-        }
-        //request
-        Builder requestBuilder = new Builder().url(urlBuilder.build());
-        //header
-        Map<String, String> headers = httpRequest.getHeaders();
-        for (String headerKey : headers.keySet()) {
-            requestBuilder.addHeader(headerKey, headers.get(headerKey));
-        }
-        //call
-        Request request = requestBuilder.build();
-        Response response = null;
-        try {
-            response = mOkHttpClient.newCall(request).execute();
-        } catch (IOException e) {
-            throw new ServerException(e.getMessage());
-        }
-        String string = "";
-        try {
-            string = response.body().string();
-        } catch (IOException e) {
-            throw new ServerException(e.getMessage());
-        }
-        try {
-            new JSONObject(string);
-        } catch (JSONException e) {
-            throw new UnknownException(e.getMessage());
-        }
-        return string;
     }
 
     @Override
