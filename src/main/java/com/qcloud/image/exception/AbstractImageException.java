@@ -4,9 +4,6 @@ import com.qcloud.image.http.ResponseBodyKey;
 
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
 /**
  * 封装cos异常
  * @author chengwu
@@ -34,14 +31,9 @@ public abstract class AbstractImageException extends Exception {
     
     @Override
     public String toString() {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        printStackTrace(new PrintStream(out));
-        String str = new String(out.toByteArray());
-        
         JSONObject responseObj = new JSONObject();
         responseObj.put(ResponseBodyKey.CODE, type.getErrorCode());
         responseObj.put(ResponseBodyKey.MESSAGE, getMessage());
-        responseObj.put("StackTrace", str);
         return responseObj.toString();
     }
     
