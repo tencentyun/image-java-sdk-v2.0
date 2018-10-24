@@ -63,6 +63,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             } catch (IOException e) {
                 throw new ServerException(e);
             }
+            
             if (!response.isSuccessful()) {
                 String string = null;
                 try {
@@ -70,8 +71,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
                 } catch (IOException e) {
                     throw new ServerException("Unexpected response code and IOException while reading response string,\n" +response+",\n" + e.getMessage());
                 }
-                String msg = String.format("Unexpected response: %s, content: %s", response, string);
-                throw new ServerException(msg);
+                return string;
             }
 
             String string = null;
@@ -110,6 +110,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             } catch (IOException e) {
                 throw new ServerException(e);
             }
+            
             if (!response.isSuccessful()) {
                 String string = null;
                 try {
@@ -117,9 +118,9 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
                 } catch (IOException e) {
                     throw new ServerException("Unexpected response code and IOException while reading response string,\n" +response+",\n" + e.getMessage());
                 }
-                String msg = String.format("Unexpected response: %s, content: %s", response, string);
-                throw new ServerException(msg);
+               return string;
             }
+            
             String string = null;
             try {
                 string = response.body().string();

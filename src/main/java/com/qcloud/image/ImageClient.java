@@ -1,11 +1,9 @@
 package com.qcloud.image;
 
 import com.qcloud.image.exception.AbstractImageException;
-import com.qcloud.image.exception.UnknownException;
 import com.qcloud.image.http.AbstractImageHttpClient;
 import com.qcloud.image.http.DefaultImageHttpClient;
 import com.qcloud.image.op.DetectionOp;
-import com.qcloud.image.request.AbstractBaseRequest;
 import com.qcloud.image.request.FaceAddFaceRequest;
 import com.qcloud.image.request.FaceAddGroupIdsRequest;
 import com.qcloud.image.request.FaceCompareRequest;
@@ -96,449 +94,161 @@ public class ImageClient implements Image {
 
 
     @Override
-    public String pornDetect(PornDetectRequest request) {
-        try {
+    public String pornDetect(PornDetectRequest request) throws AbstractImageException {
             return detectionOp.pornDetect(request);
-        } catch (AbstractImageException e) {
-            recordException("pornDetect", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("pornDetect", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String tagDetect(TagDetectRequest request) {
-        try {
+    public String tagDetect(TagDetectRequest request) throws AbstractImageException {
             return detectionOp.tagDetect(request);
-        } catch (AbstractImageException e) {
-            recordException("tagDetect", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("tagDetect", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String idcardDetect(IdcardDetectRequest request) {
-        try {
+    public String idcardDetect(IdcardDetectRequest request) throws AbstractImageException {
             return detectionOp.idcardDetect(request);
-        } catch (AbstractImageException e) {
-            recordException("idcardDetect", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("idcardDetect", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String namecardDetect(NamecardDetectRequest request) {
-        try {
+    public String namecardDetect(NamecardDetectRequest request) throws AbstractImageException {
             return detectionOp.namecardDetect(request);
-        } catch (AbstractImageException e) {
-            recordException("namecardDetect", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("namecardDetect", request, e1.toString());
-            return e1.toString();
-        }
     }
 
     @Override
-    public String ocrBizLicense(OcrBizLicenseRequest request) {
-        try {
+    public String ocrBizLicense(OcrBizLicenseRequest request) throws AbstractImageException {
             return detectionOp.ocrBizLicense(request);
-        } catch (AbstractImageException e) {
-            recordException("generalOcr", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("generalOcr", request, e1.toString());
-            return e1.toString();
-        }
     }
 
     @Override
-    public String ocrBankCard(OcrBankCardRequest request) {
-        try {
+    public String ocrBankCard(OcrBankCardRequest request) throws AbstractImageException {
             return detectionOp.ocrBankCard(request);
-        } catch (AbstractImageException e) {
-            recordException("generalOcr", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("generalOcr", request, e1.toString());
-            return e1.toString();
-        }
     }
     @Override
-    public String ocrPlate(OcrPlateRequest request) {
-        try {
+    public String ocrPlate(OcrPlateRequest request) throws AbstractImageException {
             return detectionOp.ocrPlate(request);
-        } catch (AbstractImageException e) {
-            recordException("generalOcr", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("generalOcr", request, e1.toString());
-            return e1.toString();
-        }
     }
 
     @Override
-    public String ocrDrivingLicence(OcrDrivingLicenceRequest request) {
-        try {
+    public String ocrDrivingLicence(OcrDrivingLicenceRequest request) throws AbstractImageException {
             return detectionOp.ocrDrivingLicence(request);
-        } catch (AbstractImageException e) {
-            recordException("generalOcr", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("generalOcr", request, e1.toString());
-            return e1.toString();
-        }
     }
 
     @Override
-    public String generalOcr(GeneralOcrRequest request) {
-        try {
+    public String generalOcr(GeneralOcrRequest request) throws AbstractImageException {
             return detectionOp.generalOcr(request);
-        } catch (AbstractImageException e) {
-            recordException("generalOcr", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("generalOcr", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String faceDetect(FaceDetectRequest request) {
-        try {
+    public String faceDetect(FaceDetectRequest request) throws AbstractImageException {
             return detectionOp.faceDetect(request);
-        } catch (AbstractImageException e) {
-            recordException("faceDetect", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceDetect", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String faceShape(FaceShapeRequest request) {
-        try {
+    public String faceShape(FaceShapeRequest request) throws AbstractImageException {
             return detectionOp.faceShape(request);
-        } catch (AbstractImageException e) {
-            recordException("faceShape", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceShape", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String faceNewPerson(FaceNewPersonRequest request) {
-        try {
+    public String faceNewPerson(FaceNewPersonRequest request) throws AbstractImageException {
             return detectionOp.faceNewPerson(request);
-        } catch (AbstractImageException e) {
-            recordException("faceNewPerson", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceNewPerson", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String faceDelPerson(FaceDelPersonRequest request) {
-        try {
+    public String faceDelPerson(FaceDelPersonRequest request) throws AbstractImageException {
             return detectionOp.faceDelPerson(request);
-        } catch (AbstractImageException e) {
-            recordException("faceDelPerson", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceDelPerson", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String faceAddFace(FaceAddFaceRequest request) {
-        try {
+    public String faceAddFace(FaceAddFaceRequest request) throws AbstractImageException {
             return detectionOp.faceAddFace(request);
-        } catch (AbstractImageException e) {
-            recordException("faceAddFace", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceAddFace", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String faceDelFace(FaceDelFaceRequest request) {
-        try {
+    public String faceDelFace(FaceDelFaceRequest request) throws AbstractImageException {
             return detectionOp.faceDelFace(request);
-        } catch (AbstractImageException e) {
-            recordException("faceDelFace", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceDelFace", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String faceSetInfo(FaceSetInfoRequest request) {
-        try {
+    public String faceSetInfo(FaceSetInfoRequest request) throws AbstractImageException {
             return detectionOp.faceSetInfo(request);
-        } catch (AbstractImageException e) {
-            recordException("faceSetInfo", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceSetInfo", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String faceGetInfo(FaceGetInfoRequest request) {
-        try {
+    public String faceGetInfo(FaceGetInfoRequest request) throws AbstractImageException {
             return detectionOp.faceGetInfo(request);
-        } catch (AbstractImageException e) {
-            recordException("faceGetInfo", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceGetInfo", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String faceGetGroupIds(FaceGetGroupIdsRequest request) {
-        try {
+    public String faceGetGroupIds(FaceGetGroupIdsRequest request) throws AbstractImageException {
             return detectionOp.faceGetGroupIds(request);
-        } catch (AbstractImageException e) {
-            recordException("faceGetGroupIds", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceGetGroupIds", request, e1.toString());
-            return e1.toString();
-        }
     }
 
     @Override
-    public String faceAddGroupIds(FaceAddGroupIdsRequest request) {
-        try {
+    public String faceAddGroupIds(FaceAddGroupIdsRequest request) throws AbstractImageException {
             return detectionOp.faceAddGroupIds(request);
-        } catch (AbstractImageException e) {
-            recordException("faceGetGroupIds", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceGetGroupIds", request, e1.toString());
-            return e1.toString();
-        }
     }
 
     @Override
-    public String faceDelGroupIds(FaceDelGroupIdsRequest request) {
-        try {
+    public String faceDelGroupIds(FaceDelGroupIdsRequest request) throws AbstractImageException {
             return detectionOp.faceDelGroupIds(request);
-        } catch (AbstractImageException e) {
-            recordException("faceGetGroupIds", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceGetGroupIds", request, e1.toString());
-            return e1.toString();
-        }
     }
 
     @Override
-    public String faceGetPersonIds(FaceGetPersonIdsRequest request) {
-        try {
+    public String faceGetPersonIds(FaceGetPersonIdsRequest request) throws AbstractImageException {
             return detectionOp.faceGetPersonIds(request);
-        } catch (AbstractImageException e) {
-            recordException("faceGetPersonIds", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceGetPersonIds", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String faceGetFaceIds(FaceGetFaceIdsRequest request) {
-        try {
+    public String faceGetFaceIds(FaceGetFaceIdsRequest request) throws AbstractImageException {
             return detectionOp.faceGetFaceIds(request);
-        } catch (AbstractImageException e) {
-            recordException("faceGetFaceIds", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceGetFaceIds", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String faceGetFaceInfo(FaceGetFaceInfoRequest request) {
-        try {
+    public String faceGetFaceInfo(FaceGetFaceInfoRequest request) throws AbstractImageException {
             return detectionOp.faceGetFaceInfo(request);
-        } catch (AbstractImageException e) {
-            recordException("faceGetInfo", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceGetInfo", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String faceIdentify(FaceIdentifyRequest request) {
-        try {
+    public String faceIdentify(FaceIdentifyRequest request) throws AbstractImageException {
             return detectionOp.faceIdentify(request);
-        } catch (AbstractImageException e) {
-            recordException("faceIdentify", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceIdentify", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String faceVerify(FaceVerifyRequest request) {
-        try {
+    public String faceVerify(FaceVerifyRequest request) throws AbstractImageException {
             return detectionOp.faceVerify(request);
-        } catch (AbstractImageException e) {
-            recordException("faceVerify", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceVerify", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String faceCompare(FaceCompareRequest request) {
-        try {
+    public String faceCompare(FaceCompareRequest request) throws AbstractImageException {
             return detectionOp.faceCompare(request);
-        } catch (AbstractImageException e) {
-            recordException("faceCompare", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceCompare", request, e1.toString());
-            return e1.toString();
-        }
     }
 
     @Override
-    public String faceMultiIdentify(FaceMultiIdentifyRequest request) {
-        try {
+    public String faceMultiIdentify(FaceMultiIdentifyRequest request) throws AbstractImageException {
             return detectionOp.faceMultiIdentify(request);
-        } catch (AbstractImageException e) {
-            recordException("faceMultiIdentify", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceMultiIdentify", request, e1.toString());
-            return e1.toString();
-        }
     }
 
     @Override
-    public String faceIdCardCompare(FaceIdCardCompareRequest request) {
-        try {
+    public String faceIdCardCompare(FaceIdCardCompareRequest request) throws AbstractImageException {
             return detectionOp.faceIdCardCompare(request);
-        } catch (AbstractImageException e) {
-            recordException("faceIdCardCompare", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceIdCardCompare", request, e1.toString());
-            return e1.toString();
-        }
     }
     
      @Override
-    public String faceLiveGetFour(FaceLiveGetFourRequest request) {
-        try {
+     public String faceLiveGetFour(FaceLiveGetFourRequest request) throws AbstractImageException {
             return detectionOp.faceLiveGetFour(request);
-        } catch (AbstractImageException e) {
-            recordException("faceLiveGetFour", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceLiveGetFour", request, e1.toString());
-            return e1.toString();
-        }
-    }
+     }
     
     @Override
-    public String faceIdCardLiveDetectFour(FaceIdCardLiveDetectFourRequest request) {
-        try {
+    public String faceIdCardLiveDetectFour(FaceIdCardLiveDetectFourRequest request) throws AbstractImageException {
             return detectionOp.faceIdCardLiveDetectFour(request);
-        } catch (AbstractImageException e) {
-            recordException("faceIdCardLiveDetectFour", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceIdCardLiveDetectFour", request, e1.toString());
-            return e1.toString();
-        }
     }
     
     @Override
-    public String faceLiveDetectFour(FaceLiveDetectFourRequest request) {
-        try {
+    public String faceLiveDetectFour(FaceLiveDetectFourRequest request) throws AbstractImageException {
             return detectionOp.faceLiveDetectFour(request);
-        } catch (AbstractImageException e) {
-            recordException("faceLiveDetectFour", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceLiveDetectFour", request, e1.toString());
-            return e1.toString();
-        }
     }
     @Override
-    public String faceLiveDetectPicture(FaceLiveDetectPictureRequest request) {
-        try {
+    public String faceLiveDetectPicture(FaceLiveDetectPictureRequest request) throws AbstractImageException {
             return detectionOp.faceLiveDetectPicture(request);
-        } catch (AbstractImageException e) {
-            recordException("faceLiveDetectFour", request, e.toString());
-            return e.toString();
-        } catch (Exception e) {
-            UnknownException e1 = new UnknownException(e.toString());
-            recordException("faceLiveDetectFour", request, e1.toString());
-            return e1.toString();
-        }
     }
 
     @Override
