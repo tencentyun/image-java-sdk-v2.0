@@ -119,6 +119,8 @@ public class Demo {
         faceIdCardLiveDetectFour(imageClient, bucketName, validate);
         faceLiveDetectFour(imageClient, bucketName, validate);
         faceLiveDetectPicture(imageClient, bucketName);//人脸静态活体检测
+        
+        imageClient.shutdown();
     }
 
     /**
