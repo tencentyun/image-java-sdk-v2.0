@@ -109,7 +109,7 @@ public interface Image {
 	 *人脸检测接口
 	 * 
 	 * @param request
-	 *            人连检测请求
+	 *            人脸检测请求
 	 * @return JSON格式的字符串, 格式为{"code":$code, "message":"$mess"}, code为0表示成功,
 	 *         其他为失败, message为success或者失败原因
 	 */
