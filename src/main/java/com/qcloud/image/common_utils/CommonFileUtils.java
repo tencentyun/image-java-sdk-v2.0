@@ -1,8 +1,5 @@
 package com.qcloud.image.common_utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,7 +12,6 @@ import java.io.InputStream;
  */
 public class CommonFileUtils {
 
-    private static Logger LOG = LoggerFactory.getLogger(CommonFileUtils.class);
 
     /**
      * 判断指定路径的文件是否有效, 即文件存在，且可读
@@ -66,7 +62,7 @@ public class CommonFileUtils {
                 inputStream.close();
             }
         } catch (IOException e) {
-            LOG.error("close file {} occur an IOExcpetion {}", filePath, e);
+          e.printStackTrace();
         }
     }
 
@@ -146,7 +142,6 @@ public class CommonFileUtils {
     public static long getFileLastModified(String filePath) throws Exception {
         if (!isLegalFile(filePath)) {
             String errorMsg = filePath + " is not file or not exist or can't be read!";
-            LOG.error(errorMsg);
             throw new Exception(errorMsg);
         }
         File file = new File(filePath);

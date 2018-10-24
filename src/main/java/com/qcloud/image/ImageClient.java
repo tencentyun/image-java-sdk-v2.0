@@ -40,17 +40,12 @@ import com.qcloud.image.request.PornDetectRequest;
 import com.qcloud.image.request.TagDetectRequest;
 import com.qcloud.image.sign.Credentials;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.net.Proxy;
 
 /**
  * @author chengwu 封装Image JAVA SDK暴露给用户的接口函数
  */
 public class ImageClient implements Image {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ImageClient.class);
 
     private ClientConfig config;
     private Credentials cred;
@@ -99,9 +94,6 @@ public class ImageClient implements Image {
         detectionOp = new DetectionOp(this.config, this.cred, this.client);
     }
 
-    private void recordException(String methodName, AbstractBaseRequest request, String message) {
-        LOG.error(methodName + "occur a exception, request:{}, message:{}", request, message);
-    }
 
     @Override
     public String pornDetect(PornDetectRequest request) {

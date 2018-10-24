@@ -55,12 +55,6 @@
             <artifactId>commons-codec</artifactId>
             <version>1.8</version>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.22</version>
-            <type>jar</type>
-        </dependency>
     </dependencies>
     <distributionManagement>
         <repository>

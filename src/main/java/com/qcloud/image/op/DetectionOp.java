@@ -52,8 +52,6 @@ import com.qcloud.image.request.TagDetectRequest;
 import com.qcloud.image.sign.Credentials;
 import com.qcloud.image.sign.Sign;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.HashMap;
@@ -69,7 +67,6 @@ import static com.qcloud.image.ClientConfig.OCR_PLATE;
  * @author jusisli 此类封装了图片识别操作
  */
 public class DetectionOp extends BaseOp {
-    private static final Logger LOG = LoggerFactory.getLogger(DetectionOp.class);
     private static final String PROTOCOL = "https://";
 
     public DetectionOp(ClientConfig config, Credentials cred, AbstractImageHttpClient client) {
