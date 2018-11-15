@@ -111,6 +111,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             for (String headerKey : headers.keySet()) {
                 requestBuilder.addHeader(headerKey, headers.get(headerKey));
             }
+            requestBuilder.addHeader("Connection", "close");//禁用长连接, 因为后台不支持
             Response response = null;
             try {
                 response = mOkHttpClient.newCall(requestBuilder.build()).execute();
