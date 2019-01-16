@@ -5,6 +5,8 @@ import com.qcloud.image.exception.AbstractImageException;
 import com.qcloud.image.exception.ParamException;
 import com.qcloud.image.exception.ServerException;
 import com.qcloud.image.exception.UnknownException;
+import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.ConnectionPool;
 import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
@@ -19,7 +21,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -101,11 +103,17 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             return string;
 
         } else if (httpRequest.getContentType() == HttpContentType.MULTIPART_FORM_DATA) {
-            HashMap<String, File> imageList = httpRequest.getImageList();
+            Map<String, File> imageList;//File形式的图片
+            Map<String, byte[]> bytesContentList = httpRequest.getBytesContentList();//byte[]形式的图片
+            if (bytesContentList != null) {//优先使用byte[]形式的图片
+                imageList = Collections.emptyMap();//如果有byte[]形式的图片, 则清空File形式的图片
+            } else {
+                imageList = httpRequest.getImageList();
+            }
             Map<String, Object> params = httpRequest.getParams();
             MultipartBuilder multipartBuilder = new MultipartBuilder();
             try {
-                setMultiPartEntity(multipartBuilder, params, imageList, httpRequest.getBytesContentList());
+                setMultiPartEntity(multipartBuilder, params, imageList, bytesContentList);
             } catch (FileNotFoundException e) {
                 throw new ParamException(e.getMessage());
             }
