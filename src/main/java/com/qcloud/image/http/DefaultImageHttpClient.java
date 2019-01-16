@@ -37,9 +37,15 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
     @Override
     public void shutdown() {
         mOkHttpClient.getDispatcher().getExecutorService().shutdown();   //清除并关闭线程池
-        mOkHttpClient.getConnectionPool().evictAll();                 //清除并关闭连接池
+        ConnectionPool connectionPool = mOkHttpClient.getConnectionPool();
+        if (connectionPool!=null) {
+            connectionPool.evictAll();                 //清除并关闭连接池
+        }
         try {
-            mOkHttpClient.getCache().close();
+            Cache cache = mOkHttpClient.getCache();
+            if (cache!=null) {
+                cache.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
