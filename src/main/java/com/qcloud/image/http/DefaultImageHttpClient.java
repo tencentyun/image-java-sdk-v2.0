@@ -105,7 +105,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
         } else if (httpRequest.getContentType() == HttpContentType.MULTIPART_FORM_DATA) {
             Map<String, File> imageList;//File形式的图片
             Map<String, byte[]> bytesContentList = httpRequest.getBytesContentList();//byte[]形式的图片
-            if (bytesContentList != null) {//优先使用byte[]形式的图片
+            if (bytesContentList != null && bytesContentList.size() > 0) {//优先使用byte[]形式的图片
                 imageList = Collections.emptyMap();//如果有byte[]形式的图片, 则清空File形式的图片
             } else {
                 imageList = httpRequest.getImageList();
