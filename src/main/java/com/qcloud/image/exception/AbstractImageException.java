@@ -15,6 +15,11 @@ public abstract class AbstractImageException extends Exception {
     
     private ImageExceptionType type;
 
+    public AbstractImageException(ImageExceptionType type, Throwable cause) {
+        super(cause);
+        this.type = type;
+    }
+
     public AbstractImageException(String message, Throwable cause, ImageExceptionType type) {
         super(message, cause);
         this.type = type;

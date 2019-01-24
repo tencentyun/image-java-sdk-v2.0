@@ -34,7 +34,8 @@ public class Sign {
             try {
                     hmacDigest = CommonCodecUtils.HmacSha1(plainText, secretKey);
             } catch (Exception e) {
-                    throw new UnknownException(e.getMessage());
+                e.printStackTrace();
+                throw new UnknownException(e);
             }
             byte[] signContent = new byte[hmacDigest.length + plainText.getBytes().length];
             System.arraycopy(hmacDigest, 0, signContent, 0, hmacDigest.length);

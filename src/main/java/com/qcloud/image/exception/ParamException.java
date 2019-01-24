@@ -8,5 +8,8 @@ public class ParamException extends AbstractImageException {
     public ParamException(String message) {
         super(ImageExceptionType.PARAM_EXCEPTION, message);
     }
-    
+
+    public ParamException( Throwable cause) {
+        super(ImageExceptionType.PARAM_EXCEPTION, cause);
+    }
 }

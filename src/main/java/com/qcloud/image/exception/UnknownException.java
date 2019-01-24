@@ -9,8 +9,7 @@ public class UnknownException extends AbstractImageException {
         super(message, cause, ImageExceptionType.UNKNOWN_EXCEPTION);
     }
 
-    public UnknownException(String message) {
-        super(ImageExceptionType.UNKNOWN_EXCEPTION, message);
+    public UnknownException(Throwable cause) {
+        super(ImageExceptionType.UNKNOWN_EXCEPTION, cause);
     }
-
 }
