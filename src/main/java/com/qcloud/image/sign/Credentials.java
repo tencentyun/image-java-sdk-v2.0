@@ -10,7 +10,15 @@ public class Credentials {
     private final String secretKey;
 
     public Credentials(String appId, String secretId, String secretKey) {
-        super();
+        if (appId == null || appId.trim().isEmpty()) {
+            throw new NullPointerException("AppId can not be null or empty");
+        }
+        if (secretId == null || secretId.trim().isEmpty()) {
+            throw new NullPointerException("secretId can not be null or empty");
+        }
+        if (secretKey == null || secretKey.trim().isEmpty()) {
+            throw new NullPointerException("secretKey can not be null or empty");
+        }
         this.appId = appId;
         this.secretId = secretId;
         this.secretKey = secretKey;
