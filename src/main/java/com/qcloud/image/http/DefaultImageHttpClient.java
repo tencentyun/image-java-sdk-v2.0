@@ -152,7 +152,7 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             try {
                 new JSONObject(string);
             } catch (JSONException e) {
-                throw new UnknownException("response is not json: " + string + ",\n" + e.getMessage());
+                throw new UnknownException("response is not json: " + string, e);
             }
             return string;
         } else {

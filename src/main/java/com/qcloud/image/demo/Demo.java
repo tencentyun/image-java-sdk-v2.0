@@ -58,7 +58,7 @@ public class Demo {
         String appId = "0000000";
         String secretId = "YOUR_SECRETID";
         String secretKey = "YOUR_SECRETKEY";
-        String bucketName = "YOUR_BUCKET";
+        String bucketName = "";//历史遗留字段, 无需修改
 
         
         ImageClient imageClient = new ImageClient(appId, secretId, secretKey, ImageClient.NEW_DOMAIN_recognition_image_myqcloud_com/*根据文档说明选择域名*/);
@@ -91,8 +91,8 @@ public class Demo {
         ocrPlate(imageClient, bucketName);
         
         /* 人脸识别系列
-         * 因为数据不能跨域名共享, 请根据文档说明选择域名初始化ImageClient. 文档见: https://cloud.tencent.com/document/product/867/17582
-         * ImageClient imageClient = new ImageClient(appId, secretId, secretKey, ImageClient.NEW_DOMAIN_recognition_image_myqcloud_com); //根据文档说明选择域名初始化ImageClient
+         * 因为数据不能跨域名共享, 如果你是老用户并且已经产生调用, 请继续使用旧域名 ImageClient.OLD_DOMAIN 否则推荐使用 ImageClient.NEW_DOMAIN
+         * ImageClient imageClient = new ImageClient(appId, secretId, secretKey, ImageClient.NEW_DOMAIN_recognition_image_myqcloud_com);
          */
         faceDetect(imageClient, bucketName);
         faceShape(imageClient, bucketName);

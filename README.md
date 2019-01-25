@@ -14,14 +14,14 @@
 <dependency>
   <groupId>com.qcloud</groupId>
   <artifactId>qcloud-image-sdk</artifactId>
-  <version>2.3.4</version>
+  <version>2.3.6</version>
 </dependency>
 ```
 
 ### 使用 Gradle
 
 ```groovy
-compile 'com.qcloud:qcloud-image-sdk:2.3.4'
+compile 'com.qcloud:qcloud-image-sdk:2.3.6'
 ```
 
 ### 使用  jar 文件
