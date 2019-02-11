@@ -66,6 +66,9 @@ public class Demo {
         /*设置代理服务器*/
         //Proxy proxy = new Proxy(Type.HTTP, new InetSocketAddress("127.0.0.1", 8080));
         //imageClient.setProxy(proxy);
+        
+        /*设置是否使用 HTTPS*/
+        imageClient.setEnableHttps(true);
 
 
         /*图像识别系列*/

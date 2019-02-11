@@ -112,6 +112,15 @@ public class ClientConfig {
     private int maxConnectionsCount = DEFAULT_MAX_CONNECTIONS_COUNT;
     private String userAgent = DEFAULT_USER_AGENT;
     private Proxy mProxy;
+    private boolean mEnableHttps = true;
+
+    public void setEnableHttps(boolean enableHttps) {
+        mEnableHttps = enableHttps;
+    }
+
+    public boolean isEnableHttps() {
+        return mEnableHttps;
+    }
 
     public void setProxy(Proxy proxy) {
         mProxy = proxy;

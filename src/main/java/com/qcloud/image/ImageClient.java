@@ -68,6 +68,15 @@ public class ImageClient implements Image {
         this(new ClientConfig(), cred);
     }
 
+    /**
+     * 设置是否使用 HTTPS 协议.<br>
+     * 为保证信息安全, 推荐使用 HTTPS
+     * @param enableHttps true: HTTPS, false: HTTP. 默认为 true
+     */
+    public void setEnableHttps(boolean enableHttps) {
+        this.config.setEnableHttps(enableHttps);
+    }
+
     public void setConfig(ClientConfig config) {
         this.config = config;
         this.detectionOp.setConfig(config);
