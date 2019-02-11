@@ -11,6 +11,7 @@ import com.qcloud.image.exception.ParamException;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -32,7 +33,9 @@ public class IdcardDetectRequest extends AbstractBaseRequest {
         
 	// 图片内容列表,key=image name
         private HashMap<String, File> imageList = new HashMap<String, File>();
-              
+ 
+    private int ret_portrait_flag = 0;
+    
         /**
          * @param bucketName bucketName
          * @param urlList urlList
@@ -46,6 +49,20 @@ public class IdcardDetectRequest extends AbstractBaseRequest {
                     this.urlList.add(urlList[i]);
                 }
 	}
+
+    /**
+     * @param bucketName bucketName
+     * @param urlList urlList
+     * @param cardType 0为身份证有照片的一面，1为身份证有国徽的一面
+     * @param retPortraitFlag 是否返回身份证头像照片, 0: 不返回, 1: 返回
+     */
+    public IdcardDetectRequest(String bucketName, String[] urlList, int cardType, int retPortraitFlag) {
+        super(bucketName);
+        this.isUrl = true;
+        this.cardType = cardType;
+        this.ret_portrait_flag = retPortraitFlag;
+        this.urlList.addAll(Arrays.asList(urlList));
+    }
 
         /**
          * 
@@ -62,6 +79,27 @@ public class IdcardDetectRequest extends AbstractBaseRequest {
                 this.keyList.put(i + "", String.format("image[%d]", i));
             }
         }
+
+    /**
+     * @param bucketName bucketName
+     * @param image 图片内容
+     * @param cardType 0为身份证有照片的一面，1为身份证有国徽的一面
+     * @param retPortraitFlag 是否返回身份证头像照片, 0: 不返回, 1: 返回
+     */
+    public IdcardDetectRequest(String bucketName, File[] image, int cardType, int retPortraitFlag) {
+        super(bucketName);
+        this.isUrl = false;
+        this.cardType = cardType;
+        this.ret_portrait_flag = retPortraitFlag;
+        for (int i = 0; i < image.length; i++) {
+            this.imageList.put(i + "", image[i]);
+            this.keyList.put(i + "", String.format("image[%d]", i));
+        }
+    }
+
+    public int getRetPortraitFlag() {
+        return this.ret_portrait_flag;
+    }
         
         public boolean isUrl() {
             return isUrl;
@@ -105,5 +143,8 @@ public class IdcardDetectRequest extends AbstractBaseRequest {
                 if (cardType != 0 && cardType!= 1) {
                     throw new ParamException( "param cardType error, please check!");
                 }
+        if ((this.ret_portrait_flag != 0) && (this.ret_portrait_flag != 1)) {
+            throw new ParamException("param retPortraitFlag error, please check!");
+        }
 	}
 }

@@ -937,7 +937,7 @@ public class Demo {
         String[] idcardUrlList = new String[2];
         idcardUrlList[0] = "http://youtu.qq.com/app/img/experience/char_general/icon_id_01.jpg";
         idcardUrlList[1] = "http://youtu.qq.com/app/img/experience/char_general/icon_id_02.jpg";
-        IdcardDetectRequest idReq = new IdcardDetectRequest(bucketName, idcardUrlList, 0);
+        IdcardDetectRequest idReq = new IdcardDetectRequest(bucketName, idcardUrlList, 0/*0:正面, 1:反面*/, 1/*0:不返回身份证照片, 1:返回*/);
         try {
             ret = imageClient.idcardDetect(idReq);
         } catch (AbstractImageException e) {
@@ -947,7 +947,7 @@ public class Demo {
         //识别身份证反面
         idcardUrlList[0] = "https://gss0.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/314e251f95cad1c89e04bea2763e6709c83d51f3.jpg";
         idcardUrlList[1] = "http://image2.sina.com.cn/dy/c/2004-03-29/U48P1T1D3073262F23DT20040329135445.jpg";
-        idReq = new IdcardDetectRequest(bucketName, idcardUrlList, 1);
+        idReq = new IdcardDetectRequest(bucketName, idcardUrlList, 1/*0:正面, 1:反面*/);
         try {
             ret = imageClient.idcardDetect(idReq);
         } catch (AbstractImageException e) {
@@ -960,7 +960,7 @@ public class Demo {
         File[] idcardImageList = new File[2];
         idcardImageList[0] = new File("assets", "icon_id_01.jpg");
         idcardImageList[1] = new File("assets", "icon_id_02.jpg");
-        idReq = new IdcardDetectRequest(bucketName, idcardImageList, 0);
+        idReq = new IdcardDetectRequest(bucketName, idcardImageList, 0/*0:正面, 1:反面*/, 1/*0:不返回身份证照片, 1:返回*/);
         try {
             ret = imageClient.idcardDetect(idReq);
         } catch (AbstractImageException e) {
@@ -970,7 +970,7 @@ public class Demo {
         //识别身份证反面
         idcardImageList[0] = new File("assets", "icon_id_03.jpg");
         idcardImageList[1] = new File("assets", "icon_id_04.jpg");
-        idReq = new IdcardDetectRequest(bucketName,  idcardImageList, 1);
+        idReq = new IdcardDetectRequest(bucketName,  idcardImageList, 1/*0:正面, 1:反面*/);
         try {
             ret = imageClient.idcardDetect(idReq);
         } catch (AbstractImageException e) {

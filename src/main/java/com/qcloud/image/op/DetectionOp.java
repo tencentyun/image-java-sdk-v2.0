@@ -173,6 +173,7 @@ public class DetectionOp extends BaseOp {
         httpRequest.addParam(RequestBodyKey.APPID, String.valueOf(cred.getAppId()));
         httpRequest.addParam(RequestBodyKey.BUCKET, request.getBucketName());
         httpRequest.addParam(RequestBodyKey.CARD_TYPE, String.valueOf(request.getCardType()));
+        httpRequest.addParam("ret_portrait_flag", String.valueOf(request.getRetPortraitFlag()));
         
         httpRequest.setMethod(HttpMethod.POST);
         if (request.isUrl()) {
