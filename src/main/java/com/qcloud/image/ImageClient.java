@@ -33,6 +33,7 @@ import com.qcloud.image.request.NamecardDetectRequest;
 import com.qcloud.image.request.OcrBankCardRequest;
 import com.qcloud.image.request.OcrBizLicenseRequest;
 import com.qcloud.image.request.OcrDrivingLicenceRequest;
+import com.qcloud.image.request.OcrInvoiceRequest;
 import com.qcloud.image.request.OcrPlateRequest;
 import com.qcloud.image.request.PornDetectRequest;
 import com.qcloud.image.request.TagDetectRequest;
@@ -69,7 +70,7 @@ public class ImageClient implements Image {
     }
 
     /**
-     * 设置是否使用 HTTPS 协议.<br>
+     * 设置是否使用 HTTPS 协议. 此方法非必选, 默认使用 HTTPS<br>
      * 为保证信息安全, 推荐使用 HTTPS
      * @param enableHttps true: HTTPS, false: HTTP. 默认为 true
      */
@@ -134,6 +135,11 @@ public class ImageClient implements Image {
     @Override
     public String ocrPlate(OcrPlateRequest request) throws AbstractImageException {
             return detectionOp.ocrPlate(request);
+    }
+    
+    @Override
+    public String ocrInvoice(OcrInvoiceRequest request) throws AbstractImageException {
+            return detectionOp.ocrInvoice(request);
     }
 
     @Override

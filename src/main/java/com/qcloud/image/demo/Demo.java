@@ -35,6 +35,7 @@ import com.qcloud.image.request.NamecardDetectRequest;
 import com.qcloud.image.request.OcrBankCardRequest;
 import com.qcloud.image.request.OcrBizLicenseRequest;
 import com.qcloud.image.request.OcrDrivingLicenceRequest;
+import com.qcloud.image.request.OcrInvoiceRequest;
 import com.qcloud.image.request.OcrPlateRequest;
 import com.qcloud.image.request.PornDetectRequest;
 import com.qcloud.image.request.TagDetectRequest;
@@ -55,20 +56,20 @@ public class Demo {
 
     public static void main(String[] args) {
 
-        String appId = "0000000";
-        String secretId = "YOUR_SECRETID";
-        String secretKey = "YOUR_SECRETKEY";
+        String appId = "0000000";//根据你的帐号信息修改
+        String secretId = "YOUR_SECRETID";//根据你的帐号信息修改
+        String secretKey = "YOUR_SECRETKEY";//根据你的帐号信息修改
         String bucketName = "";//历史遗留字段, 无需修改
 
         
         ImageClient imageClient = new ImageClient(appId, secretId, secretKey, ImageClient.NEW_DOMAIN_recognition_image_myqcloud_com/*根据文档说明选择域名*/);
 
-        /*设置代理服务器*/
-        //Proxy proxy = new Proxy(Type.HTTP, new InetSocketAddress("127.0.0.1", 8080));
+        /*根据实际网络环境, 可能需要设置代理服务器*/
+        //java.net.Proxy proxy = new java.net.Proxy(java.net.Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 8080));
         //imageClient.setProxy(proxy);
         
-        /*设置是否使用 HTTPS*/
-        imageClient.setEnableHttps(true);
+        /*设置是否启用 HTTPS, 非必选, 默认启用(true), 推荐启用(true)*/
+        //imageClient.setEnableHttps(true);
 
 
         /*图像识别系列*/
@@ -92,6 +93,8 @@ public class Demo {
         ocrBankCard(imageClient, bucketName);
         //车牌号
         ocrPlate(imageClient, bucketName);
+        //增值税发票
+        ocrInvoice(imageClient, bucketName);
         
         /* 人脸识别系列
          * 因为数据不能跨域名共享, 如果你是老用户并且已经产生调用, 请继续使用旧域名 ImageClient.OLD_DOMAIN 否则推荐使用 ImageClient.NEW_DOMAIN
@@ -882,6 +885,32 @@ public class Demo {
             e.printStackTrace();
         }
         System.out.println("ocrPlate:" + ret);
+    }
+    
+    /**
+     * OCR-增值税发票识别
+     */
+    private static void ocrInvoice(ImageClient imageClient, String bucketName) {
+        String ret = null;
+        // 1. url方式
+        System.out.println("====================================================");
+        OcrInvoiceRequest request = new OcrInvoiceRequest(bucketName, "https://main.qcloudimg.com/raw/04ee7b01885864bbeb8e78ff2aa0866a/invoice.png");
+        try {
+            ret = imageClient.ocrInvoice(request);
+        } catch (AbstractImageException e) {
+            e.printStackTrace();
+        }
+        System.out.println("ocrInvoice:" + ret);
+
+        //2. 图片内容方式
+        System.out.println("====================================================");
+        request = new OcrInvoiceRequest(bucketName, new File("assets", "ocr_invoice.png"));
+        try {
+            ret = imageClient.ocrInvoice(request);
+        } catch (AbstractImageException e) {
+            e.printStackTrace();
+        }
+        System.out.println("ocrInvoice:" + ret);
     }
 
     /**

@@ -30,6 +30,7 @@ import com.qcloud.image.request.NamecardDetectRequest;
 import com.qcloud.image.request.OcrBankCardRequest;
 import com.qcloud.image.request.OcrBizLicenseRequest;
 import com.qcloud.image.request.OcrDrivingLicenceRequest;
+import com.qcloud.image.request.OcrInvoiceRequest;
 import com.qcloud.image.request.OcrPlateRequest;
 import com.qcloud.image.request.PornDetectRequest;
 import com.qcloud.image.request.TagDetectRequest;
@@ -45,6 +46,11 @@ public interface Image {
      * OCR-车牌识别
      */
     String ocrPlate(OcrPlateRequest request)throws AbstractImageException;
+    
+    /**
+     * OCR-增值税发票识别
+     */
+    String ocrInvoice(OcrInvoiceRequest request)throws AbstractImageException;
     
     /**
      * OCR-银行卡识别
