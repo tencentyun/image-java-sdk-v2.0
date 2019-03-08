@@ -23,6 +23,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -60,47 +61,12 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
         mOkHttpClient.setReadTimeout(config.getSocketTimeout(), TimeUnit.MILLISECONDS);
         mOkHttpClient.setWriteTimeout(config.getSocketTimeout(),TimeUnit.MILLISECONDS);
 
+        Map<String, Object> params = httpRequest.getParams();
+        
         if (httpRequest.getContentType() == HttpContentType.APPLICATION_JSON) {
-            Map<String, Object> params = httpRequest.getParams();
-            JSONObject root = new JSONObject(params);
-            String postBody = root.toString();
+            String postBody = new JSONObject(params).toString();
             RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), postBody);
-            Builder requestBuilder = new Builder()
-                    .url(httpRequest.getUrl())
-                    .post(requestBody);
-            Map<String, String> headers = httpRequest.getHeaders();
-            for (String headerKey : headers.keySet()) {
-                requestBuilder.addHeader(headerKey, headers.get(headerKey));
-            }
-            Response response = null;
-            try {
-                response = mOkHttpClient.newCall(requestBuilder.build()).execute();
-            } catch (IOException e) {
-                throw new ServerException(e);
-            }
-            
-            if (!response.isSuccessful()) {
-                String string = null;
-                try {
-                    string = response.body().string();
-                } catch (IOException e) {
-                    throw new ServerException("Unexpected response code and IOException while reading response string,\n" +response+",\n" + e.getMessage());
-                }
-                return string;
-            }
-
-            String string = null;
-            try {
-                string = response.body().string();
-            } catch (IOException e) {
-                throw new ServerException("IOException while reading response string.\n" + e.getMessage());
-            }
-            try {
-                new JSONObject(string);
-            } catch (JSONException e) {
-                throw new UnknownException("response is not json: " + string, e);
-            }
-            return string;
+            return doRequest(httpRequest, requestBody);
 
         } else if (httpRequest.getContentType() == HttpContentType.MULTIPART_FORM_DATA) {
             Map<String, File> imageList;//File形式的图片
@@ -110,7 +76,6 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
             } else {
                 imageList = httpRequest.getImageList();
             }
-            Map<String, Object> params = httpRequest.getParams();
             MultipartBuilder multipartBuilder = new MultipartBuilder();
             try {
                 setMultiPartEntity(multipartBuilder, params, imageList, bytesContentList);
@@ -118,46 +83,51 @@ public class DefaultImageHttpClient extends AbstractImageHttpClient {
                 throw new ParamException(e);
             }
             RequestBody requestBody = multipartBuilder.build();
-            Builder requestBuilder = new Builder()
-                    .url(httpRequest.getUrl())
-                    .post(requestBody);
-            Map<String, String> headers = httpRequest.getHeaders();
-            for (String headerKey : headers.keySet()) {
-                requestBuilder.addHeader(headerKey, headers.get(headerKey));
-            }
-            requestBuilder.addHeader("Connection", "close");//禁用长连接, 因为后台不支持
-            Response response = null;
-            try {
-                response = mOkHttpClient.newCall(requestBuilder.build()).execute();
-            } catch (IOException e) {
-                throw new ServerException(e);
-            }
-            
-            if (!response.isSuccessful()) {
-                String string = null;
-                try {
-                    string = response.body().string();
-                } catch (IOException e) {
-                    throw new ServerException("Unexpected response code and IOException while reading response string,\n" +response+",\n" + e.getMessage());
-                }
-               return string;
-            }
-            
-            String string = null;
+            return doRequest(httpRequest, requestBody);
+        } else {
+            throw new ParamException("Unknown ContentType, httpRequest.getContentType():" + httpRequest.getContentType());
+        }
+    }
+
+    private String doRequest(HttpRequest httpRequest, RequestBody requestBody) throws ServerException, UnknownException {
+        Builder requestBuilder = new Builder()
+                .url(httpRequest.getUrl())
+                .post(requestBody);
+
+        for (Entry<String, String> kv : httpRequest.getHeaders().entrySet()) {
+            requestBuilder.addHeader(kv.getKey(), kv.getValue());
+        }
+        
+        Response response;
+        try {
+            response = mOkHttpClient.newCall(requestBuilder.build()).execute();
+        } catch (IOException e) {
+            throw new ServerException(e);
+        }
+
+        String string;
+        if (response.isSuccessful()) {
             try {
                 string = response.body().string();
             } catch (IOException e) {
-                throw new ServerException("IOException while reading response string.\n" + e.getMessage());
+                String msg = String.format("IOException while reading response string, com.squareup.okhttp.Response = %s, IOException msg = %s", response.toString(), e.getMessage());
+                throw new ServerException(msg);
             }
             try {
                 new JSONObject(string);
             } catch (JSONException e) {
                 throw new UnknownException("response is not json: " + string, e);
             }
-            return string;
-        } else {
-            throw new ParamException("Unknown ContentType, httpRequest.getContentType():" + httpRequest.getContentType());
+
+        } else {// HTTP Code Error
+            try {
+                string = response.body().string();
+            } catch (IOException e) {
+                String msg = String.format("Unexpected response code and IOException while reading response string, com.squareup.okhttp.Response = %s, IOException msg = %s", response.toString(), e.getMessage());
+                throw new ServerException(msg);
+            }
         }
+        return string;
     }
 
     private void setMultiPartEntity(MultipartBuilder multipartBuilder, Map<String, Object> params, Map<String, File> files, Map<String, byte[]> fileContents)
