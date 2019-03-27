@@ -68,10 +68,6 @@ public class Demo {
         //java.net.Proxy proxy = new java.net.Proxy(java.net.Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 8080));
         //imageClient.setProxy(proxy);
         
-        /*设置是否启用 HTTPS, 非必选, 默认启用(true), 推荐启用(true)*/
-        //imageClient.setEnableHttps(true);
-
-
         /*图像识别系列*/
         //鉴黄
         imagePorn(imageClient, bucketName);
