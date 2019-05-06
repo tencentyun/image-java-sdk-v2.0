@@ -134,7 +134,7 @@ public class Demo {
 
         // 1. url方式
         System.out.println("====================================================");
-        String imageUrl = "http://open.youtu.qq.com/app/img/experience/face_img/face_34.jpg";//照片url
+        String imageUrl = "IMAGE_URL";//照片url
         request = new FaceLiveDetectPictureRequest(bucketName, imageUrl);
         try {
             result = imageClient.faceLiveDetectPicture(request);
@@ -307,7 +307,7 @@ public class Demo {
 
         // 1. url方式
         System.out.println("====================================================");
-        String imageUrl = "http://youtu.qq.com/app/img/experience/face_img/icon_face_01.jpg";
+        String imageUrl = "IMAGE_URL";
         request = new FaceMultiIdentifyRequest(bucketName, imageUrl, "tencent", "group_id_A", "group_id_B", "group_id_C");
         try {
             result = imageClient.faceMultiIdentify(request);
@@ -717,7 +717,7 @@ public class Demo {
         String ret = null;
         // 1. url方式
         System.out.println("====================================================");
-        String faceDetectUrl = "http://youtu.qq.com/app/img/experience/face_img/icon_face_01.jpg";
+        String faceDetectUrl = "IMAGE_URL";
         FaceDetectRequest faceDetectReq = new FaceDetectRequest(bucketName, faceDetectUrl, 1);
 
         try {
@@ -754,8 +754,8 @@ public class Demo {
         // 1. url方式
         System.out.println("====================================================");
         String[] namecardUrlList = new String[2];
-        namecardUrlList[0] = "http://youtu.qq.com/app/img/experience/char_general/ocr_namecard_01.jpg";
-        namecardUrlList[1] = "http://youtu.qq.com/app/img/experience/char_general/ocr_namecard_02.jpg";
+        namecardUrlList[0] = "IMAGE_URL";
+        namecardUrlList[1] = "IMAGE_URL";
         NamecardDetectRequest nameReq = new NamecardDetectRequest(bucketName, namecardUrlList, 0);
 
         try {
@@ -786,7 +786,7 @@ public class Demo {
         String ret = null;
         // 1. url方式
         System.out.println("====================================================");
-        GeneralOcrRequest request = new GeneralOcrRequest(bucketName, "http://youtu.qq.com/app/img/experience/char_general/ocr_common09.jpg");
+        GeneralOcrRequest request = new GeneralOcrRequest(bucketName, "IMAGE_URL");
         try {
             ret = imageClient.generalOcr(request);
         } catch (AbstractImageException e) {
@@ -812,7 +812,7 @@ public class Demo {
         String ret = null;
         // 1. url方式
         System.out.println("====================================================");
-        OcrBizLicenseRequest request = new OcrBizLicenseRequest(bucketName, "http://youtu.qq.com/app/img/experience/char_general/ocr_yyzz_02.jpg");
+        OcrBizLicenseRequest request = new OcrBizLicenseRequest(bucketName, "IMAGE_URL");
         try {
             ret = imageClient.ocrBizLicense(request);
         } catch (AbstractImageException e) {
@@ -838,7 +838,7 @@ public class Demo {
         String ret = null;
         // 1. url方式
         System.out.println("====================================================");
-        OcrBankCardRequest request = new OcrBankCardRequest(bucketName, "http://youtu.qq.com/app/img/experience/char_general/icon_ocr_card_1.jpg");
+        OcrBankCardRequest request = new OcrBankCardRequest(bucketName, "IMAGE_URL");
         try {
             ret = imageClient.ocrBankCard(request);
         } catch (AbstractImageException e) {
@@ -864,7 +864,7 @@ public class Demo {
         String ret = null;
         // 1. url方式
         System.out.println("====================================================");
-        OcrPlateRequest request = new OcrPlateRequest(bucketName, "http://youtu.qq.com/app/img/experience/char_general/icon_ocr_license_3.jpg");
+        OcrPlateRequest request = new OcrPlateRequest(bucketName, "IMAGE_URL");
         try {
             ret = imageClient.ocrPlate(request);
         } catch (AbstractImageException e) {
@@ -890,7 +890,7 @@ public class Demo {
         String ret = null;
         // 1. url方式
         System.out.println("====================================================");
-        OcrInvoiceRequest request = new OcrInvoiceRequest(bucketName, "https://main.qcloudimg.com/raw/04ee7b01885864bbeb8e78ff2aa0866a/invoice.png");
+        OcrInvoiceRequest request = new OcrInvoiceRequest(bucketName, "IMAGE_URL");
         try {
             ret = imageClient.ocrInvoice(request);
         } catch (AbstractImageException e) {
@@ -916,7 +916,7 @@ public class Demo {
         String ret = null;
         // 1. 驾驶证 url方式
         System.out.println("====================================================");
-        OcrDrivingLicenceRequest request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_DRIVER_LICENSE, "http://youtu.qq.com/app/img/experience/char_general/icon_ocr_jsz_01.jpg");
+        OcrDrivingLicenceRequest request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_DRIVER_LICENSE, "IMAGE_URL");
         try {
             ret = imageClient.ocrDrivingLicence(request);
         } catch (AbstractImageException e) {
@@ -936,7 +936,7 @@ public class Demo {
 
         // 1. 行驶证 url方式
         System.out.println("====================================================");
-        request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_VEHICLE_LICENSE, "http://youtu.qq.com/app/img/experience/char_general/icon_ocr_xsz_01.jpg");
+        request = new OcrDrivingLicenceRequest(bucketName, OcrDrivingLicenceRequest.TYPE_VEHICLE_LICENSE, "IMAGE_URL");
         try {
             ret = imageClient.ocrDrivingLicence(request);
         } catch (AbstractImageException e) {
@@ -963,8 +963,8 @@ public class Demo {
         // 1. url方式,识别身份证正面
         System.out.println("====================================================");
         String[] idcardUrlList = new String[2];
-        idcardUrlList[0] = "http://youtu.qq.com/app/img/experience/char_general/icon_id_01.jpg";
-        idcardUrlList[1] = "http://youtu.qq.com/app/img/experience/char_general/icon_id_02.jpg";
+        idcardUrlList[0] = "IMAGE_URL";
+        idcardUrlList[1] = "IMAGE_URL";
         IdcardDetectRequest idReq = new IdcardDetectRequest(bucketName, idcardUrlList, 0/*0:正面, 1:反面*/, 1/*0:不返回身份证照片, 1:返回*/);
         try {
             ret = imageClient.idcardDetect(idReq);
@@ -973,8 +973,8 @@ public class Demo {
         }
         System.out.println("idcard detect ret:" + ret);
         //识别身份证反面
-        idcardUrlList[0] = "https://gss0.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/314e251f95cad1c89e04bea2763e6709c83d51f3.jpg";
-        idcardUrlList[1] = "http://image2.sina.com.cn/dy/c/2004-03-29/U48P1T1D3073262F23DT20040329135445.jpg";
+        idcardUrlList[0] = "IMAGE_URL";
+        idcardUrlList[1] = "IMAGE_URL";
         idReq = new IdcardDetectRequest(bucketName, idcardUrlList, 1/*0:正面, 1:反面*/);
         try {
             ret = imageClient.idcardDetect(idReq);
@@ -1014,7 +1014,7 @@ public class Demo {
         String ret = null;
         // 1. url方式
         System.out.println("====================================================");
-        String tagUrl = "http://youtu.qq.com/app/img/experience/image/icon_imag_01.jpg";
+        String tagUrl = "IMAGE_URL";
         TagDetectRequest tagReq = new TagDetectRequest(bucketName, tagUrl);
         try {
             ret = imageClient.tagDetect(tagReq);
@@ -1049,9 +1049,9 @@ public class Demo {
         // 1. url方式
         System.out.println("====================================================");
         String[] pornUrlList = new String[3];
-        pornUrlList[0] = "http://youtu.qq.com/app/img/experience/porn/icon_porn04.jpg";
-        pornUrlList[1] = "http://youtu.qq.com/app/img/experience/porn/icon_porn05.jpg";
-        pornUrlList[2] = "http://youtu.qq.com/app/img/experience/porn/icon_porn06.jpg";
+        pornUrlList[0] = "IMAGE_URL";
+        pornUrlList[1] = "IMAGE_URL";
+        pornUrlList[2] = "IMAGE_URL";
         PornDetectRequest pornReq = new PornDetectRequest(bucketName, pornUrlList);
 
         try {
